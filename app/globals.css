@@ -1,26 +1,93 @@
 @import "tailwindcss";
 
+/* RESET DI BASE */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* COLOR SCHEME AUTOMATICO */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light dark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* MEDIA ELEMENTI RESPONSIVI */
+img,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* LINK "SALTA AL CONTENUTO" – ACCESSIBILITÀ */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000;
+  color: #fff;
+  font-size: 0.95rem;
+  padding: 8px 18px;
+  z-index: 1000;
+  border-radius: 0 0 8px 0;
+  transition: top 0.25s ease-in-out;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* FOCUS VISIBILE PER UTENTI TASTIERA */
+:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 3px;
+}
+
+/* TRANSIZIONI GLOBALI PIÙ FLUIDE (limitate per performance) */
+body, a, button, input, textarea, select {
+  transition: background-color 0.25s ease, color 0.25s ease;
+  -webkit-tap-highlight-color: transparent; /* Migliora UX su mobile */
+}
+
+/* SCROLL FLUIDO LENIS */
+html.lenis {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* RIDUZIONE MOVIMENTO PER UTENTI SENSIBILI */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* CORREZIONE ALTEZZA HERO SU TABLET/SAFARI */
+@supports (-webkit-touch-callout: none) {
+  .fix-vh {
+    height: -webkit-fill-available !important;
+    min-height: -webkit-fill-available !important;
+  }
+}
+
+/* FALLBACK PER I TABLET NON IOS */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .fix-vh {
+    min-height: 100vh;
+    height: 100vh;
+  }
 }

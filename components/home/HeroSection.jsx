@@ -1,0 +1,206 @@
+"use client";
+
+import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
+import { useRef } from "react";
+import LogoCard from "@/components/home/LogoCard";
+
+export default function HeroSection() {
+  const ref = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+
+  // Animazioni Hero Section
+  const opacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.25, 0.65], [1, 0.92, 0.8]);
+  const y = useTransform(scrollYProgress, [0, 0.65], [0, -80]);
+  const x = useTransform(scrollYProgress, [0, 0.65], [0, -100]);
+  const rotate = useTransform(scrollYProgress, [0, 0.65], [0, -3]);
+
+  // Sfondo parallax
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  const hintOpacity = useTransform(scrollYProgress, [0, 0.2, 0.4], [1, 1, 0]);
+
+  const sportEImpiantiUrl =
+    "https://www.sporteimpianti.it/?aziende_mappa=mauro-concentri-edilizia-pubblica-impiantisca-sportiva";
+
+  return (
+    <section
+      ref={ref}
+      role="banner"
+      aria-label="Sezione introduttiva Mauro Concentri Architetto"
+      className="
+        relative isolate
+        lg:h-screen fix-vh
+        flex flex-col items-center justify-center
+        overflow-hidden
+        bg-white
+      "
+    >
+      {/* SFONDO BASE (BIANCO) */}
+      <div
+        className="
+          absolute inset-0 z-0 pointer-events-none
+          bg-linear-to-b from-white via-neutral-50 to-neutral-200
+        "
+      />
+
+      {/* SFONDO PARALLAX (IMMAGINE) */}
+      <motion.div
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{ y: bgY, scale: bgScale }}
+      >
+        <Image
+          src="/images/bgHero.png"
+          alt="Sfondo architettonico"
+          fill
+          priority
+          sizes="100vw"
+          quality={90}
+          className="object-cover object-center"
+        />
+
+        {/* SFUMATURA PER LEGGIBILITÀ */}
+        <div
+          className="
+            absolute inset-0
+            bg-linear-to-br
+            from-white/15 via-transparent to-black/25
+          "
+        />
+      </motion.div>
+
+      {/* LOGO CARD + CAPTION EDITORIALE (NON SPOSTA NULLA) */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9, y: 60 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+        style={{ opacity, scale, y, x, rotate }}
+        className="relative z-10"
+      >
+        <LogoCard />
+
+        {/* Caption “pubblicato su” ancorata alla card */}
+        <motion.a
+          href={sportEImpiantiUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Apri la pubblicazione dello studio su Sport&Impianti (si apre in una nuova scheda)"
+          className="
+            absolute left-1/2 top-full
+            -translate-x-1/2
+            mt-8 sm:mt-8
+            inline-flex items-center gap-3
+            tracking-wide uppercase
+            text-lg
+            text-black/70
+            hover:text-black/90
+            transition
+            whitespace-nowrap
+          "
+          initial={{ opacity: 0, y: -6, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 1.0 }}
+        >
+          <span className="h-px w-10 bg-black/20" />
+
+          {/* Gerarchia: “Pubblicato su” più leggero */}
+          <span className="text-black/50 tracking-[0.28em] mr-4">Pubblicato su</span>
+
+          {/* Blocco testata + payoff su due righe */}
+          <span className="inline-flex flex-col items-center leading-tight">
+            {/* Simulazione logotipo: SPORT overline, & discreta, IMPIANTI underline */}
+            <span className="inline-flex items-baseline gap-2 text-black/65">
+              <span
+                className="
+                  font-semibold
+                  tracking-[0.22em]
+                  [text-decoration:overline]
+                  decoration-black/60 decoration-1px
+                "
+              >
+                SPORT
+              </span>
+
+              <span
+                className="
+                  font-medium
+                  text-2xl
+                  tracking-[0.06em]
+                  text-black/65
+                  -mx-1
+                "
+                aria-label="e"
+              >
+                &amp;
+              </span>
+
+              <span
+                className="
+                  font-semibold
+                  tracking-[0.22em]
+                  [text-decoration:underline]
+                  decoration-black/60 decoration-1px
+                  underline-offset-4
+                "
+              >
+                IMPIANTI
+              </span>
+            </span>
+
+            {/* Payoff sotto: più piccolo, non uppercase, più “editoriale” */}
+            <span className="mt-1 text-[11px] sm:text-[13px] tracking-wide text-black/75 normal-case">
+              il portale dello sport, ambiente e lifestyle
+            </span>
+          </span>
+
+          <span className="text-black/50" aria-hidden="true">
+            ↗
+          </span>
+
+          <span className="h-px w-10 bg-black/20" />
+        </motion.a>
+      </motion.div>
+
+      {/* INVITO ALLO SCROLL */}
+      <motion.div
+        className="
+          absolute z-10 bottom-36 lg:bottom-6
+          flex flex-col items-center
+          text-black/80
+        "
+        style={{ opacity: hintOpacity }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8, duration: 1.2, ease: "easeOut" }}
+      >
+        <motion.span
+          className="text-sm tracking-widest font-light uppercase"
+          animate={{ opacity: [1, 0.6, 1], y: [0, -4, 0] }}
+          transition={{ repeat: Infinity, duration: 2.8, ease: "easeInOut" }}
+        >
+          Scroll
+        </motion.span>
+
+        <motion.svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="26"
+          height="26"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.4"
+          className="mt-1"
+          animate={{ y: [0, 6, 0] }}
+          transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
+        </motion.svg>
+      </motion.div>
+    </section>
+  );
+}
