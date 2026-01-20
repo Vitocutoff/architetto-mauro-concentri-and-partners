@@ -74,7 +74,74 @@ export default function HeroSection() {
         />
       </motion.div>
 
-      {/* LOGO CARD + CAPTION EDITORIALE (NON SPOSTA NULLA) */}
+      {/* CAPTION EDITORIALE (sotto header, a sinistra, su 3 righe) */}
+      <motion.a
+        href={sportEImpiantiUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Apri la pubblicazione dello studio su Sport&Impianti (si apre in una nuova scheda)"
+        className="
+          absolute z-20
+          left-4 sm:left-6 lg:left-8
+          top-24 sm:top-28 lg:top-20
+          text-left
+          select-none
+        "
+        initial={{ opacity: 0, y: -8, filter: "blur(6px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 1.0 }}
+        whileHover={{ y: -1 }}
+      >
+        <div className="flex items-center gap-2 text-[11px] sm:text-xs uppercase tracking-[0.28em] text-black/45">
+          <span>Pubblicato su</span>
+          <span className="text-black/40" aria-hidden="true">
+            ↗
+          </span>
+        </div>
+
+        <div className="mt-2 inline-flex items-baseline gap-2 text-black/80">
+          <span
+            className="
+              font-semibold
+              tracking-[0.22em]
+              [text-decoration:overline]
+              decoration-black/55 decoration-1px
+            "
+          >
+            SPORT
+          </span>
+
+          <span
+            className="
+              font-medium
+              tracking-[0.06em]
+              text-black/55
+              -mx-1
+            "
+            aria-label="e"
+          >
+            &amp;
+          </span>
+
+          <span
+            className="
+              font-semibold
+              tracking-[0.22em]
+              [text-decoration:underline]
+              decoration-black/55 decoration-1px
+              underline-offset-4
+            "
+          >
+            IMPIANTI
+          </span>
+        </div>
+
+        <div className="mt-1 text-[12px] sm:text-[13px] tracking-wide text-black/45 normal-case">
+          il portale dello sport, ambiente e lifestyle
+        </div>
+      </motion.a>
+
+      {/* LOGO CARD */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 60 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -83,93 +150,14 @@ export default function HeroSection() {
         className="relative z-10"
       >
         <LogoCard />
-
-        {/* Caption “pubblicato su” ancorata alla card */}
-        <motion.a
-          href={sportEImpiantiUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Apri la pubblicazione dello studio su Sport&Impianti (si apre in una nuova scheda)"
-          className="
-            absolute left-1/2 top-full
-            -translate-x-1/2
-            mt-8 sm:mt-8
-            inline-flex items-center gap-3
-            tracking-wide uppercase
-            text-lg
-            text-black/70
-            hover:text-black/90
-            transition
-            whitespace-nowrap
-          "
-          initial={{ opacity: 0, y: -6, filter: "blur(6px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 1.0 }}
-        >
-          <span className="h-px w-10 bg-black/20" />
-
-          {/* Gerarchia: “Pubblicato su” più leggero */}
-          <span className="text-black/50 tracking-[0.28em] mr-4">Pubblicato su</span>
-
-          {/* Blocco testata + payoff su due righe */}
-          <span className="inline-flex flex-col items-center leading-tight">
-            {/* Simulazione logotipo: SPORT overline, & discreta, IMPIANTI underline */}
-            <span className="inline-flex items-baseline gap-2 text-black/65">
-              <span
-                className="
-                  font-semibold
-                  tracking-[0.22em]
-                  [text-decoration:overline]
-                  decoration-black/60 decoration-1px
-                "
-              >
-                SPORT
-              </span>
-
-              <span
-                className="
-                  font-medium
-                  text-2xl
-                  tracking-[0.06em]
-                  text-black/65
-                  -mx-1
-                "
-                aria-label="e"
-              >
-                &amp;
-              </span>
-
-              <span
-                className="
-                  font-semibold
-                  tracking-[0.22em]
-                  [text-decoration:underline]
-                  decoration-black/60 decoration-1px
-                  underline-offset-4
-                "
-              >
-                IMPIANTI
-              </span>
-            </span>
-
-            {/* Payoff sotto: più piccolo, non uppercase, più “editoriale” */}
-            <span className="mt-1 text-[11px] sm:text-[13px] tracking-wide text-black/75 normal-case">
-              il portale dello sport, ambiente e lifestyle
-            </span>
-          </span>
-
-          <span className="text-black/50" aria-hidden="true">
-            ↗
-          </span>
-
-          <span className="h-px w-10 bg-black/20" />
-        </motion.a>
       </motion.div>
 
       {/* INVITO ALLO SCROLL */}
       <motion.div
         className="
-          absolute z-10 bottom-36 lg:bottom-6
+          absolute z-10
+          bottom-[calc(env(safe-area-inset-bottom)+1.25rem)]
+          sm:bottom-8 lg:bottom-6
           flex flex-col items-center
           text-black/80
         "
