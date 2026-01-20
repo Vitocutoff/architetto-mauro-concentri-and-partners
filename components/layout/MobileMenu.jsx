@@ -37,43 +37,64 @@ export default function MobileMenu({ isOpen, toggleMenu, closeMenu }) {
     }`;
 
   return (
+
     <>
-      {/* BOTTONE ANIMATO */}
+
       <button
         onClick={toggleMenu}
         aria-label={isOpen ? "Chiudi menu" : "Apri menu"}
         aria-controls="mobile-navigation"
         aria-expanded={isOpen}
         aria-haspopup="menu"
-        className={`fixed top-1 right-1
-                   z-90 w-12 h-12 flex
-                   flex-col justify-center
-                   items-center group
-                   ${isOpen ? "text-red-400" : "text-black"}`}
+        className={`fixed
+                    top-1
+                    right-1
+                    z-90
+                    w-12
+                    h-12
+                    flex
+                    flex-col
+                    justify-center
+                    items-center
+                    group
+                    ${isOpen ? "text-red-400" : "text-black"}`}
       >
+
         <motion.span
-          className="block w-5 h-0.5
-                     bg-current mb-1
-                     rounded origin-center"
+          className="block
+                     w-5
+                     h-0.5
+                     bg-current
+                     mb-1
+                     rounded
+                     origin-center"
           animate={isOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
           transition={{ duration: 0.25, ease: "easeInOut" }}
         />
 
         <motion.span
-          className="block w-5 h-0.5
-                     bg-current mb-1
-                     rounded origin-center"
+          className="block
+                     w-5
+                     h-0.5
+                     bg-current
+                     mb-1
+                     rounded
+                     origin-center"
           animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
           transition={{ duration: 0.2, ease: "easeInOut" }}
         />
 
         <motion.span
-          className="block w-5 h-0.5
-                     bg-current rounded
+          className="block
+                     w-5
+                     h-0.5
+                     bg-current
+                     rounded
                      origin-center"
           animate={isOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
           transition={{ duration: 0.25, ease: "easeInOut" }}
         />
+
       </button>
 
       <AnimatePresence>
@@ -86,23 +107,31 @@ export default function MobileMenu({ isOpen, toggleMenu, closeMenu }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -40 }}
             transition={{ duration: 0.6, ease: [0.25, 0.8, 0.25, 1] }}
-            className="fixed inset-0 z-70
-                       flex flex-col items-center
-                       justify-center overflow-hidden
-                       h-screen w-screen"
+            className="fixed
+                       inset-0
+                       z-70
+                       flex
+                       flex-col
+                       items-center
+                       justify-center
+                       overflow-hidden
+                       h-screen
+                       w-screen"
           >
-            {/* SFONDO GRADIENTE */}
+
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.8, ease: "easeInOut" }}
-              className="absolute inset-0 bg-linear-to-b
-                         from-neutral-950 via-neutral-900
+              className="absolute
+                         inset-0
+                         bg-linear-to-b
+                         from-neutral-950
+                         via-neutral-900
                          to-neutral-950"
             />
 
-            {/* BAGLIORE DINAMICO */}
             <motion.div
               initial={{ opacity: 0, y: "-30%" }}
               animate={{
@@ -115,39 +144,70 @@ export default function MobileMenu({ isOpen, toggleMenu, closeMenu }) {
                 repeatDelay: 4,
                 ease: "easeInOut",
               }}
-              className="pointer-events-none absolute inset-0
-                         bg-linear-to-b from-transparent
-                         via-white/10 to-transparent blur-2xl"
+              className="pointer-events-none
+                         absolute
+                         inset-0
+                         bg-linear-to-b
+                         from-transparent
+                         via-white/10
+                         to-transparent
+                         blur-2xl"
             />
 
-            {/* CONTENUTO */}
             <div
-              className="relative z-10 flex
-                         flex-col items-center
+              className="relative
+                         z-10
+                         flex
+                         flex-col
+                         items-center
                          text-center"
             >
-              {/* LOGO CENTRALE */}
-              <div className="mb-3 transform -translate-y-16">
-                {/* ARCHITETTO (spostato come prima voce, stesso stile) */}
+
+              <div
+                className="mb-3
+                           transform
+                           -translate-y-16"
+              >
+
                 <div
                   className={`${fontMonoSpecial.className}
-                              text-2xl mb-1 tracking-widest text-blue-300/90`}
+                              text-2xl
+                              mb-1
+                              tracking-widest
+                              text-blue-300/90`}
                 >
+
                   A<span className={`${fontMono.className}`}>rchitetto</span>
+
                 </div>
 
-                {/* MAURO CONCENTRI & PARTNERS (aggiunta riga) */}
                 <h2
                   className={`${fontMonoSpecial.className}
-                              text-2xl font-extrabold tracking-widest text-white`}
+                              text-2xl
+                              font-extrabold
+                              tracking-widest
+                              text-white`}
                 >
+
                   MAURO<br />
+
                   CONCENtRi<br />
-                  <span className={`${fontCursive.className} text-2xl font-extrabold tracking-widest text-white`}>&amp; Partners</span>
+
+                  <span
+                    className={`${fontCursive.className}
+                                text-2xl
+                                font-extrabold
+                                tracking-widest
+                                text-white`}
+                    >
+                      &amp; Partners
+
+                    </span>
+
                 </h2>
+
               </div>
 
-              {/* LISTA LINK */}
               <motion.ul
                 initial="hidden"
                 animate="visible"
@@ -160,9 +220,12 @@ export default function MobileMenu({ isOpen, toggleMenu, closeMenu }) {
                   },
                   exit: { opacity: 0 },
                 }}
-                className="flex flex-col items-center
+                className="flex
+                           flex-col
+                           items-center
                            gap-5"
               >
+
                 {links.map((link, i) => (
                   <motion.li
                     key={link.href}
@@ -171,21 +234,34 @@ export default function MobileMenu({ isOpen, toggleMenu, closeMenu }) {
                     exit={{ opacity: 0, x: 25 }}
                     transition={{ duration: 0.3, delay: 0.05 * i }}
                   >
+
                     <Link
                       href={link.href}
                       onClick={closeMenu}
                       className={linkClass(link.href)}
                       aria-current={pathname === link.href ? "page" : undefined}
                     >
+
                       {link.label}
+
                     </Link>
+
                   </motion.li>
+
                 ))}
+
               </motion.ul>
+
             </div>
+
           </motion.nav>
+
         )}
+
       </AnimatePresence>
+
     </>
+
   );
+
 }

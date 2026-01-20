@@ -2,50 +2,139 @@
 
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import Image from "next/image";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { fontCursive, fontMono, fontSerif } from "@/lib/fonts";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { fontCursive, fontSans, fontSerif } from "@/lib/fonts";
+
+function PlayIcon({ className = "" }) {
+  return (
+
+    <svg
+      className={className}
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+
+      <path
+        d="M9 7.25v9.5l8.5-4.75L9 7.25Z"
+        fill="currentColor"
+      />
+
+    </svg>
+
+  );
+
+}
 
 export default function IntroSection() {
   const ref = useRef(null);
+  const reduceMotion = useReducedMotion();
   const inView = useInView(ref, { once: true, amount: 0.35 });
+
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
 
   const fullText =
     "Nel 1989 ho iniziato la mia attività di professionista, occupandomi di urbanistica, edilizia privata, edilizia industriale e lavori pubblici soprattutto nel settore degli impianti sportivi.";
   const words = fullText.split(" ");
 
+  const extraText1 =
+    "Dal 2000 lavoro come Architetto Mauro Concentri & Partners, un gruppo di professionisti formato da me, dall’arch. Domenico Gabaldo e da SP Engineering Srl. Ci occupiamo soprattutto di edilizia pubblica, con una specializzazione nell’impiantistica sportiva.";
+
+  const extraText2 =
+    "Dal 2000 al 2015 sono stato consulente provinciale CONI: quell’esperienza ha rafforzato competenze e visione dello studio e ha reso l’impiantistica sportiva uno dei nostri ambiti principali. Lavoriamo con un’organizzazione flessibile e una progettazione integrata tra specialisti che collaborano stabilmente da oltre 25 anni. Questo ci permette di seguire progetti anche molto diversi tra loro, garantendo una direzione lavori presente e continua in tutte le fasi di realizzazione.";
+
+  const bioVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: reduceMotion ? 0 : 0.06,
+        delayChildren: reduceMotion ? 0 : 1.15,
+      },
+    },
+  };
+
+  const wordVariants = {
+    hidden: { opacity: 0, y: reduceMotion ? 0 : 14 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: reduceMotion ? 0 : 0.42, ease: "easeOut" },
+    },
+  };
+
+  // Chiudi con ESC
+  useEffect(() => {
+    if (!isVideoOpen) return;
+
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") setIsVideoOpen(false);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isVideoOpen]);
+
+  // Lock scroll body quando modal aperta
+  useEffect(() => {
+    if (!isVideoOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [isVideoOpen]);
+
+  const videoSrc = "/videos/drone.mp4";
+
   return (
+
     <section
       ref={ref}
       role="region"
       aria-label="Introduzione e biografia professionale"
-      className="relative min-h-screen flex
-                 items-center justify-center
-                 overflow-hidden py-8"
+      className="relative
+                 min-h-screen
+                 flex
+                 items-center
+                 justify-center
+                 overflow-hidden
+                 py-14
+                 sm:py-16
+                 lg:py-20"
     >
-
-      {/* BACKGROUND ANIMATO */}
+      {/* BACKGROUND */}
       <motion.div
-        className="absolute inset-0 -z-10"
+        className="absolute
+                   inset-0
+                   -z-10"
         animate={
-          inView
+          inView && !reduceMotion
             ? { backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }
             : {}
         }
         transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
         style={{
-          background: "linear-gradient(135deg, #ffffff 0%, #e7eaef 40%, #dde2e7 100%)",
+          background:
+            "linear-gradient(135deg, #ffffff 0%, #e7eaef 40%, #dde2e7 100%)",
           backgroundSize: "200% 200%",
         }}
+        aria-hidden="true"
       />
 
       {/* LUCE MORBIDA */}
       <motion.div
-        className="absolute inset-0 bg-linear-to-t
-                   from-white/0 via-white/40
-                   to-transparent pointer-events-none"
+        className="absolute
+                   inset-0
+                   pointer-events-none
+                   bg-linear-to-t
+                   from-white/0
+                   via-white/40
+                   to-transparent"
         initial={{ opacity: 0 }}
-        animate={inView ? { opacity: [0, 1, 0.6] } : {}}
+        animate={inView ? { opacity: reduceMotion ? 0.6 : [0, 1, 0.6] } : {}}
         transition={{ duration: 1.8, ease: "easeOut" }}
         aria-hidden="true"
       />
@@ -55,13 +144,21 @@ export default function IntroSection() {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={inView ? { opacity: 1, scale: 1 } : {}}
         transition={{ delay: 0.3, duration: 1, ease: "easeOut" }}
-        className="hidden md:block absolute
-                   top-8 left-8 text-black/60
-                   drop-shadow-[0_6px_14px_rgba(0,0,0,0.25)]"
+        className="hidden
+                   md:block
+                   absolute
+                   top-8
+                   left-8
+                   text-black/60
+                   drop-shadow-[0_6px_14px_rgba(0,0,0,0.25)]
+                   pointer-events-none"
         aria-hidden="true"
       >
 
-        <FaQuoteLeft className="text-5xl lg:text-6xl" />
+        <FaQuoteLeft
+          className="text-5xl
+                     lg:text-6xl"
+        />
 
       </motion.div>
 
@@ -69,53 +166,89 @@ export default function IntroSection() {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={inView ? { opacity: 1, scale: 1 } : {}}
         transition={{ delay: 0.6, duration: 1, ease: "easeOut" }}
-        className="hidden md:block absolute
-                   bottom-8 right-8 text-black/60
-                   drop-shadow-[0_6px_14px_rgba(0,0,0,0.25)]"
+        className="hidden
+                   md:block
+                   absolute
+                   bottom-8
+                   right-8
+                   text-black/60
+                   drop-shadow-[0_6px_14px_rgba(0,0,0,0.25)]
+                   pointer-events-none"
         aria-hidden="true"
       >
 
-        <FaQuoteRight className="text-5xl lg:text-6xl" />
+        <FaQuoteRight
+          className="text-5xl
+                     lg:text-6xl"
+        />
 
       </motion.div>
 
       {/* CONTENUTO */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
+        initial={{ opacity: 0, scale: 0.98 }}
         animate={inView ? { opacity: 1, scale: 1 } : {}}
-        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-10 w-full
-                   max-w-[95%] sm:max-w-3xl
-                   lg:max-w-7xl mx-auto flex
-                   flex-col lg:flex-row items-center
-                   justify-between gap-12 px-4
-                   sm:px-6 lg:px-20 overflow-hidden"
+        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+        className="relative
+                   z-10
+                   w-full
+                   max-w-[95%]
+                   sm:max-w-3xl
+                   lg:max-w-7xl
+                   mx-auto
+                   flex
+                   flex-col
+                   lg:flex-row
+                   items-start
+                   lg:items-center
+                   justify-between
+                   gap-10
+                   lg:gap-14
+                   px-4
+                   sm:px-6
+                   lg:px-20
+                   overflow-hidden"
       >
 
         {/* TESTO */}
-        <div
-          className="flex-1 flex flex-col
-                     justify-center
-                     items-start text-left
-                     gap-10"
+        <div className="flex-1
+                        flex
+                        flex-col
+                        justify-center
+                        items-start
+                        text-left
+                        gap-8
+                        lg:gap-10"
         >
 
           <motion.blockquote
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 34 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 1.1, ease: "easeOut", delay: 0.4 }}
+            transition={{
+              duration: 1.05,
+              ease: "easeOut",
+              delay: reduceMotion ? 0 : 0.25,
+            }}
             className={`${fontSerif.className}
-                        font-semibold text-4xl md:text-5xl
-                        lg:text-6xl text-sky-700/90
-                        leading-snug max-w-xl text-shadow-md`}
+                        font-semibold
+                        text-4xl
+                        md:text-5xl
+                        lg:text-6xl
+                        text-sky-700/90
+                        leading-snug
+                        max-w-xl
+                        text-shadow-md`}
           >
 
             Progettare è realizzare esperienze di vita.
 
             <footer
               className={`${fontCursive.className}
-                          mt-4 text-4xl md:text-5xl
-                          text-neutral-900 text-right`}
+                          mt-4
+                          text-4xl
+                          md:text-5xl
+                          text-neutral-900
+                          text-right`}
             >
 
               – Mauro Concentri
@@ -124,35 +257,28 @@ export default function IntroSection() {
 
           </motion.blockquote>
 
-          {/* BIO ANIMATA */}
+          {/* BIO 1 */}
           <motion.p
-            className={`${fontMono.className}
-                        text-neutral-700 text-lg md:text-xl
-                        font-extralight leading-relaxed max-w-md`}
+            className={`
+              ${fontSans.className}
+              text-neutral-800
+              text-lg
+              md:text-xl
+              font-normal
+              leading-relaxed
+              max-w-xl`}
+            variants={bioVariants}
             initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={{
-              hidden: {},
-              visible: {
-                transition: { staggerChildren: 0.1, delayChildren: 1.3 },
-              },
-            }}
+            animate={inView ? "visible" : "hidden"}
           >
 
             {words.map((word, i) => (
 
               <motion.span
-                key={i}
-                className="inline-block mr-1"
-                variants={{
-                  hidden: { opacity: 0, y: 18 },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    transition: { duration: 0.45, ease: "easeOut" },
-                  },
-                }}
+                key={`${word}-${i}`}
+                className="inline-block
+                           mr-1"
+                variants={wordVariants}
               >
 
                 {word}
@@ -163,40 +289,340 @@ export default function IntroSection() {
 
           </motion.p>
 
+          {/* BIO 2 */}
+          <motion.p
+            className={`
+              ${fontSans.className}
+              text-neutral-800
+              text-base
+              md:text-lg
+              font-normal
+              leading-relaxed
+              max-w-xl`}
+            initial={{ opacity: 0, y: reduceMotion ? 0 : 14, filter: "blur(6px)" }}
+            animate={
+              inView
+                ? { opacity: 1, y: 0, filter: "blur(0px)" }
+                : { opacity: 0, y: reduceMotion ? 0 : 14, filter: "blur(6px)" }
+            }
+            transition={{
+              duration: reduceMotion ? 0 : 0.85,
+              ease: [0.22, 1, 0.36, 1],
+              delay: reduceMotion ? 0 : 1.25,
+            }}
+          >
+
+            {extraText1}
+
+          </motion.p>
+
+          {/* BIO 3 */}
+          <motion.p
+            className={`
+              ${fontSans.className}
+              text-neutral-800
+              text-base
+              md:text-lg
+              font-normal
+              leading-relaxed
+              max-w-xl`}
+            initial={{ opacity: 0, y: reduceMotion ? 0 : 14, filter: "blur(6px)" }}
+            animate={
+              inView
+                ? { opacity: 1, y: 0, filter: "blur(0px)" }
+                : { opacity: 0, y: reduceMotion ? 0 : 14, filter: "blur(6px)" }
+            }
+            transition={{
+              duration: reduceMotion ? 0 : 0.85,
+              ease: [0.22, 1, 0.36, 1],
+              delay: reduceMotion ? 0 : 1.45,
+            }}
+          >
+
+            {extraText2}
+
+          </motion.p>
+
         </div>
 
-        {/* IMMAGINE */}
-        <motion.div
-          initial={{ opacity: 0, x: 80 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 1.3, ease: [0.22, 1, 0.36, 1], delay: 0.5 }}
-          whileHover={{
-            y: -8,
-            scale: 1.04,
-            rotate: [0, 0.5, 0],
-            transition: { duration: 1.2, ease: "easeInOut" },
-          }}
-          className="shrink-0 w-[260px] h-[260px]
-                     sm:w-[320px] sm:h-80 lg:w-[420px]
-                     lg:h-[420px] relative rounded-full
-                     overflow-hidden border-2 border-black/40
-                     shadow-[0_8px_40px_rgba(0,0,0,0.3)]
-                     lg:hover:shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
+        {/* COLONNA DESTRA */}
+        <div
+          className="shrink-0
+                     w-full
+                     lg:w-auto
+                     flex
+                     flex-col
+                     items-center"
         >
 
-          <Image
-            src="/images/mauroConcentri.png"
-            alt="Ritratto dell'architetto Mauro Concentri"
-            fill
-            className="object-cover object-center select-none"
-            sizes="(max-width: 1024px) 50vw, 420px"
-            priority
-            decoding="async"
-          />
+          <motion.div
+            initial={{ opacity: 0, x: 60 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{
+              duration: 1.15,
+              ease: [0.22, 1, 0.36, 1],
+              delay: reduceMotion ? 0 : 0.35,
+            }}
+            whileHover={
+              reduceMotion
+                ? undefined
+                : {
+                    y: -8,
+                    scale: 1.04,
+                    rotate: [0, 0.5, 0],
+                    transition: { duration: 1.2, ease: "easeInOut" },
+                  }
+            }
+            className="
+              w-65
+              h-65
+              sm:w-[320px]
+              sm:h-80
+              lg:w-105
+              lg:h-105
+              relative
+              rounded-full
+              overflow-hidden
+              border-2
+              border-black/40
+              shadow-[0_8px_40px_rgba(0,0,0,0.3)]
+              lg:hover:shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
+          >
+
+            <Image
+              src="/images/mauroConcentri.png"
+              alt="Ritratto dell'architetto Mauro Concentri"
+              fill
+              className="object-cover
+                         object-center
+                         select-none"
+              sizes="(max-width: 1024px) 60vw, 420px"
+              loading="lazy"
+            />
+
+          </motion.div>
+
+          {/* CTA VIDEO */}
+          <motion.button
+            type="button"
+            onClick={() => setIsVideoOpen(true)}
+            className="group
+                       mt-10
+                       w-full
+                       max-w-105
+                       rounded-2xl
+                       border border-black/15
+                       bg-white/65
+                       backdrop-blur-md
+                       px-5
+                       py-4
+                       text-left
+                       shadow-sm
+                       hover:bg-white/80
+                       hover:border-black/25
+                       transition"
+            initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
+            animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+            transition={{
+              duration: reduceMotion ? 0 : 0.85,
+              ease: [0.22, 1, 0.36, 1],
+              delay: reduceMotion ? 0 : 1.15,
+            }}
+            aria-label="Guarda il video"
+          >
+
+            <div
+              className="flex
+                         items-center
+                         gap-6"
+            >
+
+              <motion.span
+                className="relative
+                           grid
+                           place-items-center
+                           h-12
+                           w-12
+                           rounded-full
+                           bg-red-600
+                           text-white
+                           shadow-[0_10px_30px_rgba(0,0,0,0.18)]"
+                whileHover={reduceMotion ? undefined : { scale: 1.04 }}
+              >
+
+                <motion.span
+                  className="absolute
+                             inset-0
+                             rounded-full"
+                  animate={
+                    reduceMotion
+                      ? {}
+                      : {
+                          boxShadow: [
+                            "0 0 0 0 rgba(220,38,38,0.00)",
+                            "0 0 0 16px rgba(220,38,38,0.10)",
+                            "0 0 0 0 rgba(220,38,38,0.00)",
+                          ],
+                        }
+                  }
+                  transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+                  aria-hidden="true"
+                />
+
+                <motion.span
+                  className="ml-0.75"
+                  whileHover={reduceMotion ? undefined : { x: 1 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 18 }}
+                >
+
+                  <PlayIcon
+                    className="w-5.5
+                               h-5.5
+                               text-white"
+                  />
+
+                </motion.span>
+
+              </motion.span>
+
+              <div
+                className="flex-1
+                           pl-1"
+              >
+
+                <div
+                  className={`${fontSans.className}
+                              text-black/85
+                              font-semibold
+                              tracking-wide`}
+                >
+
+                  Guarda il video
+
+                </div>
+
+                <div
+                  className={`${fontSans.className}
+                              mt-1
+                              text-sm
+                              text-black/55`}
+                >
+
+                  Realizzazione campo da calcio in erba sintetica (Brendola)
+
+                </div>
+
+              </div>
+
+              <div
+                className="text-black/40
+                           group-hover:text-black/60
+                           transition"
+                aria-hidden="true"
+              >
+
+                ↗
+
+              </div>
+
+            </div>
+
+          </motion.button>
+
+        </div>
+
+      </motion.div>
+
+      {/* MODAL VIDEO */}
+      {isVideoOpen && (
+
+        <motion.div
+          className="
+            fixed
+            inset-0
+            z-200
+            bg-black/70
+            backdrop-blur-sm
+            overflow-y-auto
+            pt-[calc(env(safe-area-inset-top)+5rem)]
+            pb-[calc(env(safe-area-inset-bottom)+2rem)]
+            px-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Video"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) setIsVideoOpen(false);
+          }}
+        >
+
+          {/* TASTO CHIUSURA SEMPRE VISIBILE */}
+          <button
+            type="button"
+            onClick={() => setIsVideoOpen(false)}
+            className="
+              fixed
+              z-210
+              top-[calc(env(safe-area-inset-top)+1rem)]
+              right-4
+              sm:right-6
+              rounded-full
+              bg-white/10
+              hover:bg-white/20
+              border
+              border-white/15
+              text-white
+              px-3
+              py-2
+              text-sm
+              transition"
+            aria-label="Chiudi video"
+          >
+
+            Chiudi ✕
+
+          </button>
+
+          <div
+            className="w-full
+                       flex
+                       justify-center"
+          >
+
+            <motion.div
+              className="relative
+                         w-full
+                         max-w-5xl
+                         rounded-2xl
+                         overflow-hidden
+                         bg-black
+                         shadow-[0_20px_80px_rgba(0,0,0,0.6)]
+                         border
+                         border-white/10"
+              initial={{ scale: reduceMotion ? 1 : 0.97, y: reduceMotion ? 0 : 10 }}
+              animate={{ scale: 1, y: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.25, ease: "easeOut" }}
+              onMouseDown={(e) => e.stopPropagation()}
+            >
+
+              <video
+                src={videoSrc}
+                controls
+                autoPlay
+                playsInline
+                preload="metadata"
+                className="w-full
+                           h-auto"
+              />
+
+            </motion.div>
+
+          </div>
 
         </motion.div>
 
-      </motion.div>
+      )}
 
     </section>
 

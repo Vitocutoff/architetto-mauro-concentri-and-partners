@@ -10,7 +10,6 @@ const nextConfig = {
     qualities: [75, 90],
     formats: ["image/avif", "image/webp"],
 
-    // Opzionale ma safe: aiuta a generare srcset più sensati
     deviceSizes: [360, 390, 414, 640, 768, 1024, 1280, 1440, 1680, 1920, 2560],
     imageSizes: [16, 24, 32, 48, 64, 96, 128, 256],
   },

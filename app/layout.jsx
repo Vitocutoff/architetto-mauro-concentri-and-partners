@@ -1,21 +1,5 @@
 // 📄 /app/layout.jsx
 
-// ==================================================================
-// 🔹 LAYOUT PRINCIPALE DELL’APPLICAZIONE NEXT.JS (App Router)
-// ==================================================================
-//
-// Contiene tutti i componenti e le configurazioni globali:
-//
-// - Header (menu principale e logo)
-// - Footer (contatti, social e crediti)
-// - CookieBanner (consenso GDPR)
-// - ScrollController (scroll fluido con Lenis)
-// - ScrollToTop (pulsante di ritorno all’inizio)
-//
-// ==================================================================
-// Tutte le pagine vengono renderizzate all’interno di questo layout.
-// ==================================================================
-
 import "./globals.css";
 import { siteMetadata, viewport } from "@/lib/metadata";
 import HeadMeta from "@/components/meta/HeadMeta";

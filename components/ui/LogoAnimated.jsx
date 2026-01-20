@@ -5,9 +5,14 @@ import { fontCursive, fontMonoSpecial } from "@/lib/fonts";
 
 export default function LogoAnimated() {
   return (
-    <div className="flex items-center gap-2 select-none">
 
-      {/* ARCHITETTO */}
+    <div
+      className="flex
+                 items-center
+                 gap-2
+                 select-none"
+    >
+
       <motion.span
         className={`${fontMonoSpecial.className}
                     text-blue-900/95
@@ -18,10 +23,11 @@ export default function LogoAnimated() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
+
         Architetto
+
       </motion.span>
 
-      {/* MAURO CONCENTRI */}
       <motion.span
         className={`${fontCursive.className}
                     text-black/90
@@ -31,10 +37,11 @@ export default function LogoAnimated() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
       >
+
         Mauro Concentri
+
       </motion.span>
 
-      {/* & PARTNERS */}
       <motion.span
         className={`${fontCursive.className}
                     text-red-900/90
@@ -44,9 +51,13 @@ export default function LogoAnimated() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
       >
+
         &amp; Partners
+
       </motion.span>
 
     </div>
+
   );
+
 }

@@ -14,7 +14,6 @@ export default function DesktopMenu() {
   const pathname = usePathname();
   const controls = useAnimationControls();
 
-  // ✅ Patch D1: rispetta prefers-reduced-motion
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
@@ -22,7 +21,6 @@ export default function DesktopMenu() {
 
     const run = async () => {
 
-      // PRM: niente animazioni, stato finale immediato
       if (shouldReduceMotion) {
         controls.set("show");
         return;
@@ -38,7 +36,6 @@ export default function DesktopMenu() {
 
     run();
 
-    // ✅ Patch D2: unmount-safe
     return () => {
       cancelled = true;
     };
@@ -50,7 +47,6 @@ export default function DesktopMenu() {
       ? "text-blue-900/95 font-bold cursor-default"
       : "hover:text-blue-900/95 text-black/95"}`;
 
-  // Variants contenitore (stagger ingresso)
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -63,7 +59,6 @@ export default function DesktopMenu() {
     },
   };
 
-  // Variants voce menu
   const wordVariants = {
     hidden: (i) => ({
       opacity: 0,
@@ -73,7 +68,6 @@ export default function DesktopMenu() {
       rotate: 0,
     }),
 
-    // Opzione 1: show esplicita scale/rotate + transizioni per-property
     show: {
       opacity: 1,
       y: 0,
@@ -96,7 +90,6 @@ export default function DesktopMenu() {
     },
   };
 
-  // Variants lettere (bounce)
   const letterVariants = {
     hidden: { opacity: 0, y: 20 },
     show: (i) => ({
@@ -130,33 +123,47 @@ export default function DesktopMenu() {
   );
 
   return (
+
     <nav aria-label="Menu principale desktop">
       <motion.ul
         variants={container}
         initial="hidden"
         animate={controls}
         className={`${fontNav.className}
-                    flex items-center gap-6
-                    text-lg tracking-wider`}
+                    flex
+                    items-center
+                    gap-6
+                    text-lg
+                    tracking-wider`}
       >
+
         {menuItems.map((item, index) => (
+
           <motion.li
             key={item.href}
             custom={index}
             variants={wordVariants}
             whileHover="hover"
           >
+
             <Link
               href={item.href}
               className={linkClass(item.href)}
               aria-current={pathname === item.href ? "page" : undefined}
             >
+
               <AnimatedLetters text={item.label} />
+
             </Link>
+
           </motion.li>
+
         ))}
+
       </motion.ul>
+
     </nav>
+
   );
 
 }

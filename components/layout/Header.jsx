@@ -55,24 +55,33 @@ export default function Header() {
     >
 
       <div
-        className="mx-auto max-w-7xl
-                   px-4 sm:px-6 lg:px-8"
+        className="mx-auto
+                   max-w-7xl
+                   px-4 sm:px-6
+                   lg:px-8"
       >
 
         <nav
           aria-label="Menu Principale"
-          className="flex items-center justify-between
+          className="flex
+                     items-center
+                     justify-between
                      py-3"
         >
 
-          <div className="min-w-11 flex items-center">
+          <div
+            className="min-w-11
+                       flex
+                       items-center"
+          >
 
             {showLogo && <LogoAnimated />}
 
           </div>
 
           <div
-            className="hidden lg:block"
+            className="hidden
+                       lg:block"
           >
 
             <DesktopMenu
@@ -82,7 +91,8 @@ export default function Header() {
           </div>
 
           <div
-            className="block lg:hidden"
+            className="block
+                       lg:hidden"
           >
 
             <MobileMenu
@@ -102,17 +112,3 @@ export default function Header() {
   );
 
 }
-
-// ============================================================================
-// ✅ NOTE DI OTTIMIZZAZIONE / BEST PRACTICE
-// ============================================================================
-// 🔹 I valori numerici di `stiffness`, `damping` e `mass` sono perfetti.
-//    Se un domani volessi cambiare fluidità:
-//     - stiffness ↑ → animazione più “rigida”
-//     - damping ↓ → più oscillazione (“rimbalzo”)
-//     - mass ↑ → movimento più lento
-//
-// 🔹 `useCallback` qui è una vera best practice: evita re-render
-//     inutili nei figli (`MobileMenu` e `DesktopMenu`)
-//
-// ============================================================================

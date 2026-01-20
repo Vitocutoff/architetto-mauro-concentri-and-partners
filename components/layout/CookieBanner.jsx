@@ -19,7 +19,7 @@ export default function CookieBanner() {
           raf = requestAnimationFrame(() => setShow(true));
         }
       } catch {
-        // Safari in private mode può lanciare eccezioni su localStorage
+
         if (active) {
           raf = requestAnimationFrame(() => setShow(true));
         }
@@ -38,7 +38,6 @@ export default function CookieBanner() {
     try {
       localStorage.setItem("cookiesAccepted", "true");
     } catch {
-      /* modalità privata Safari o altre eccezioni */
     }
     setShow(false);
   };
@@ -68,26 +67,41 @@ export default function CookieBanner() {
         >
 
           <div
-            className="mx-auto max-w-5xl flex
-                       flex-col sm:flex-row
-                       items-center justify-between
-                       gap-4 sm:gap-6 rounded-t-2xl
-                       bg-white/80 backdrop-blur-md
-                       border-t border-neutral-300/70
+            className="mx-auto
+                       max-w-5xl
+                       flex
+                       flex-col
+                       sm:flex-row
+                       items-center
+                       justify-between
+                       gap-4
+                       sm:gap-6
+                       rounded-t-2xl
+                       bg-white/80
+                       backdrop-blur-md
+                       border-t
+                       border-neutral-300/70
                        shadow-[0_-8px_30px_rgba(0,0,0,0.15)]
-                       p-5 sm:p-6"
+                       p-5
+                       sm:p-6"
           >
 
-            {/* Titolo solo per screen reader (zero impatto visivo) */}
-            <h2 id="cookie-banner-title" className="sr-only">
+            <h2
+              id="cookie-banner-title"
+              className="sr-only"
+            >
+
               Informativa sui cookie
+
             </h2>
 
-            {/* TESTO INFORMATIVO */}
             <p
               id="cookie-banner-desc"
-              className="text-neutral-800 text-sm leading-relaxed
-                         text-center sm:text-left"
+              className="text-neutral-800
+                         text-sm
+                         leading-relaxed
+                         text-center
+                         sm:text-left"
             >
 
               Questo sito utilizza{" "}
@@ -100,9 +114,13 @@ export default function CookieBanner() {
 
               <Link
                 href="/privacy-policy"
-                className="underline underline-offset-2 text-blue-900
-                           hover:text-blue-950 focus:outline-none
-                           focus-visible:ring-2 focus-visible:ring-blue-900/60
+                className="underline
+                           underline-offset-2
+                           text-blue-900
+                           hover:text-blue-950
+                           focus:outline-none
+                           focus-visible:ring-2
+                           focus-visible:ring-blue-900/60
                            rounded-sm"
               >
 
@@ -114,17 +132,21 @@ export default function CookieBanner() {
 
             </p>
 
-            {/* PULSANTE CTA */}
             <motion.button
               onClick={handleAccept}
               whileHover={{ scale: 1.06 }}
               whileTap={{ scale: 0.94 }}
               transition={{ type: "spring", stiffness: 260, damping: 16 }}
-              className="mt-3 sm:mt-0 px-6
-                         py-2.5 rounded-xl
+              className="mt-3
+                         sm:mt-0
+                         px-6
+                         py-2.5
+                         rounded-xl
                          bg-sky-800
-                         text-white text-sm
-                         font-medium cursor-pointer
+                         text-white
+                         text-sm
+                         font-medium
+                         cursor-pointer
                          hover:bg-sky-900
                          transition-colors
                          focus-visible:outline-none

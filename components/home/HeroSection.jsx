@@ -29,29 +29,41 @@ export default function HeroSection() {
     "https://www.sporteimpianti.it/?aziende_mappa=mauro-concentri-edilizia-pubblica-impiantisca-sportiva";
 
   return (
+
     <section
       ref={ref}
       role="banner"
       aria-label="Sezione introduttiva Mauro Concentri Architetto"
       className="
-        relative isolate
-        lg:h-screen fix-vh
-        flex flex-col items-center justify-center
+        relative
+        isolate
+        lg:h-screen
+        fix-vh
+        flex
+        flex-col
+        items-center
+        justify-center
         overflow-hidden
-        bg-white
-      "
+        bg-white"
     >
       {/* SFONDO BASE (BIANCO) */}
       <div
         className="
-          absolute inset-0 z-0 pointer-events-none
-          bg-linear-to-b from-white via-neutral-50 to-neutral-200
-        "
+          absolute
+          inset-0
+          z-0
+          pointer-events-none
+          bg-linear-to-b
+          from-white
+          via-neutral-50
+          to-neutral-200"
       />
 
-      {/* SFONDO PARALLAX (IMMAGINE) */}
       <motion.div
-        className="absolute inset-0 z-0 pointer-events-none"
+        className="absolute
+                   inset-0
+                   z-0
+                   pointer-events-none"
         style={{ y: bgY, scale: bgScale }}
       >
         <Image
@@ -61,54 +73,92 @@ export default function HeroSection() {
           priority
           sizes="100vw"
           quality={90}
-          className="object-cover object-center"
+          className="object-cover
+                     object-center"
         />
 
         {/* SFUMATURA PER LEGGIBILITÀ */}
         <div
           className="
-            absolute inset-0
+            absolute
+            inset-0
             bg-linear-to-br
-            from-white/15 via-transparent to-black/25
-          "
+            from-white/15
+            via-transparent
+            to-black/25"
         />
+
       </motion.div>
 
-      {/* CAPTION EDITORIALE (sotto header, a sinistra, su 3 righe) */}
       <motion.a
         href={sportEImpiantiUrl}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Apri la pubblicazione dello studio su Sport&Impianti (si apre in una nuova scheda)"
         className="
-          absolute z-20
-          left-4 sm:left-6 lg:left-8
-          top-24 sm:top-28 lg:top-20
+          absolute
+          z-20
+          left-4
+          sm:left-6
+          lg:left-8
+          top-24
+          sm:top-28
+          lg:top-20
           text-left
-          select-none
-        "
+          select-none"
         initial={{ opacity: 0, y: -8, filter: "blur(6px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 1.0 }}
         whileHover={{ y: -1 }}
       >
-        <div className="flex items-center gap-2 text-[11px] sm:text-xs uppercase tracking-[0.28em] text-black/45">
-          <span>Pubblicato su</span>
-          <span className="text-black/40" aria-hidden="true">
-            ↗
+
+        <div
+          className="flex
+                     items-center
+                     gap-2
+                     text-[11px]
+                     sm:text-xs
+                     uppercase
+                     tracking-[0.28em]
+                     text-black/45"
+        >
+
+          <span>
+
+            Pubblicato su
+
           </span>
+
+          <span
+            className="text-black/40"
+            aria-hidden="true"
+          >
+
+            ↗
+
+          </span>
+
         </div>
 
-        <div className="mt-2 inline-flex items-baseline gap-2 text-black/80">
+        <div
+          className="mt-2
+                     inline-flex
+                     items-baseline
+                     gap-2
+                     text-black/80"
+        >
+
           <span
             className="
               font-semibold
               tracking-[0.22em]
               [text-decoration:overline]
-              decoration-black/55 decoration-1px
-            "
+              decoration-black/55
+              decoration-1px"
           >
+
             SPORT
+
           </span>
 
           <span
@@ -116,11 +166,12 @@ export default function HeroSection() {
               font-medium
               tracking-[0.06em]
               text-black/55
-              -mx-1
-            "
+              -mx-1"
             aria-label="e"
           >
+
             &amp;
+
           </span>
 
           <span
@@ -128,50 +179,73 @@ export default function HeroSection() {
               font-semibold
               tracking-[0.22em]
               [text-decoration:underline]
-              decoration-black/55 decoration-1px
-              underline-offset-4
-            "
+              decoration-black/55
+              decoration-1px
+              underline-offset-4"
           >
+
             IMPIANTI
+
           </span>
+
         </div>
 
-        <div className="mt-1 text-[12px] sm:text-[13px] tracking-wide text-black/45 normal-case">
+        <div
+          className="mt-1
+                     text-[12px]
+                     sm:text-[13px]
+                     tracking-wide
+                     text-black/45
+                     normal-case"
+        >
+
           il portale dello sport, ambiente e lifestyle
+
         </div>
+
       </motion.a>
 
-      {/* LOGO CARD */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 60 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
         style={{ opacity, scale, y, x, rotate }}
-        className="relative z-10"
+        className="relative
+                   z-10"
       >
+
         <LogoCard />
+
       </motion.div>
 
-      {/* INVITO ALLO SCROLL */}
       <motion.div
         className="
-          absolute z-10
+          absolute
+          z-10
           bottom-[calc(env(safe-area-inset-bottom)+1.25rem)]
-          sm:bottom-8 lg:bottom-6
-          flex flex-col items-center
-          text-black/80
-        "
+          sm:bottom-8
+          lg:bottom-6
+          flex
+          flex-col
+          items-center
+          text-black/80"
         style={{ opacity: hintOpacity }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8, duration: 1.2, ease: "easeOut" }}
       >
+
         <motion.span
-          className="text-sm tracking-widest font-light uppercase"
+          className="text-sm
+                     tracking-widest
+                     font-light
+                     uppercase"
           animate={{ opacity: [1, 0.6, 1], y: [0, -4, 0] }}
           transition={{ repeat: Infinity, duration: 2.8, ease: "easeInOut" }}
         >
+
           Scroll
+
         </motion.span>
 
         <motion.svg
@@ -186,9 +260,19 @@ export default function HeroSection() {
           animate={{ y: [0, 6, 0] }}
           transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
         >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
+
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M6 9l6 6 6-6"
+          />
+
         </motion.svg>
+
       </motion.div>
+
     </section>
+
   );
+
 }
