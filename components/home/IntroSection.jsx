@@ -97,14 +97,14 @@ export default function IntroSection() {
       aria-label="Introduzione e biografia professionale"
       className="relative
                  min-h-screen
-                 flex
-                 items-center
+                 flex items-center
                  justify-center
                  overflow-hidden
                  py-14
                  sm:py-16
                  lg:py-20"
     >
+
       {/* BACKGROUND */}
       <motion.div
         className="absolute
@@ -120,12 +120,14 @@ export default function IntroSection() {
           background:
             "linear-gradient(135deg, #ffffff 0%, #e7eaef 40%, #dde2e7 100%)",
           backgroundSize: "200% 200%",
+          willChange: "transform, opacity",
+          transform: "translateZ(0)",
         }}
         aria-hidden="true"
       />
 
       {/* LUCE MORBIDA */}
-      <motion.div
+      <div
         className="absolute
                    inset-0
                    pointer-events-none
@@ -133,9 +135,7 @@ export default function IntroSection() {
                    from-white/0
                    via-white/40
                    to-transparent"
-        initial={{ opacity: 0 }}
-        animate={inView ? { opacity: reduceMotion ? 0.6 : [0, 1, 0.6] } : {}}
-        transition={{ duration: 1.8, ease: "easeOut" }}
+        style={{ opacity: inView ? (reduceMotion ? 0.6 : 0.85) : 0 }}
         aria-hidden="true"
       />
 
@@ -219,7 +219,7 @@ export default function IntroSection() {
                         text-left
                         gap-8
                         lg:gap-10"
-        >
+          >
 
           <motion.blockquote
             initial={{ opacity: 0, y: 34 }}
@@ -231,9 +231,7 @@ export default function IntroSection() {
             }}
             className={`${fontSerif.className}
                         font-semibold
-                        text-4xl
-                        md:text-5xl
-                        lg:text-6xl
+                        text-4xl md:text-5xl lg:text-6xl
                         text-sky-700/90
                         leading-snug
                         max-w-xl
@@ -259,14 +257,13 @@ export default function IntroSection() {
 
           {/* BIO 1 */}
           <motion.p
-            className={`
-              ${fontSans.className}
-              text-neutral-800
-              text-lg
-              md:text-xl
-              font-normal
-              leading-relaxed
-              max-w-xl`}
+            className={`${fontSans.className}
+                        text-neutral-800
+                        text-lg
+                        md:text-xl
+                        font-normal
+                        leading-relaxed
+                        max-w-xl`}
             variants={bioVariants}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
@@ -289,21 +286,20 @@ export default function IntroSection() {
 
           </motion.p>
 
-          {/* BIO 2 */}
+          {/* BIO 2 (senza blur) */}
           <motion.p
-            className={`
-              ${fontSans.className}
-              text-neutral-800
-              text-base
-              md:text-lg
-              font-normal
-              leading-relaxed
-              max-w-xl`}
-            initial={{ opacity: 0, y: reduceMotion ? 0 : 14, filter: "blur(6px)" }}
+            className={`${fontSans.className}
+                        text-neutral-800
+                        text-base
+                        md:text-lg
+                        font-normal
+                        leading-relaxed
+                        max-w-xl`}
+            initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
             animate={
               inView
-                ? { opacity: 1, y: 0, filter: "blur(0px)" }
-                : { opacity: 0, y: reduceMotion ? 0 : 14, filter: "blur(6px)" }
+                ? { opacity: 1, y: 0 }
+                : { opacity: 0, y: reduceMotion ? 0 : 14 }
             }
             transition={{
               duration: reduceMotion ? 0 : 0.85,
@@ -316,21 +312,20 @@ export default function IntroSection() {
 
           </motion.p>
 
-          {/* BIO 3 */}
+          {/* BIO 3 (senza blur) */}
           <motion.p
-            className={`
-              ${fontSans.className}
-              text-neutral-800
-              text-base
-              md:text-lg
-              font-normal
-              leading-relaxed
-              max-w-xl`}
-            initial={{ opacity: 0, y: reduceMotion ? 0 : 14, filter: "blur(6px)" }}
+            className={`${fontSans.className}
+                        text-neutral-800
+                        text-base
+                        md:text-lg
+                        font-normal
+                        leading-relaxed
+                        max-w-xl`}
+            initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
             animate={
               inView
-                ? { opacity: 1, y: 0, filter: "blur(0px)" }
-                : { opacity: 0, y: reduceMotion ? 0 : 14, filter: "blur(6px)" }
+                ? { opacity: 1, y: 0 }
+                : { opacity: 0, y: reduceMotion ? 0 : 14 }
             }
             transition={{
               duration: reduceMotion ? 0 : 0.85,
@@ -373,20 +368,19 @@ export default function IntroSection() {
                     transition: { duration: 1.2, ease: "easeInOut" },
                   }
             }
-            className="
-              w-65
-              h-65
-              sm:w-[320px]
-              sm:h-80
-              lg:w-105
-              lg:h-105
-              relative
-              rounded-full
-              overflow-hidden
-              border-2
-              border-black/40
-              shadow-[0_8px_40px_rgba(0,0,0,0.3)]
-              lg:hover:shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
+            className="w-65
+                       h-65
+                       sm:w-[320px]
+                       sm:h-80
+                       lg:w-105
+                       lg:h-105
+                       relative
+                       rounded-full
+                       overflow-hidden
+                       border-2
+                       border-black/40
+                       shadow-[0_8px_40px_rgba(0,0,0,0.3)]
+                       lg:hover:shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
           >
 
             <Image
@@ -402,7 +396,7 @@ export default function IntroSection() {
 
           </motion.div>
 
-          {/* CTA VIDEO */}
+          {/* CTA VIDEO (senza blur) */}
           <motion.button
             type="button"
             onClick={() => setIsVideoOpen(true)}
@@ -411,7 +405,8 @@ export default function IntroSection() {
                        w-full
                        max-w-105
                        rounded-2xl
-                       border border-black/15
+                       border
+                       border-black/15
                        bg-white/65
                        backdrop-blur-md
                        px-5
@@ -421,8 +416,8 @@ export default function IntroSection() {
                        hover:bg-white/80
                        hover:border-black/25
                        transition"
-            initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
-            animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+            initial={{ opacity: 0, y: 14 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{
               duration: reduceMotion ? 0 : 0.85,
               ease: [0.22, 1, 0.36, 1],
@@ -537,16 +532,14 @@ export default function IntroSection() {
       {isVideoOpen && (
 
         <motion.div
-          className="
-            fixed
-            inset-0
-            z-200
-            bg-black/70
-            backdrop-blur-sm
-            overflow-y-auto
-            pt-[calc(env(safe-area-inset-top)+5rem)]
-            pb-[calc(env(safe-area-inset-bottom)+2rem)]
-            px-4"
+          className="fixed
+                     inset-0
+                     z-200
+                     bg-black/70
+                     overflow-y-auto
+                     pt-[calc(env(safe-area-inset-top)+5rem)]
+                     pb-[calc(env(safe-area-inset-bottom)+2rem)]
+                     px-4"
           role="dialog"
           aria-modal="true"
           aria-label="Video"
@@ -557,26 +550,37 @@ export default function IntroSection() {
           }}
         >
 
+          {/* luce soft */}
+          <div
+            className="absolute
+                       inset-0
+                       pointer-events-none
+                       bg-linear-to-b
+                       from-white/10
+                       via-transparent
+                       to-transparent"
+            aria-hidden="true"
+          />
+
           {/* TASTO CHIUSURA SEMPRE VISIBILE */}
           <button
             type="button"
             onClick={() => setIsVideoOpen(false)}
-            className="
-              fixed
-              z-210
-              top-[calc(env(safe-area-inset-top)+1rem)]
-              right-4
-              sm:right-6
-              rounded-full
-              bg-white/10
-              hover:bg-white/20
-              border
-              border-white/15
-              text-white
-              px-3
-              py-2
-              text-sm
-              transition"
+            className="fixed
+                       z-210
+                       top-[calc(env(safe-area-inset-top)+1rem)]
+                       right-4
+                       sm:right-6
+                       rounded-full
+                       bg-white/10
+                       hover:bg-white/20
+                       border
+                       border-white/15
+                       text-white
+                       px-3
+                       py-2
+                       text-sm
+                       transition"
             aria-label="Chiudi video"
           >
 
@@ -597,9 +601,7 @@ export default function IntroSection() {
                          rounded-2xl
                          overflow-hidden
                          bg-black
-                         shadow-[0_20px_80px_rgba(0,0,0,0.6)]
-                         border
-                         border-white/10"
+                         shadow-[0_20px_80px_rgba(0,0,0,0.6)]border border-white/10"
               initial={{ scale: reduceMotion ? 1 : 0.97, y: reduceMotion ? 0 : 10 }}
               animate={{ scale: 1, y: 0 }}
               transition={{ duration: reduceMotion ? 0 : 0.25, ease: "easeOut" }}
