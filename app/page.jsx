@@ -10,15 +10,7 @@ export default function HomePage() {
 
   return (
 
-    <main
-      id="main-content"
-      aria-label="Contenuto principale della Home Page"
-      className="flex
-                 flex-col
-                 w-full
-                 min-h-screen
-                 overflow-x-hidden"
-    >
+    <>
 
       <HeroSection />
 
@@ -30,7 +22,7 @@ export default function HomePage() {
 
       <FinalSection />
 
-    </main>
+    </>
 
   );
 

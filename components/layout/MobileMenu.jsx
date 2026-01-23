@@ -1,3 +1,5 @@
+// /components/layout/MobileMenu.jsx
+
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
@@ -31,70 +33,36 @@ export default function MobileMenu({ isOpen, toggleMenu, closeMenu }) {
 
   const linkClass = (path) =>
     `${fontNav.className} text-xl tracking-widest transition-colors duration-200 ${
-      pathname === path
-        ? "text-red-400 font-bold"
-        : "hover:text-red-300 text-neutral-200"
+      pathname === path ? "text-red-400 font-bold" : "hover:text-red-300 text-neutral-200"
     }`;
 
   return (
-
     <>
-
       <button
         onClick={toggleMenu}
         aria-label={isOpen ? "Chiudi menu" : "Apri menu"}
         aria-controls="mobile-navigation"
         aria-expanded={isOpen}
         aria-haspopup="menu"
-        className={`fixed
-                    top-1
-                    right-1
-                    z-90
-                    w-12
-                    h-12
-                    flex
-                    flex-col
-                    justify-center
-                    items-center
-                    group
+        className={`fixed top-1 right-1 z-90 w-12 h-12
+                    flex flex-col justify-center items-center group
                     ${isOpen ? "text-red-400" : "text-black"}`}
       >
-
         <motion.span
-          className="block
-                     w-5
-                     h-0.5
-                     bg-current
-                     mb-1
-                     rounded
-                     origin-center"
+          className="block w-5 h-0.5 bg-current mb-1 rounded origin-center"
           animate={isOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
           transition={{ duration: 0.25, ease: "easeInOut" }}
         />
-
         <motion.span
-          className="block
-                     w-5
-                     h-0.5
-                     bg-current
-                     mb-1
-                     rounded
-                     origin-center"
+          className="block w-5 h-0.5 bg-current mb-1 rounded origin-center"
           animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
           transition={{ duration: 0.2, ease: "easeInOut" }}
         />
-
         <motion.span
-          className="block
-                     w-5
-                     h-0.5
-                     bg-current
-                     rounded
-                     origin-center"
+          className="block w-5 h-0.5 bg-current rounded origin-center"
           animate={isOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
           transition={{ duration: 0.25, ease: "easeInOut" }}
         />
-
       </button>
 
       <AnimatePresence>
@@ -107,105 +75,39 @@ export default function MobileMenu({ isOpen, toggleMenu, closeMenu }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -40 }}
             transition={{ duration: 0.6, ease: [0.25, 0.8, 0.25, 1] }}
-            className="fixed
-                       inset-0
-                       z-70
-                       flex
-                       flex-col
-                       items-center
-                       justify-center
-                       overflow-hidden
-                       h-screen
-                       w-screen"
+            className="fixed inset-0 z-70
+                       flex flex-col items-center justify-center
+                       overflow-hidden h-screen w-screen"
           >
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.8, ease: "easeInOut" }}
-              className="absolute
-                         inset-0
-                         bg-linear-to-b
-                         from-neutral-950
-                         via-neutral-900
-                         to-neutral-950"
-            />
-
-            <motion.div
-              initial={{ opacity: 0, y: "-30%" }}
-              animate={{
-                opacity: [0, 0.3, 0],
-                y: ["-30%", "120%"],
-              }}
-              transition={{
-                duration: 3.2,
-                repeat: Infinity,
-                repeatDelay: 4,
-                ease: "easeInOut",
-              }}
-              className="pointer-events-none
-                         absolute
-                         inset-0
-                         bg-linear-to-b
-                         from-transparent
-                         via-white/10
-                         to-transparent
-                         blur-2xl"
-            />
-
+            {/* Background statico (no loop infinito + blur = meno flicker) */}
             <div
-              className="relative
-                         z-10
-                         flex
-                         flex-col
-                         items-center
-                         text-center"
-            >
+              className="absolute inset-0
+                         bg-linear-to-b
+                         from-neutral-950 via-neutral-900 to-neutral-950"
+            />
 
-              <div
-                className="mb-3
-                           transform
-                           -translate-y-16"
-              >
-
+            <div className="relative z-10 flex flex-col items-center text-center">
+              <div className="mb-3 transform -translate-y-16">
                 <div
                   className={`${fontMonoSpecial.className}
-                              text-2xl
-                              mb-1
-                              tracking-widest
-                              text-blue-300/90`}
+                              text-2xl mb-1 tracking-widest text-blue-300/90`}
                 >
-
                   A<span className={`${fontMono.className}`}>rchitetto</span>
-
                 </div>
 
                 <h2
                   className={`${fontMonoSpecial.className}
-                              text-2xl
-                              font-extrabold
-                              tracking-widest
-                              text-white`}
+                              text-2xl font-extrabold tracking-widest text-white`}
                 >
-
                   MAURO<br />
-
                   CONCENtRi<br />
-
                   <span
                     className={`${fontCursive.className}
-                                text-2xl
-                                font-extrabold
-                                tracking-widest
-                                text-white`}
-                    >
-                      &amp; Partners
-
-                    </span>
-
+                                text-2xl font-extrabold tracking-widest text-white`}
+                  >
+                    &amp; Partners
+                  </span>
                 </h2>
-
               </div>
 
               <motion.ul
@@ -220,12 +122,8 @@ export default function MobileMenu({ isOpen, toggleMenu, closeMenu }) {
                   },
                   exit: { opacity: 0 },
                 }}
-                className="flex
-                           flex-col
-                           items-center
-                           gap-5"
+                className="flex flex-col items-center gap-5"
               >
-
                 {links.map((link, i) => (
                   <motion.li
                     key={link.href}
@@ -234,34 +132,21 @@ export default function MobileMenu({ isOpen, toggleMenu, closeMenu }) {
                     exit={{ opacity: 0, x: 25 }}
                     transition={{ duration: 0.3, delay: 0.05 * i }}
                   >
-
                     <Link
                       href={link.href}
                       onClick={closeMenu}
                       className={linkClass(link.href)}
                       aria-current={pathname === link.href ? "page" : undefined}
                     >
-
                       {link.label}
-
                     </Link>
-
                   </motion.li>
-
                 ))}
-
               </motion.ul>
-
             </div>
-
           </motion.nav>
-
         )}
-
       </AnimatePresence>
-
     </>
-
   );
-
 }

@@ -1,3 +1,5 @@
+// /components/home/IntroSection.jsx
+
 "use client";
 
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
@@ -96,8 +98,12 @@ export default function IntroSection() {
       role="region"
       aria-label="Introduzione e biografia professionale"
       className="relative
+                 w-screen
+                 left-1/2
+                 -translate-x-1/2
                  min-h-screen
-                 flex items-center
+                 flex
+                 items-center
                  justify-center
                  overflow-hidden
                  py-14
@@ -110,15 +116,10 @@ export default function IntroSection() {
         className="absolute
                    inset-0
                    -z-10"
-        animate={
-          inView && !reduceMotion
-            ? { backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }
-            : {}
-        }
+        animate={inView && !reduceMotion ? { backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] } : {}}
         transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
         style={{
-          background:
-            "linear-gradient(135deg, #ffffff 0%, #e7eaef 40%, #dde2e7 100%)",
+          background: "linear-gradient(135deg, #ffffff 0%, #e7eaef 40%, #dde2e7 100%)",
           backgroundSize: "200% 200%",
           willChange: "transform, opacity",
           transform: "translateZ(0)",
@@ -189,12 +190,8 @@ export default function IntroSection() {
         initial={{ opacity: 0, scale: 0.98 }}
         animate={inView ? { opacity: 1, scale: 1 } : {}}
         transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-        className="relative
-                   z-10
+        className="relative z-10
                    w-full
-                   max-w-[95%]
-                   sm:max-w-3xl
-                   lg:max-w-7xl
                    mx-auto
                    flex
                    flex-col
@@ -206,20 +203,20 @@ export default function IntroSection() {
                    lg:gap-14
                    px-4
                    sm:px-6
-                   lg:px-20
+                   lg:px-8
                    overflow-hidden"
       >
-
         {/* TESTO */}
-        <div className="flex-1
-                        flex
-                        flex-col
-                        justify-center
-                        items-start
-                        text-left
-                        gap-8
-                        lg:gap-10"
-          >
+        <div
+          className="flex-1
+                     flex
+                     flex-col
+                     justify-center
+                     items-start
+                     text-left
+                     gap-8
+                     lg:gap-10"
+        >
 
           <motion.blockquote
             initial={{ opacity: 0, y: 34 }}
@@ -286,7 +283,7 @@ export default function IntroSection() {
 
           </motion.p>
 
-          {/* BIO 2 (senza blur) */}
+          {/* BIO 2 */}
           <motion.p
             className={`${fontSans.className}
                         text-neutral-800
@@ -296,11 +293,7 @@ export default function IntroSection() {
                         leading-relaxed
                         max-w-xl`}
             initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
-            animate={
-              inView
-                ? { opacity: 1, y: 0 }
-                : { opacity: 0, y: reduceMotion ? 0 : 14 }
-            }
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: reduceMotion ? 0 : 14 }}
             transition={{
               duration: reduceMotion ? 0 : 0.85,
               ease: [0.22, 1, 0.36, 1],
@@ -312,7 +305,7 @@ export default function IntroSection() {
 
           </motion.p>
 
-          {/* BIO 3 (senza blur) */}
+          {/* BIO 3 */}
           <motion.p
             className={`${fontSans.className}
                         text-neutral-800
@@ -322,11 +315,7 @@ export default function IntroSection() {
                         leading-relaxed
                         max-w-xl`}
             initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
-            animate={
-              inView
-                ? { opacity: 1, y: 0 }
-                : { opacity: 0, y: reduceMotion ? 0 : 14 }
-            }
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: reduceMotion ? 0 : 14 }}
             transition={{
               duration: reduceMotion ? 0 : 0.85,
               ease: [0.22, 1, 0.36, 1],
@@ -396,7 +385,7 @@ export default function IntroSection() {
 
           </motion.div>
 
-          {/* CTA VIDEO (senza blur) */}
+          {/* CTA VIDEO */}
           <motion.button
             type="button"
             onClick={() => setIsVideoOpen(true)}
@@ -562,7 +551,7 @@ export default function IntroSection() {
             aria-hidden="true"
           />
 
-          {/* TASTO CHIUSURA SEMPRE VISIBILE */}
+          {/* TASTO CHIUSURA */}
           <button
             type="button"
             onClick={() => setIsVideoOpen(false)}
@@ -600,8 +589,9 @@ export default function IntroSection() {
                          max-w-5xl
                          rounded-2xl
                          overflow-hidden
-                         bg-black
-                         shadow-[0_20px_80px_rgba(0,0,0,0.6)]border border-white/10"
+                         bg-black shadow-[0_20px_80px_rgba(0,0,0,0.6)]
+                         border
+                         border-white/10"
               initial={{ scale: reduceMotion ? 1 : 0.97, y: reduceMotion ? 0 : 10 }}
               animate={{ scale: 1, y: 0 }}
               transition={{ duration: reduceMotion ? 0 : 0.25, ease: "easeOut" }}

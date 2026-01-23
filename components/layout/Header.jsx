@@ -1,8 +1,8 @@
-// 📄 /components/layout/Header.jsx
+// /components/layout/Header.jsx
 
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useScroll } from "framer-motion";
 import { usePathname } from "next/navigation";
 import DesktopMenu from "@/components/layout/DesktopMenu";
@@ -10,29 +10,37 @@ import MobileMenu from "@/components/layout/MobileMenu";
 import LogoAnimated from "@/components/ui/LogoAnimated";
 
 export default function Header() {
-
   const [menuOpen, setMenuOpen] = useState(false);
   const { scrollY } = useScroll();
   const [showLogo, setShowLogo] = useState(false);
+
   const pathname = usePathname();
+
   const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
+  const lastShowRef = useRef(false);
+
   useEffect(() => {
-
     if (pathname !== "/") {
-
-      requestAnimationFrame(() => setShowLogo(true));
+      requestAnimationFrame(() => {
+        lastShowRef.current = true;
+        setShowLogo(true);
+      });
       return;
     }
 
     const unsubscribe = scrollY.on("change", (latest) => {
       const trigger = window.innerHeight * 0.4;
-      setShowLogo(latest > trigger);
+      const next = latest > trigger;
+
+      if (next !== lastShowRef.current) {
+        lastShowRef.current = next;
+        setShowLogo(next);
+      }
     });
 
     return () => unsubscribe();
-
   }, [scrollY, pathname]);
 
   return (
@@ -56,9 +64,12 @@ export default function Header() {
 
       <div
         className="mx-auto
-                   max-w-7xl
-                   px-4 sm:px-6
-                   lg:px-8"
+                   w-full
+                   max-w-420
+                   px-4
+                   sm:px-6
+                   lg:px-8
+                   xl:px-12"
       >
 
         <nav
@@ -70,18 +81,33 @@ export default function Header() {
         >
 
           <div
-            className="min-w-11
-                       flex
+            className="flex
+                       flex-1
+                       min-w-0
                        items-center"
           >
 
-            {showLogo && <LogoAnimated />}
+            {showLogo && (
+
+              <div
+                className="min-w-0
+                           overflow-hidden
+                           max-w-[calc(100vw-5.25rem)]
+                           sm:max-w-[calc(100vw-6.25rem)]
+                           min-[820px]:max-w-none"
+              >
+
+                <LogoAnimated />
+
+              </div>
+
+            )}
 
           </div>
 
           <div
             className="hidden
-                       lg:block"
+                       min-[1280px]:block"
           >
 
             <DesktopMenu
@@ -92,7 +118,7 @@ export default function Header() {
 
           <div
             className="block
-                       lg:hidden"
+                       min-[1280px]:hidden"
           >
 
             <MobileMenu

@@ -2,9 +2,8 @@
 const nextConfig = {
   poweredByHeader: false,
 
-  // Consenti richieste al dev server anche quando lo apri da altri host della LAN
-  // (es. telefono su http://192.168.1.171:3000)
-  allowedDevOrigins: ["localhost:3000", "192.168.1.171:3000"],
+  // ⚠️ RIMOSSO in dev: crea problemi su mobile
+  // allowedDevOrigins: ["localhost:3000", "192.168.1.171:3000"],
 
   images: {
     qualities: [75, 90],

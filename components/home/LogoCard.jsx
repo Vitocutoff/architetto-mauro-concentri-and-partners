@@ -1,3 +1,5 @@
+// /components/home/LogoCard.jsx
+
 "use client";
 
 import { motion, useMotionValue, useSpring } from "framer-motion";
@@ -27,7 +29,6 @@ export default function LogoCard() {
   };
 
   return (
-
     <motion.div
       role="img"
       aria-label="Logo Architetto Mauro Concentri & Partners"
@@ -52,7 +53,13 @@ export default function LogoCard() {
         to-white/50
         border-2
         border-black/60
-        will-change-transform"
+        will-change-transform
+        origin-center
+        scale-[0.92]
+        sm:scale-100
+        md:scale-[1.06]
+        lg:scale-100
+      "
       style={{
         perspective: 800,
         rotateX: springX,
@@ -66,16 +73,17 @@ export default function LogoCard() {
       whileTap={{ scale: 0.97 }}
       transition={{ type: "spring", stiffness: 120, damping: 14 }}
     >
-
       <motion.div
-        className="absolute
-                   inset-0
-                   rounded-2xl
-                   bg-linear-to-br
-                   from-white/40
-                   via-white/25
-                   to-white/30
-                   pointer-events-none"
+        className="
+          absolute
+          inset-0
+          rounded-2xl
+          bg-linear-to-br
+          from-white/40
+          via-white/25
+          to-white/30
+          pointer-events-none
+        "
         whileTap={{ opacity: 0.25 }}
         style={{ opacity: 0.4 }}
         transition={{ type: "spring", stiffness: 140, damping: 18 }}
@@ -93,18 +101,8 @@ export default function LogoCard() {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ delay: 0.25, duration: 1, ease: [0.25, 1, 0.5, 1] }}
       >
-
-        <span
-          className={`${fontMonoSpecial.className}
-                      font-extrabold`}
-        >
-
-          A
-
-        </span>
-
+        <span className={`${fontMonoSpecial.className} font-extrabold`}>A</span>
         rchitetto
-
       </motion.div>
 
       <motion.div
@@ -119,9 +117,7 @@ export default function LogoCard() {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ delay: 0.55, duration: 1, ease: [0.25, 1, 0.5, 1] }}
       >
-
         MAURO
-
       </motion.div>
 
       <motion.div
@@ -135,18 +131,11 @@ export default function LogoCard() {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ delay: 0.85, duration: 1, ease: [0.25, 1, 0.5, 1] }}
       >
-
         CONCENTRI
-
       </motion.div>
 
       <motion.hr
-        className="relative
-                   z-10
-                   my-3
-                   w-full
-                   border-t
-                   border-black/40"
+        className="relative z-10 my-3 w-full border-t border-black/40"
         initial={{ opacity: 0, scaleX: 0 }}
         animate={{ opacity: 1, scaleX: 1 }}
         transition={{ delay: 1.15, duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
@@ -157,20 +146,16 @@ export default function LogoCard() {
                     relative
                     z-10
                     -mt-1
-                    text-xl
-                    lg:text-5xl
+                    text-4xl
+                    lg:text-4xl
+                    xl:text-5xl
                     text-red-700/90`}
         initial={{ opacity: 0, y: 10, filter: "blur(6px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         transition={{ delay: 1.35, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
       >
-
         &amp; Partners
-
       </motion.div>
-
     </motion.div>
-
   );
-
 }
