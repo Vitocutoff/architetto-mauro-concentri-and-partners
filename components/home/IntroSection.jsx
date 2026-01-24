@@ -14,6 +14,22 @@ function PlayIcon({ className = "" }) {
   );
 }
 
+function MicroLabel({ children, align = "left" }) {
+  return (
+    <div
+      className={[
+        "hidden lg:flex items-center gap-3 text-[11px] tracking-[0.22em] uppercase text-black/45 select-none",
+        align === "right" ? "justify-end" : "justify-start",
+      ].join(" ")}
+      aria-hidden="true"
+    >
+      {align === "left" && <span className="h-px w-10 bg-black/15" />}
+      <span className="leading-none">{children}</span>
+      {align === "right" && <span className="h-px w-10 bg-black/15" />}
+    </div>
+  );
+}
+
 export default function IntroSection() {
   const ref = useRef(null);
   const reduceMotion = useReducedMotion();
@@ -132,7 +148,7 @@ export default function IntroSection() {
         className="relative z-10 w-full mx-auto px-4 sm:px-6 lg:px-8"
       >
         <div className="mx-auto w-full max-w-[1200px]">
-          {/* TOP DUO (come lo avevi, invariato) */}
+          {/* TOP DUO */}
           <div
             className="
               grid grid-cols-1
@@ -143,7 +159,8 @@ export default function IntroSection() {
               lg:text-left lg:justify-items-stretch
             "
           >
-            <div className="lg:col-span-7 flex flex-col items-center lg:items-start">
+            {/* LEFT */}
+            <div className="lg:col-span-7 flex flex-col items-center lg:items-start relative">
               <motion.blockquote
                 initial={{ opacity: 0, y: 22 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -166,6 +183,7 @@ export default function IntroSection() {
                 </footer>
               </motion.blockquote>
 
+              {/* CTA */}
               <motion.button
                 type="button"
                 onClick={() => setIsVideoOpen(true)}
@@ -231,8 +249,23 @@ export default function IntroSection() {
                   </div>
                 </div>
               </motion.button>
+
+              {/* LINEA UNICA SOTTO IL VIDEO (lg+) */}
+              <div
+                className="
+                  hidden lg:block
+                  relative
+                  mt-10
+                  w-full
+                  max-w-[560px]
+                "
+                aria-hidden="true"
+              >
+                <div className="h-px w-full bg-black/12" />
+              </div>
             </div>
 
+            {/* RIGHT */}
             <div className="lg:col-span-5 flex justify-center lg:justify-end">
               <div className="relative">
                 <div className="pointer-events-none absolute -inset-10 rounded-full bg-white/60 blur-2xl opacity-55 hidden lg:block" aria-hidden="true" />
@@ -269,21 +302,44 @@ export default function IntroSection() {
             </div>
           </div>
 
-          {/* BIO AREA: qui cambiamo per eliminare i vuoti */}
+          {/* BIO AREA */}
           <div className="mt-14 md:mt-16 lg:mt-14 relative">
-            {/* Asse sottilissimo (solo lg+) */}
-            <div className="hidden lg:block absolute left-1/2 top-2 bottom-2 w-px bg-black/10" aria-hidden="true" />
+            {/* Assi (solo lg+) */}
+            {/* centrale: lo facciamo arrivare fino alla linea sotto video */}
+            <div
+              className="
+                hidden lg:block
+                absolute left-1/2
+                -top-14
+                bottom-3
+                w-px bg-black/10
+              "
+              aria-hidden="true"
+            />
+            {/* asse sinistro */}
+            <div className="hidden lg:block absolute left-[10%] top-10 h-[260px] w-px bg-black/8" aria-hidden="true" />
+
+            {/* NODO WOW all’intersezione (solo lg+) */}
+            <div className="hidden lg:block absolute left-1/2 -top-14" aria-hidden="true">
+              <div className="relative -translate-x-1/2">
+                <span className="absolute -top-[10px] left-1/2 -translate-x-1/2 h-1.5 w-1.5 rounded-full bg-black/18" />
+                <span className="absolute -top-[16px] left-1/2 -translate-x-1/2 h-1 w-1 rounded-full bg-black/10" />
+              </div>
+            </div>
 
             <div className="relative grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-10">
-              {/* 1989: NON più “sparato” troppo a destra. Lo avviciniamo al centro */}
+              {/* 1989 */}
               <motion.div
                 className="lg:col-span-5 lg:col-start-7 text-center lg:text-left"
                 variants={bioVariants}
                 initial="hidden"
                 animate={inView ? "visible" : "hidden"}
               >
+                <MicroLabel align="right">1989</MicroLabel>
+
                 <motion.p
                   className={`${fontSans.className}
+                    mt-4 lg:mt-5
                     text-neutral-800
                     text-lg md:text-xl
                     leading-relaxed
@@ -299,39 +355,48 @@ export default function IntroSection() {
                 </motion.p>
               </motion.div>
 
-              {/* 2000: lo rendiamo un filo più largo e meno “isolato” */}
+              {/* 2000 */}
               <motion.div
                 initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: reduceMotion ? 0 : 14 }}
                 transition={{ duration: reduceMotion ? 0 : 0.85, ease: [0.22, 1, 0.36, 1], delay: reduceMotion ? 0 : 0.95 }}
                 className="lg:col-span-5 lg:col-start-1 text-center lg:text-left lg:translate-y-6"
               >
+                <div className="hidden lg:flex items-center gap-3 mb-4" aria-hidden="true">
+                  <span className="h-px w-8 bg-black/15" />
+                  <span className="text-[11px] tracking-[0.22em] uppercase text-black/45">2000</span>
+                  <span className="h-px w-14 bg-black/12" />
+                </div>
+
                 <p className={`${fontSans.className} text-neutral-800 text-base md:text-lg leading-relaxed`}>{extraText1}</p>
+
+                <div className="hidden lg:flex items-center gap-3 mt-7" aria-hidden="true">
+                  <span className="h-px w-16 bg-black/10" />
+                  <span className="text-[10px] tracking-[0.22em] uppercase text-black/35">Edilizia pubblica</span>
+                </div>
               </motion.div>
 
-              {/* 2000–2015: più “editoriale”, più vicino, e con righe che già ti piacciono */}
+              {/* 2000–2015 */}
               <motion.div
                 initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: reduceMotion ? 0 : 14 }}
                 transition={{ duration: reduceMotion ? 0 : 0.9, ease: [0.22, 1, 0.36, 1], delay: reduceMotion ? 0 : 1.15 }}
                 className="lg:col-span-4 lg:col-start-8 mt-2 lg:mt-12"
               >
-                <div className="relative">
-                  <div className="mx-auto lg:mx-0 h-px w-28 bg-black/20" aria-hidden="true" />
-                  <p
-                    className={`${fontSans.className}
-                      mt-7
-                      text-neutral-800
-                      text-base md:text-lg
-                      leading-relaxed
-                      text-center
-                      lg:text-left
-                    `}
-                  >
-                    {extraText2}
-                  </p>
-                  <div className="mx-auto lg:mx-0 mt-8 h-px w-20 bg-black/15" aria-hidden="true" />
-                </div>
+                <MicroLabel align="left">2000–2015</MicroLabel>
+
+                <p
+                  className={`${fontSans.className}
+                    mt-4 lg:mt-5
+                    text-neutral-800
+                    text-base md:text-lg
+                    leading-relaxed
+                    text-center
+                    lg:text-left
+                  `}
+                >
+                  {extraText2}
+                </p>
               </motion.div>
             </div>
           </div>
@@ -395,4 +460,3 @@ export default function IntroSection() {
     </section>
   );
 }
-
