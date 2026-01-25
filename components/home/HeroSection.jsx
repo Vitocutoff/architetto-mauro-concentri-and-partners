@@ -31,35 +31,48 @@ export default function HeroSection() {
   // Hint scroll (fade-out con scroll)
   const hintOpacity = useTransform(scrollYProgress, [0, 0.2, 0.4], [1, 1, 0]);
 
-  const sportEImpiantiUrl =
-    "https://www.sporteimpianti.it/?aziende_mappa=mauro-concentri-edilizia-pubblica-impiantisca-sportiva";
+  const sportEImpiantiUrl = "https://www.sporteimpianti.it/?aziende_mappa=mauro-concentri-edilizia-pubblica-impiantisca-sportiva";
 
   return (
+
     <section
       ref={ref}
       role="banner"
       aria-label="Sezione introduttiva Mauro Concentri Architetto"
-      className="
-        relative isolate
-        w-screen left-1/2 -translate-x-1/2
-        lg:h-screen
-        fix-vh
-        flex flex-col
-        items-center
-        justify-center
-        overflow-hidden
-        bg-white
-      "
+      className="relative
+                 isolate
+                 w-screen
+                 left-1/2
+                 -translate-x-1/2
+                 lg:h-screen
+                 fix-vh
+                 flex
+                 flex-col
+                 items-center
+                 justify-center
+                 overflow-hidden
+                 bg-white"
     >
+
       {/* SFONDO BASE (BIANCO) */}
       <div
-        className="absolute inset-0 z-0 pointer-events-none bg-linear-to-b from-white via-neutral-50 to-neutral-200"
+        className="absolute
+                   inset-0
+                   z-0
+                   pointer-events-none
+                   bg-linear-to-b
+                   from-white
+                   via-neutral-50
+                   to-neutral-200"
         aria-hidden="true"
       />
 
-      {/* Sfondo immagine con parallax */}
+      {/* Sfondo parallax */}
       <motion.div
-        className="absolute inset-0 z-0 pointer-events-none"
+        className="absolute
+                   inset-0
+                   z-0
+                   pointer-events-none"
         style={{
           y: bgY,
           scale: bgScale,
@@ -68,6 +81,7 @@ export default function HeroSection() {
         }}
         aria-hidden="true"
       >
+
         <Image
           src="/images/bgHero.png"
           alt="Sfondo architettonico"
@@ -75,14 +89,21 @@ export default function HeroSection() {
           priority
           sizes="100vw"
           quality={90}
-          className="object-cover object-center"
+          className="object-cover
+                     object-center"
         />
 
         {/* SFUMATURA PER LEGGIBILITÀ */}
         <div
-          className="absolute inset-0 bg-linear-to-br from-white/15 via-transparent to-black/25"
+          className="absolute
+                     inset-0
+                     bg-linear-to-br
+                     from-white/15
+                     via-transparent
+                     to-black/25"
           aria-hidden="true"
         />
+
       </motion.div>
 
       {/* Badge Sport&Impianti */}
@@ -91,14 +112,16 @@ export default function HeroSection() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Apri la pubblicazione dello studio su Sport&Impianti (si apre in una nuova scheda)"
-        className="
-          absolute z-20
-          top-24 sm:top-28 lg:top-20
-          left-1/2 -translate-x-1/2
-          text-center
-          select-none
-          lg:left-8 lg:translate-x-0 lg:text-left
-        "
+        className="absolute z-20
+                   top-24
+                   sm:top-28
+                   lg:top-20
+                   left-1/2 -translate-x-1/2
+                   text-center
+                   select-none
+                   lg:left-8
+                   lg:translate-x-0
+                   lg:text-left"
         initial={{ opacity: 0, y: -8 }}
         animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: reduceMotion ? 0 : 1.0 }}
@@ -108,33 +131,102 @@ export default function HeroSection() {
           transform: "translateZ(0)",
         }}
       >
-        <div className="flex items-center justify-center lg:justify-start gap-2 text-[11px] sm:text-xs uppercase tracking-[0.28em] text-black/45">
-          <span>Pubblicato su</span>
-          <span className="text-black/40" aria-hidden="true">
+
+        <div
+          className="flex
+                     items-center
+                     justify-center
+                     lg:justify-start
+                     gap-2
+                     text-[11px]
+                     sm:text-xs
+                     uppercase
+                     tracking-[0.28em]
+                     text-black/65"
+        >
+
+          <span>
+
+            Pubblicato su
+
+          </span>
+
+          <span
+            className="text-black/55"
+            aria-hidden="true"
+          >
+
             ↗
+
           </span>
+
         </div>
 
-        <div className="mt-2 inline-flex items-baseline justify-center lg:justify-start gap-2 text-black/80">
-          <span className="font-semibold tracking-[0.22em] [text-decoration:overline] decoration-black/55 decoration-1px">
+        <div
+          className="mt-2
+                     inline-flex
+                     items-baseline
+                     justify-center
+                     lg:justify-start
+                     gap-2
+                     text-green-500/80"
+        >
+
+          <span
+            className="font-semibold
+                       tracking-[0.22em]
+                       [text-decoration:overline]
+                       decoration-green-500/55
+                       decoration-1px"
+          >
+
             SPORT
+
           </span>
 
-          <span className="font-medium tracking-[0.06em] text-black/55 -mx-1" aria-label="e">
+          <span
+            className="font-medium
+                       tracking-[0.06em]
+                       text-lg
+                       text-green-600/80
+                       -mx-1"
+            aria-label="e"
+          >
+
             &amp;
+
           </span>
 
-          <span className="font-semibold tracking-[0.22em] [text-decoration:underline] decoration-black/55 decoration-1px underline-offset-4">
+          <span
+            className="font-semibold
+                       tracking-[0.22em]
+                       [text-decoration:underline]
+                       decoration-green-500/55
+                       decoration-1px
+                       underline-offset-4"
+          >
+
             IMPIANTI
+
           </span>
+
         </div>
 
-        <div className="mt-1 text-[12px] sm:text-[13px] tracking-wide text-black/45 normal-case">
+        <div
+          className="mt-1
+                     text-[12px]
+                     sm:text-[13px]
+                     tracking-wide
+                     text-black/55
+                     normal-case"
+        >
+
           il portale dello sport, ambiente e lifestyle
+
         </div>
+
       </motion.a>
 
-      {/* LogoCard (animazione guidata dallo scroll) */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 60 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -148,34 +240,43 @@ export default function HeroSection() {
           willChange: "transform, opacity",
           transform: "translateZ(0)",
         }}
-        className="relative z-10"
+        className="relative
+                   z-10"
       >
+
         <LogoCard />
+
       </motion.div>
 
       {/* Hint scroll */}
       <motion.div
-        className="
-          absolute z-10
-          bottom-[calc(env(safe-area-inset-bottom)+9.5rem)]
-          sm:bottom-8
-          md:bottom-12
-          lg:bottom-6
-          flex flex-col items-center
-          text-black/80
-          pointer-events-none
-        "
+        className="absolute z-10
+                   bottom-[calc(env(safe-area-inset-bottom)+9.5rem)]
+                   sm:bottom-8
+                   md:bottom-12
+                   lg:bottom-6
+                   flex
+                   flex-col
+                   items-center
+                   text-black/80
+                   pointer-events-none"
         style={{ opacity: hintOpacity, willChange: "opacity" }}
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : { opacity: 0 }}
         transition={{ delay: reduceMotion ? 0 : 0.8, duration: 1.2, ease: "easeOut" }}
       >
+
         <motion.span
-          className="text-sm tracking-widest font-light uppercase"
+          className="text-sm
+                     tracking-widest
+                     font-light
+                     uppercase"
           animate={reduceMotion ? undefined : { opacity: [1, 0.6, 1], y: [0, -4, 0] }}
           transition={reduceMotion ? undefined : { repeat: Infinity, duration: 2.8, ease: "easeInOut" }}
         >
+
           Scroll
+
         </motion.span>
 
         <motion.svg
@@ -191,9 +292,19 @@ export default function HeroSection() {
           transition={reduceMotion ? undefined : { repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
           aria-hidden="true"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
+
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M6 9l6 6 6-6"
+          />
+
         </motion.svg>
+
       </motion.div>
+
     </section>
+
   );
+
 }
