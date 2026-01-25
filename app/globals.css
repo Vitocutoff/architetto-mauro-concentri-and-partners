@@ -9,11 +9,12 @@ body {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
 /* COLOR SCHEME AUTOMATICO */
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
 }
 
 /* MEDIA ELEMENTI RESPONSIVI */

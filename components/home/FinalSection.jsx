@@ -124,7 +124,15 @@ export default function FinalSection() {
   const fieldOk = "border-white/10";
 
   return (
-    <section role="region" aria-label="Email" className="relative w-full overflow-hidden isolate">
+    <section
+      role="region"
+      aria-label="Email"
+      className="
+        relative
+        w-screen left-1/2 -translate-x-1/2
+        overflow-hidden isolate
+      "
+    >
       {/* BACKGROUND */}
       <div className="absolute inset-0 -z-10">
         <Image
@@ -157,7 +165,8 @@ export default function FinalSection() {
         />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 py-18 sm:py-22 lg:py-26">
+      {/* ✅ Wrapper coerente con le altre sezioni (e senza “vuoti” strani) */}
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-12 py-18 sm:py-22 lg:py-26">
         {/* Cornice unica: niente doppie linee */}
         <motion.div
           {...enter}
@@ -172,10 +181,7 @@ export default function FinalSection() {
           style={{ willChange: "transform, opacity" }}
         >
           {/* Hairline interno unico (molto soft) */}
-          <div
-            className="pointer-events-none absolute inset-[1px] rounded-3xl border border-black/10 opacity-60"
-            aria-hidden="true"
-          />
+          <div className="pointer-events-none absolute inset-[1px] rounded-3xl border border-black/10 opacity-60" aria-hidden="true" />
 
           {/* LEFT */}
           <div className="lg:col-span-5 relative p-8 sm:p-10 lg:p-12">
@@ -189,9 +195,7 @@ export default function FinalSection() {
             />
 
             <div className="relative">
-              <div className={`${fontSans.className} text-xs tracking-[0.26em] uppercase text-neutral-800/70`}>
-                EMAIL
-              </div>
+              <div className={`${fontSans.className} text-xs tracking-[0.26em] uppercase text-neutral-800/70`}>EMAIL</div>
 
               <h2 className={`${fontSerif.className} mt-4 text-4xl sm:text-5xl leading-[1.02] text-neutral-950`}>
                 Contattaci
@@ -199,16 +203,13 @@ export default function FinalSection() {
               </h2>
 
               <p className={`${fontSans.className} mt-6 text-base sm:text-lg leading-relaxed text-neutral-800/85 max-w-xl`}>
-                Per informazioni su progetti, consulenze o collaborazioni, scrivici: sarà nostra premura risponere il
-                prima possibile.
+                Per informazioni su progetti, consulenze o collaborazioni, scrivici: sarà nostra premura risponere il prima possibile.
               </p>
 
               {/* Card unica con email */}
               <div className="mt-8">
                 <div className="rounded-2xl border border-black/10 bg-white/55 px-6 py-5">
-                  <div className={`${fontSans.className} text-xs tracking-[0.18em] uppercase text-neutral-700/70`}>
-                    email
-                  </div>
+                  <div className={`${fontSans.className} text-xs tracking-[0.18em] uppercase text-neutral-700/70`}>email</div>
                   <div className={`${fontSans.className} mt-2 text-sm sm:text-base text-neutral-900`}>
                     info@mauroconcentriarchitetto.com
                   </div>
@@ -246,12 +247,8 @@ export default function FinalSection() {
             <form onSubmit={onSubmit} className="relative">
               <div className="flex items-end justify-between gap-6">
                 <div>
-                  <div className={`${fontSans.className} text-xs tracking-[0.24em] uppercase text-white/60`}>
-                    richiesta
-                  </div>
-                  <h3 className={`${fontSerif.className} mt-3 text-3xl sm:text-4xl text-white`}>
-                    Invia un messaggio
-                  </h3>
+                  <div className={`${fontSans.className} text-xs tracking-[0.24em] uppercase text-white/60`}>richiesta</div>
+                  <h3 className={`${fontSerif.className} mt-3 text-3xl sm:text-4xl text-white`}>Invia un messaggio</h3>
                 </div>
               </div>
 
@@ -283,9 +280,7 @@ export default function FinalSection() {
                     className={`${fieldBase} ${errors.name ? fieldError : fieldOk}`}
                     autoComplete="name"
                   />
-                  {errors.name && (
-                    <div className={`${fontSans.className} mt-2 text-sm text-amber-300/90`}>{errors.name}</div>
-                  )}
+                  {errors.name && <div className={`${fontSans.className} mt-2 text-sm text-amber-300/90`}>{errors.name}</div>}
                 </div>
 
                 <div>
@@ -300,9 +295,7 @@ export default function FinalSection() {
                     className={`${fieldBase} ${errors.email ? fieldError : fieldOk}`}
                     autoComplete="email"
                   />
-                  {errors.email && (
-                    <div className={`${fontSans.className} mt-2 text-sm text-amber-300/90`}>{errors.email}</div>
-                  )}
+                  {errors.email && <div className={`${fontSans.className} mt-2 text-sm text-amber-300/90`}>{errors.email}</div>}
                 </div>
 
                 <div className="sm:col-span-2">
@@ -330,9 +323,7 @@ export default function FinalSection() {
                     rows={6}
                     className={`${fieldBase} resize-none ${errors.message ? fieldError : fieldOk}`}
                   />
-                  {errors.message && (
-                    <div className={`${fontSans.className} mt-2 text-sm text-amber-300/90`}>{errors.message}</div>
-                  )}
+                  {errors.message && <div className={`${fontSans.className} mt-2 text-sm text-amber-300/90`}>{errors.message}</div>}
                 </div>
 
                 <div className="sm:col-span-2 mt-1">
@@ -347,9 +338,7 @@ export default function FinalSection() {
                       Ho letto l’informativa privacy e acconsento al trattamento dei dati per essere ricontattato.
                     </span>
                   </label>
-                  {errors.consent && (
-                    <div className={`${fontSans.className} mt-2 text-sm text-amber-300/90`}>{errors.consent}</div>
-                  )}
+                  {errors.consent && <div className={`${fontSans.className} mt-2 text-sm text-amber-300/90`}>{errors.consent}</div>}
                 </div>
               </div>
 
@@ -361,9 +350,7 @@ export default function FinalSection() {
                 <motion.button
                   type="submit"
                   disabled={submitting}
-                  whileHover={
-                    reduceMotion || submitting ? undefined : { y: -2, transition: { duration: 0.25, ease: "easeOut" } }
-                  }
+                  whileHover={reduceMotion || submitting ? undefined : { y: -2, transition: { duration: 0.25, ease: "easeOut" } }}
                   className={`
                     ${fontSans.className}
                     inline-flex items-center justify-center

@@ -114,12 +114,24 @@ export default function DesktopMenu() {
       }}
       className="inline-block"
     >
+
       {text.split("").map((char, i) => (
-        <motion.span key={i} custom={i} variants={letterVariants} className="inline-block">
+
+        <motion.span
+          key={i}
+          custom={i}
+          variants={letterVariants}
+          className="inline-block"
+        >
+
           {char === " " ? "\u00A0" : char}
+
         </motion.span>
+
       ))}
+
     </motion.span>
+
   );
 
   return (

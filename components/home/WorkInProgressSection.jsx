@@ -47,14 +47,19 @@ export default function WorkInProgressSection() {
       ref={sectionRef}
       role="region"
       aria-label="Sezione Work in Progress"
-      className="relative flex items-center overflow-hidden py-20 lg:py-32"
+      className="
+        relative
+        w-screen left-1/2 -translate-x-1/2
+        flex items-center
+        overflow-hidden
+        py-20 lg:py-32
+      "
     >
       {/* SFONDO STABILE */}
       <div
         className="absolute inset-0 -z-10 pointer-events-none"
         style={{
-          background:
-            "radial-gradient(circle at 25% 25%, #ffffff 0%, #f2f4f7 52%, #e7ebf0 100%)",
+          background: "radial-gradient(circle at 25% 25%, #ffffff 0%, #f2f4f7 52%, #e7ebf0 100%)",
         }}
         aria-hidden="true"
       />
@@ -72,13 +77,15 @@ export default function WorkInProgressSection() {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+      {/* ✅ Wrapper contenuto coerente con le altre sezioni */}
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-12">
         <motion.div
           variants={card3D}
           initial="rest"
           whileHover="hover"
           animate="rest"
           className="
+            relative
             flex flex-col lg:flex-row
             rounded-2xl overflow-hidden
             shadow-[0_10px_40px_rgba(0,0,0,0.22)]
@@ -89,10 +96,7 @@ export default function WorkInProgressSection() {
           style={{ willChange: "transform", transform: "translateZ(0)" }}
         >
           {/* Hairline border interno (statico) */}
-          <div
-            className="pointer-events-none absolute inset-[1px] rounded-2xl border border-white/10"
-            aria-hidden="true"
-          />
+          <div className="pointer-events-none absolute inset-[1px] rounded-2xl border border-white/10" aria-hidden="true" />
 
           {/* IMMAGINE */}
           <motion.div
@@ -141,13 +145,12 @@ export default function WorkInProgressSection() {
             <div
               className="absolute bottom-0 right-0 h-28 w-56 pointer-events-none"
               style={{
-                background:
-                  "linear-gradient(315deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.18) 55%, transparent 100%)",
+                background: "linear-gradient(315deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.18) 55%, transparent 100%)",
               }}
               aria-hidden="true"
             />
 
-            {/* CTA minimale: solo testo */}
+            {/* CTA minimale */}
             <Link
               href="/work-in-progress"
               className={`
@@ -188,8 +191,8 @@ export default function WorkInProgressSection() {
             >
               Progetti attualmente in corso di realizzazione.
               <span className="block mt-3 text-neutral-300/90">
-                Una selezione aggiornata di cantieri e interventi in fase esecutiva, con attenzione
-                alle scelte tecniche e alle soluzioni adottate in opera.
+                Una selezione aggiornata di cantieri e interventi in fase esecutiva, con attenzione alle scelte tecniche e
+                alle soluzioni adottate in opera.
               </span>
             </motion.p>
           </div>

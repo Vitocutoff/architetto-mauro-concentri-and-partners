@@ -66,7 +66,9 @@ export default function MobileMenu({ isOpen, toggleMenu, closeMenu }) {
       </button>
 
       <AnimatePresence>
+
         {isOpen && (
+
           <motion.nav
             id="mobile-navigation"
             aria-label="Menu principale mobile"
@@ -79,35 +81,73 @@ export default function MobileMenu({ isOpen, toggleMenu, closeMenu }) {
                        flex flex-col items-center justify-center
                        overflow-hidden h-screen w-screen"
           >
-            {/* Background statico (no loop infinito + blur = meno flicker) */}
+
+            {/* Background statico */}
             <div
               className="absolute inset-0
                          bg-linear-to-b
                          from-neutral-950 via-neutral-900 to-neutral-950"
             />
 
-            <div className="relative z-10 flex flex-col items-center text-center">
-              <div className="mb-3 transform -translate-y-16">
+            <div
+              className="relative
+                         z-10
+                         flex
+                         flex-col
+                         items-center
+                         text-center"
+            >
+
+              <div
+                className="mb-3
+                           transform
+                           -translate-y-16"
+              >
+
                 <div
                   className={`${fontMonoSpecial.className}
-                              text-2xl mb-1 tracking-widest text-blue-300/90`}
+                              text-xl
+                              mb-1
+                              tracking-widest
+                              text-blue-300/90`}
                 >
-                  A<span className={`${fontMono.className}`}>rchitetto</span>
+
+                  A
+                  <span
+                    className={`${fontMono.className}`}
+                  >
+
+                    rchitetto
+
+                  </span>
+
                 </div>
 
                 <h2
                   className={`${fontMonoSpecial.className}
-                              text-2xl font-extrabold tracking-widest text-white`}
+                              text-2xl
+                              font-extrabold
+                              tracking-widest
+                              text-white`}
                 >
+
                   MAURO<br />
                   CONCENtRi<br />
+
                   <span
                     className={`${fontCursive.className}
-                                text-2xl font-extrabold tracking-widest text-white`}
+                                text-4xl
+                                font-extrabold
+                                tracking-widest
+                                text-red-400`}
                   >
+
                     &amp; Partners
+
                   </span>
+
                 </h2>
+
               </div>
 
               <motion.ul
@@ -122,9 +162,14 @@ export default function MobileMenu({ isOpen, toggleMenu, closeMenu }) {
                   },
                   exit: { opacity: 0 },
                 }}
-                className="flex flex-col items-center gap-5"
+                className="flex
+                           flex-col
+                           items-center
+                           gap-5"
               >
+
                 {links.map((link, i) => (
+
                   <motion.li
                     key={link.href}
                     initial={{ opacity: 0, x: 25 }}
@@ -132,21 +177,34 @@ export default function MobileMenu({ isOpen, toggleMenu, closeMenu }) {
                     exit={{ opacity: 0, x: 25 }}
                     transition={{ duration: 0.3, delay: 0.05 * i }}
                   >
+
                     <Link
                       href={link.href}
                       onClick={closeMenu}
                       className={linkClass(link.href)}
                       aria-current={pathname === link.href ? "page" : undefined}
                     >
+
                       {link.label}
+
                     </Link>
+
                   </motion.li>
+
                 ))}
+
               </motion.ul>
+
             </div>
+
           </motion.nav>
+
         )}
+
       </AnimatePresence>
+
     </>
+
   );
+
 }
