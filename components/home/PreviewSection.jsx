@@ -45,7 +45,7 @@ export default function PreviewSection() {
 
   const featured = {
     img: "/images/bgCard4.jpg",
-    title: "Campi da calcio in Erba Sintetica",
+    title: "Campi da Calcio in Erba Sintetica",
     link: "#",
     tag: "Selezione",
     y: yFeatured,
@@ -57,8 +57,9 @@ export default function PreviewSection() {
     { img: "/images/bgCard3.jpg", title: "Acquapark & Piscine", link: "#", y: yC },
   ];
 
+  // ✅ Hardening GPU per ridurre micro-flicker con blur+shadow+transform
   const cardBase =
-    "relative rounded-2xl overflow-hidden border border-black/10 bg-white/55 backdrop-blur-md shadow-[0_14px_50px_rgba(0,0,0,0.14)]";
+    "relative rounded-2xl overflow-hidden border border-black/10 bg-white/55 backdrop-blur-md shadow-[0_14px_50px_rgba(0,0,0,0.14)] transform-gpu [backface-visibility:hidden] [transform-style:preserve-3d]";
 
   const cardHover = reduceMotion
     ? {}
@@ -75,20 +76,23 @@ export default function PreviewSection() {
       aria-label="Anteprima dei progetti"
       className="
         relative
-        w-screen left-1/2 -translate-x-1/2
+        w-screen
+        left-1/2
+        -translate-x-1/2
         overflow-hidden
         py-18
         sm:py-20
         lg:py-24
       "
     >
-      {/* SFONDO */}
+      {/* SFONDO (aggiornato: più “architettonico”, meno pastello) */}
       <motion.div
         className="absolute inset-0 -z-10"
         animate={reduceMotion ? undefined : { backgroundPosition: ["0% 45%", "100% 55%", "0% 45%"] }}
         transition={{ duration: 36, repeat: Infinity, ease: "easeInOut" }}
         style={{
-          background: "linear-gradient(135deg, #fff6ec 0%, #f1f6ff 52%, #f4fff8 100%)",
+          background:
+            "linear-gradient(135deg, #f5f6f8 0%, #eef1f6 34%, #fff3e8 68%, #eef6ff 100%)",
           backgroundSize: "220% 220%",
         }}
         aria-hidden="true"
@@ -109,7 +113,10 @@ export default function PreviewSection() {
 
       {/* Vignetta + luce */}
       <div
-        className="absolute inset-0 -z-10 pointer-events-none bg-radial from-white/80 via-transparent to-black/10"
+        className="
+          absolute inset-0 -z-10 pointer-events-none
+          bg-radial from-white/80 via-transparent to-black/10
+        "
         aria-hidden="true"
       />
 
@@ -120,21 +127,13 @@ export default function PreviewSection() {
           rounded-full bg-radial
           from-red-500/10 via-transparent to-transparent
           blur-2xl
+          transform-gpu [backface-visibility:hidden]
         "
         aria-hidden="true"
       />
 
-      {/* ✅ Wrapper contenuto: full-bleed section, contenuto centrato e pulito */}
-      <div
-        className="
-          mx-auto
-          w-full
-          max-w-7xl
-          px-4
-          sm:px-6
-          lg:px-12
-        "
-      >
+      {/* ✅ Wrapper */}
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-12">
         {/* Header */}
         <div className="flex flex-col items-start gap-5">
           <motion.div
@@ -142,10 +141,21 @@ export default function PreviewSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-3 rounded-full border border-black/10 bg-white/60 px-4 py-2 backdrop-blur-md"
+            className="
+              inline-flex items-center gap-3 rounded-full
+              border border-black/10 bg-white/60
+              px-4 py-2 backdrop-blur-md
+            "
           >
             <span className="text-red-500/80 text-lg font-light">&gt;</span>
-            <span className={`${fontSans.className} text-sm tracking-[0.18em] uppercase text-black/60`}>anteprima</span>
+
+            <span
+              className={`${fontSans.className}
+                text-sm tracking-[0.18em] uppercase text-black/60
+              `}
+            >
+              anteprima
+            </span>
           </motion.div>
 
           <motion.h2
@@ -155,7 +165,7 @@ export default function PreviewSection() {
             viewport={{ once: true }}
             className={`${fontSerif.className} text-4xl sm:text-5xl lg:text-6xl text-black/85`}
           >
-            Progetti selezionati
+            Progetti
           </motion.h2>
 
           <motion.p
@@ -171,11 +181,11 @@ export default function PreviewSection() {
 
         {/* Layout */}
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
-          {/* COLONNA SINISTRA: featured + card sotto */}
+          {/* COLONNA SINISTRA */}
           <div className="lg:col-span-7 flex flex-col gap-8">
             {/* FEATURED */}
             <motion.article
-              style={{ y: featured.y }}
+              style={{ y: featured.y, willChange: "transform" }}
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
@@ -196,62 +206,99 @@ export default function PreviewSection() {
 
                   <div className="absolute inset-0 bg-linear-to-t from-black/55 via-black/15 to-transparent" />
 
-                  <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/30 px-3 py-1.5 text-xs tracking-[0.18em] uppercase text-white/80 backdrop-blur-md">
+                  <div
+                    className="
+                      absolute left-5 top-5
+                      inline-flex items-center gap-2
+                      rounded-full border border-white/20
+                      bg-black/30 px-3 py-1.5
+                      text-xs tracking-[0.18em] uppercase
+                      text-white/80 backdrop-blur-md
+                    "
+                  >
                     <span className="h-1.5 w-1.5 rounded-full bg-red-400/90" />
                     {featured.tag}
                   </div>
 
                   <div className="absolute bottom-5 left-5 right-5">
-                    <div className={`${fontSerif.className} text-2xl sm:text-3xl text-white/95`}>{featured.title}</div>
-                    <div className={`${fontSans.className} mt-1 text-sm uppercase text-white/70`}>Scopri →</div>
+                    <div className={`${fontSerif.className} text-2xl sm:text-3xl text-white/95`}>
+                      {featured.title}
+                    </div>
+
+                    <div className={`${fontSans.className} mt-1 text-sm uppercase text-white/70`}>
+                      Scopri →
+                    </div>
                   </div>
                 </div>
               </a>
             </motion.article>
 
-            {/* Card “Titolo” */}
+            {/* Card approfondimento (Brendola) — rifinita + anti flicker */}
             <motion.article
-              style={{ y: yTitle }}
+              style={{ y: yTitle, willChange: "transform" }}
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
               viewport={{ once: true }}
-              className={`${cardBase} ${reduceMotion ? "" : "rotate-[0.35deg]"} bg-white/65`}
+              className={`
+                ${cardBase}
+                ${reduceMotion ? "" : "rotate-[0.35deg]"}
+                bg-white/65
+                shadow-[0_14px_50px_rgba(0,0,0,0.14),inset_0_1px_0_rgba(255,255,255,0.55)]
+              `}
               whileHover={cardHover}
             >
               <div className="relative h-52 sm:h-56 p-6 flex flex-col justify-between">
                 <div>
-                  <div className={`${fontSans.className} text-xs tracking-[0.18em] uppercase text-black/55`}>sezione</div>
+                  {/* Micro–header editoriale (più “architetto”) */}
+                  <div className="flex items-center gap-3">
+                    <span className="h-1.5 w-1.5 rounded-full bg-red-500/70" aria-hidden="true" />
+                    <div className="h-px flex-1 bg-black/10" aria-hidden="true" />
+                    <div
+                      className={`${fontSans.className}
+                        text-xs tracking-[0.18em] uppercase text-black/55
+                      `}
+                    >
+                      in primo piano
+                    </div>
+                  </div>
 
-                  <div className={`${fontSerif.className} mt-2 text-2xl text-black/85`}>Titolo</div>
+                  <div className={`${fontSerif.className} mt-3 text-2xl text-black/85`}>Brendola</div>
 
                   <div className={`${fontSans.className} mt-3 text-sm leading-relaxed text-black/60`}>
-                    (Placeholder) Qui possiamo inserire una breve frase curatoriale o un micro–indice per dare contesto alla
-                    selezione.
+                    Ampliamento campo da calcio con realizzazione nuovo impianto di illuminazione e manto in erba sintetica.
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div className="h-px flex-1 bg-black/10" />
                   <div className={`${fontSans.className} ml-4 text-xs tracking-[0.18em] uppercase text-black/55`}>
-                    anteprima →
+                    approfondimento →
                   </div>
                 </div>
 
+                {/* Glow “blindato” (ridotto e GPU-safe) */}
                 <div
-                  className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-radial from-red-500/12 via-transparent to-transparent blur-2xl"
+                  className="
+                    absolute -right-24 -top-24
+                    h-64 w-64 rounded-full
+                    bg-radial from-red-500/10 via-transparent to-transparent
+                    blur-2xl
+                    pointer-events-none
+                    transform-gpu [backface-visibility:hidden]
+                  "
                   aria-hidden="true"
                 />
               </div>
             </motion.article>
           </div>
 
-          {/* COLONNA DESTRA: 3 card */}
+          {/* COLONNA DESTRA */}
           <div className="lg:col-span-5 flex flex-col gap-8">
             {cards.map((c, idx) => (
               <motion.article
                 key={c.title}
-                style={{ y: c.y }}
+                style={{ y: c.y, willChange: "transform" }}
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.95, delay: idx * 0.06, ease: [0.22, 1, 0.36, 1] }}
@@ -281,7 +328,10 @@ export default function PreviewSection() {
 
                     <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
                       <div className={`${fontSerif.className} text-xl text-white/95`}>{c.title}</div>
-                      <div className={`${fontSans.className} text-xs tracking-[0.18em] uppercase text-white/75`}>scopri →</div>
+
+                      <div className={`${fontSans.className} text-xs tracking-[0.18em] uppercase text-white/75`}>
+                        scopri →
+                      </div>
                     </div>
                   </div>
                 </a>
