@@ -9,13 +9,11 @@ export default function PreviewSection() {
   const reduceMotion = useReducedMotion();
   const sectionRef = useRef(null);
 
-  // Scroll relativo alla sezione
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
   });
 
-  // ✅ Meno rimbalzo: spring più “smorzata” + escursioni più piccole
   const springCfg = { stiffness: 50, damping: 30, mass: 0.9 };
 
   const yFeatured = useSpring(
@@ -57,9 +55,11 @@ export default function PreviewSection() {
     { img: "/images/bgCard3.jpg", title: "Acquapark & Piscine", link: "#", y: yC },
   ];
 
-  // ✅ Hardening GPU per ridurre micro-flicker con blur+shadow+transform
+  // ✅ FIX FLICKER:
+  // - niente backdrop-blur sul wrapper che viene trasformato
+  // - blur applicato a un layer interno statico
   const cardBase =
-    "relative rounded-2xl overflow-hidden border border-black/10 bg-white/55 backdrop-blur-md shadow-[0_14px_50px_rgba(0,0,0,0.14)] transform-gpu [backface-visibility:hidden] [transform-style:preserve-3d]";
+    "relative rounded-2xl overflow-hidden border border-black/10 bg-white/55 shadow-[0_14px_50px_rgba(0,0,0,0.14)] transform-gpu [backface-visibility:hidden] [transform-style:preserve-3d] isolate";
 
   const cardHover = reduceMotion
     ? {}
@@ -85,20 +85,18 @@ export default function PreviewSection() {
         lg:py-24
       "
     >
-      {/* SFONDO (aggiornato: più “architettonico”, meno pastello) */}
+      {/* SFONDO */}
       <motion.div
         className="absolute inset-0 -z-10"
         animate={reduceMotion ? undefined : { backgroundPosition: ["0% 45%", "100% 55%", "0% 45%"] }}
         transition={{ duration: 36, repeat: Infinity, ease: "easeInOut" }}
         style={{
-          background:
-            "linear-gradient(135deg, #f5f6f8 0%, #eef1f6 34%, #fff3e8 68%, #eef6ff 100%)",
+          background: "linear-gradient(135deg, #f5f6f8 0%, #eef1f6 34%, #fff3e8 68%, #eef6ff 100%)",
           backgroundSize: "220% 220%",
         }}
         aria-hidden="true"
       />
 
-      {/* Texture diagonale leggera */}
       <div
         className="
           absolute inset-0 -z-10 pointer-events-none
@@ -111,12 +109,8 @@ export default function PreviewSection() {
         aria-hidden="true"
       />
 
-      {/* Vignetta + luce */}
       <div
-        className="
-          absolute inset-0 -z-10 pointer-events-none
-          bg-radial from-white/80 via-transparent to-black/10
-        "
+        className="absolute inset-0 -z-10 pointer-events-none bg-radial from-white/80 via-transparent to-black/10"
         aria-hidden="true"
       />
 
@@ -132,7 +126,6 @@ export default function PreviewSection() {
         aria-hidden="true"
       />
 
-      {/* ✅ Wrapper */}
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-12">
         {/* Header */}
         <div className="flex flex-col items-start gap-5">
@@ -141,21 +134,10 @@ export default function PreviewSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             viewport={{ once: true }}
-            className="
-              inline-flex items-center gap-3 rounded-full
-              border border-black/10 bg-white/60
-              px-4 py-2 backdrop-blur-md
-            "
+            className="inline-flex items-center gap-3 rounded-full border border-black/10 bg-white/60 px-4 py-2 backdrop-blur-md"
           >
             <span className="text-red-500/80 text-lg font-light">&gt;</span>
-
-            <span
-              className={`${fontSans.className}
-                text-sm tracking-[0.18em] uppercase text-black/60
-              `}
-            >
-              anteprima
-            </span>
+            <span className={`${fontSans.className} text-sm tracking-[0.18em] uppercase text-black/60`}>anteprima</span>
           </motion.div>
 
           <motion.h2
@@ -179,9 +161,8 @@ export default function PreviewSection() {
           </motion.p>
         </div>
 
-        {/* Layout */}
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
-          {/* COLONNA SINISTRA */}
+          {/* SINISTRA */}
           <div className="lg:col-span-7 flex flex-col gap-8">
             {/* FEATURED */}
             <motion.article
@@ -193,6 +174,9 @@ export default function PreviewSection() {
               className={`${cardBase} ${reduceMotion ? "" : "rotate-[-0.6deg]"}`}
               whileHover={cardHover}
             >
+              {/* blur layer statico */}
+              <div className="absolute inset-0 -z-10 backdrop-blur-md" aria-hidden="true" />
+
               <a href={featured.link} className="block">
                 <div className="relative h-72 sm:h-80 lg:h-112">
                   <Image
@@ -206,61 +190,38 @@ export default function PreviewSection() {
 
                   <div className="absolute inset-0 bg-linear-to-t from-black/55 via-black/15 to-transparent" />
 
-                  <div
-                    className="
-                      absolute left-5 top-5
-                      inline-flex items-center gap-2
-                      rounded-full border border-white/20
-                      bg-black/30 px-3 py-1.5
-                      text-xs tracking-[0.18em] uppercase
-                      text-white/80 backdrop-blur-md
-                    "
-                  >
+                  <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/30 px-3 py-1.5 text-xs tracking-[0.18em] uppercase text-white/80 backdrop-blur-md">
                     <span className="h-1.5 w-1.5 rounded-full bg-red-400/90" />
                     {featured.tag}
                   </div>
 
                   <div className="absolute bottom-5 left-5 right-5">
-                    <div className={`${fontSerif.className} text-2xl sm:text-3xl text-white/95`}>
-                      {featured.title}
-                    </div>
-
-                    <div className={`${fontSans.className} mt-1 text-sm uppercase text-white/70`}>
-                      Scopri →
-                    </div>
+                    <div className={`${fontSerif.className} text-2xl sm:text-3xl text-white/95`}>{featured.title}</div>
+                    <div className={`${fontSans.className} mt-1 text-sm uppercase text-white/70`}>Scopri →</div>
                   </div>
                 </div>
               </a>
             </motion.article>
 
-            {/* Card approfondimento (Brendola) — rifinita + anti flicker */}
+            {/* APPROFONDIMENTO */}
             <motion.article
               style={{ y: yTitle, willChange: "transform" }}
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
               viewport={{ once: true }}
-              className={`
-                ${cardBase}
-                ${reduceMotion ? "" : "rotate-[0.35deg]"}
-                bg-white/65
-                shadow-[0_14px_50px_rgba(0,0,0,0.14),inset_0_1px_0_rgba(255,255,255,0.55)]
-              `}
+              className={`${cardBase} ${reduceMotion ? "" : "rotate-[0.35deg]"} bg-white/65 shadow-[0_14px_50px_rgba(0,0,0,0.14),inset_0_1px_0_rgba(255,255,255,0.55)]`}
               whileHover={cardHover}
             >
+              {/* blur layer statico */}
+              <div className="absolute inset-0 -z-10 backdrop-blur-md" aria-hidden="true" />
+
               <div className="relative h-52 sm:h-56 p-6 flex flex-col justify-between">
                 <div>
-                  {/* Micro–header editoriale (più “architetto”) */}
                   <div className="flex items-center gap-3">
                     <span className="h-1.5 w-1.5 rounded-full bg-red-500/70" aria-hidden="true" />
                     <div className="h-px flex-1 bg-black/10" aria-hidden="true" />
-                    <div
-                      className={`${fontSans.className}
-                        text-xs tracking-[0.18em] uppercase text-black/55
-                      `}
-                    >
-                      in primo piano
-                    </div>
+                    <div className={`${fontSans.className} text-xs tracking-[0.18em] uppercase text-black/55`}>in primo piano</div>
                   </div>
 
                   <div className={`${fontSerif.className} mt-3 text-2xl text-black/85`}>Brendola</div>
@@ -277,7 +238,6 @@ export default function PreviewSection() {
                   </div>
                 </div>
 
-                {/* Glow “blindato” (ridotto e GPU-safe) */}
                 <div
                   className="
                     absolute -right-24 -top-24
@@ -293,7 +253,7 @@ export default function PreviewSection() {
             </motion.article>
           </div>
 
-          {/* COLONNA DESTRA */}
+          {/* DESTRA */}
           <div className="lg:col-span-5 flex flex-col gap-8">
             {cards.map((c, idx) => (
               <motion.article
@@ -308,6 +268,9 @@ export default function PreviewSection() {
                 }`}
                 whileHover={cardHover}
               >
+                {/* blur layer statico */}
+                <div className="absolute inset-0 -z-10 backdrop-blur-md" aria-hidden="true" />
+
                 <a href={c.link} className="block">
                   <div className="relative h-52 sm:h-56 overflow-hidden">
                     <Image
@@ -328,10 +291,7 @@ export default function PreviewSection() {
 
                     <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
                       <div className={`${fontSerif.className} text-xl text-white/95`}>{c.title}</div>
-
-                      <div className={`${fontSans.className} text-xs tracking-[0.18em] uppercase text-white/75`}>
-                        scopri →
-                      </div>
+                      <div className={`${fontSans.className} text-xs tracking-[0.18em] uppercase text-white/75`}>scopri →</div>
                     </div>
                   </div>
                 </a>

@@ -55,29 +55,96 @@ export default function WorkInProgressSection() {
         py-20 lg:py-32
       "
     >
-      {/* SFONDO STABILE */}
+      {/* SFONDO BASE */}
       <div
-        className="absolute inset-0 -z-10 pointer-events-none"
+        className="absolute inset-0 -z-50 pointer-events-none"
         style={{
-          background: "radial-gradient(circle at 25% 25%, #ffffff 0%, #f2f4f7 52%, #e7ebf0 100%)",
+          background: "linear-gradient(135deg, #f3f4f6 0%, #eef1f6 46%, #f6f2ea 72%, #eef4fb 100%)",
         }}
         aria-hidden="true"
       />
 
-      {/* Texture leggera statica */}
+      {/* Griglia CAD soft */}
       <div
         className="
-          absolute inset-0 -z-10 pointer-events-none
+          absolute inset-0 -z-50 pointer-events-none
           [background-image:
-            linear-gradient(to_right,rgba(0,0,0,0.035)_1px,transparent_1px),
-            linear-gradient(to_bottom,rgba(0,0,0,0.03)_1px,transparent_1px)]
-          [background-size:56px_56px]
-          opacity-25
+            linear-gradient(to_right,rgba(0,0,0,0.020)_1px,transparent_1px),
+            linear-gradient(to_bottom,rgba(0,0,0,0.018)_1px,transparent_1px)]
+          [background-size:84px_84px]
+          opacity-16
         "
         aria-hidden="true"
       />
 
-      {/* ✅ Wrapper contenuto coerente con le altre sezioni */}
+      {/* Blueprint nei vuoti (mask centrale) */}
+      <div className="absolute inset-0 -z-40 pointer-events-none" aria-hidden="true">
+        <svg className="absolute inset-0 h-full w-full" viewBox="0 0 1000 700" preserveAspectRatio="none">
+          <defs>
+            <mask id="cutCardAreaWipAsset">
+              <rect x="0" y="0" width="1000" height="700" fill="white" />
+              <rect x="85" y="160" width="830" height="385" rx="38" fill="black" />
+            </mask>
+
+            <style>{`
+              .wf1 { stroke: rgba(0,0,0,0.18); stroke-width: 1; vector-effect: non-scaling-stroke; }
+              .wf2 { stroke: rgba(0,0,0,0.12); stroke-width: 1; vector-effect: non-scaling-stroke; stroke-dasharray: 6 6; }
+              .wf3 { stroke: rgba(0,0,0,0.22); stroke-width: 2; vector-effect: non-scaling-stroke; }
+              .txt { fill: rgba(0,0,0,0.22); font-size: 10px; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; letter-spacing: 0.22em; }
+              .node { fill: rgba(0,0,0,0.20); }
+            `}</style>
+          </defs>
+
+          <g mask="url(#cutCardAreaWipAsset)">
+            {/* ✅ 1) ASSET REALE: rendilo VISIBILE subito */}
+            {/* Metti il file in: public/images/wip-blueprint.svg */}
+            <image
+              href="/images/blueprint.jpg"
+              x="0"
+              y="0"
+              width="1000"
+              height="700"
+              preserveAspectRatio="xMidYMid slice"
+              opacity="0.28"
+              style={{ mixBlendMode: "multiply" }}
+            />
+
+            {/* ✅ 2) FALLBACK WIREFRAME (sempre visibile) */}
+            {/* Serve solo per capire che stiamo disegnando nei vuoti */}
+            <rect x="60" y="55" width="880" height="590" fill="transparent" className="wf1" opacity="0.55" />
+            <line x1="60" y1="120" x2="940" y2="120" className="wf2" opacity="0.7" />
+            <line x1="60" y1="610" x2="940" y2="610" className="wf2" opacity="0.7" />
+            <line x1="120" y1="55" x2="120" y2="645" className="wf2" opacity="0.7" />
+            <line x1="880" y1="55" x2="880" y2="645" className="wf2" opacity="0.7" />
+
+            {/* due “frammenti pianta” minimal ma credibili */}
+            <g opacity="0.45">
+              <line x1="95" y1="165" x2="335" y2="165" className="wf3" />
+              <line x1="95" y1="165" x2="95" y2="285" className="wf3" />
+              <line x1="95" y1="285" x2="255" y2="285" className="wf3" />
+              <path d="M255 285 A50 50 0 0 1 305 235" fill="none" className="wf1" />
+              <line x1="255" y1="285" x2="305" y2="235" className="wf1" />
+              <circle cx="210" cy="205" r="2.6" className="node" />
+              <text x="95" y="150" className="txt">PIANTA</text>
+            </g>
+
+            <g opacity="0.35">
+              <rect x="650" y="520" width="290" height="125" fill="transparent" className="wf1" />
+              <path
+                d="M665 625 L665 560 L720 560 L720 585 L780 585 L780 545 L920 545 L920 625 Z"
+                fill="transparent"
+                className="wf3"
+              />
+              <text x="650" y="508" className="txt">DETTAGLIO</text>
+            </g>
+          </g>
+        </svg>
+
+        {/* velo leggero */}
+        <div className="absolute inset-0 bg-radial from-white/70 via-transparent to-black/10 opacity-55" />
+      </div>
+
+      {/* Wrapper contenuto */}
       <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-12">
         <motion.div
           variants={card3D}
@@ -89,16 +156,26 @@ export default function WorkInProgressSection() {
             flex flex-col lg:flex-row
             rounded-2xl overflow-hidden
             shadow-[0_10px_40px_rgba(0,0,0,0.22)]
-            bg-linear-to-br from-neutral-900 via-neutral-950 to-black
-            border border-white/30
+            border border-white/26
             transition-transform duration-700
+            isolate
           "
-          style={{ willChange: "transform", transform: "translateZ(0)" }}
+          style={{
+            willChange: "transform",
+            transform: "translateZ(0)",
+            background: "linear-gradient(135deg, #111827 0%, #0b1020 48%, #05070c 100%)",
+          }}
         >
-          {/* Hairline border interno (statico) */}
           <div className="pointer-events-none absolute inset-[1px] rounded-2xl border border-white/10" aria-hidden="true" />
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.04) 24%, transparent 55%)",
+            }}
+            aria-hidden="true"
+          />
 
-          {/* IMMAGINE */}
           <motion.div
             className="lg:w-3/4 relative overflow-hidden aspect-video group"
             variants={imageVariants}
@@ -118,10 +195,8 @@ export default function WorkInProgressSection() {
               decoding="async"
             />
 
-            {/* Overlay leggibilità (statico) */}
             <div className="absolute inset-0 bg-linear-to-r from-black/35 via-black/15 to-transparent" />
 
-            {/* Label editoriale (statica) */}
             <div
               className={`
                 ${fontSans.className}
@@ -141,7 +216,6 @@ export default function WorkInProgressSection() {
               lavori in corso
             </div>
 
-            {/* Micro-gradient locale in basso a destra */}
             <div
               className="absolute bottom-0 right-0 h-28 w-56 pointer-events-none"
               style={{
@@ -150,7 +224,6 @@ export default function WorkInProgressSection() {
               aria-hidden="true"
             />
 
-            {/* CTA minimale */}
             <Link
               href="/work-in-progress"
               className={`
@@ -168,7 +241,6 @@ export default function WorkInProgressSection() {
             </Link>
           </motion.div>
 
-          {/* TESTO */}
           <div className="p-10 lg:p-12 flex flex-col justify-center items-center text-center lg:w-1/3">
             <motion.h3
               className={`${fontSerif.className} text-4xl lg:text-5xl font-light text-white mb-8 tracking-tight leading-tight`}

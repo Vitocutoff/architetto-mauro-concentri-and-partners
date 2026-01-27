@@ -8,7 +8,6 @@ import { fontSans, fontSerif } from "@/lib/fonts";
 const INITIAL = {
   name: "",
   email: "",
-  phone: "",
   message: "",
   consent: false,
   company: "", // honeypot
@@ -46,13 +45,12 @@ export default function FinalSection() {
   }
 
   function buildMailto() {
-    const to = "info@mauroconcentriarchitetto.com"; // modifica se necessario
+    const to = "info@mauroconcentri.com";
     const subject = encodeURIComponent("Richiesta contatto dal sito");
     const body = encodeURIComponent(
       [
         `Nome: ${form.name.trim()}`,
         `Email: ${form.email.trim()}`,
-        form.phone.trim() ? `Telefono: ${form.phone.trim()}` : null,
         "",
         form.message.trim(),
       ]
@@ -83,7 +81,6 @@ export default function FinalSection() {
         body: JSON.stringify({
           name: form.name.trim(),
           email: form.email.trim(),
-          phone: form.phone.trim(),
           message: form.message.trim(),
           consent: form.consent,
         }),
@@ -167,7 +164,6 @@ export default function FinalSection() {
 
       {/* ✅ Wrapper coerente con le altre sezioni (e senza “vuoti” strani) */}
       <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-12 py-18 sm:py-22 lg:py-26">
-        {/* Cornice unica: niente doppie linee */}
         <motion.div
           {...enter}
           className="
@@ -180,7 +176,6 @@ export default function FinalSection() {
           "
           style={{ willChange: "transform, opacity" }}
         >
-          {/* Hairline interno unico (molto soft) */}
           <div className="pointer-events-none absolute inset-[1px] rounded-3xl border border-black/10 opacity-60" aria-hidden="true" />
 
           {/* LEFT */}
@@ -211,7 +206,7 @@ export default function FinalSection() {
                 <div className="rounded-2xl border border-black/10 bg-white/55 px-6 py-5">
                   <div className={`${fontSans.className} text-xs tracking-[0.18em] uppercase text-neutral-700/70`}>email</div>
                   <div className={`${fontSans.className} mt-2 text-sm sm:text-base text-neutral-900`}>
-                    info@mauroconcentriarchitetto.com
+                    info@mauroconcentri.com
                   </div>
                 </div>
               </div>
@@ -236,7 +231,6 @@ export default function FinalSection() {
               aria-hidden="true"
             />
 
-            {/* Un solo hairline qui (non doppio): molto leggero */}
             <div className="pointer-events-none absolute inset-0 rounded-3xl border border-white/10" aria-hidden="true" />
 
             <div
@@ -296,20 +290,6 @@ export default function FinalSection() {
                     autoComplete="email"
                   />
                   {errors.email && <div className={`${fontSans.className} mt-2 text-sm text-amber-300/90`}>{errors.email}</div>}
-                </div>
-
-                <div className="sm:col-span-2">
-                  <label className={`${fontSans.className} text-sm text-white/80`} htmlFor="phone">
-                    Telefono (facoltativo)
-                  </label>
-                  <input
-                    id="phone"
-                    type="tel"
-                    value={form.phone}
-                    onChange={(e) => updateField("phone", e.target.value)}
-                    className={`${fieldBase} ${fieldOk}`}
-                    autoComplete="tel"
-                  />
                 </div>
 
                 <div className="sm:col-span-2">
