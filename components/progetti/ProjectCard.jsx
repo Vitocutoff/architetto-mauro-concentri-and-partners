@@ -55,7 +55,7 @@ export default function ProjectCard({ p }) {
           <span className={`text-xs text-neutral-900 ${fontMono.className}`}>{p.year || "—"}</span>
 
           <span className={`text-xs text-neutral-800 ${fontMono.className}`}>
-            Apri scheda <span className="text-neutral-700">→</span>
+            Vai <span className="text-neutral-700">→</span>
           </span>
         </div>
       </div>
