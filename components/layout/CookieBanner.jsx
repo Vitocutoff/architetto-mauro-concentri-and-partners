@@ -1,64 +1,43 @@
-// /components/layout/CookieBanner.jsx
-
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
+
+const STORAGE_KEY = "cookieBannerDismissed";
+
+function getInitialDismissed() {
+  try {
+    return Boolean(window.localStorage.getItem(STORAGE_KEY));
+  } catch {
+    return false;
+  }
+}
 
 export default function CookieBanner() {
+  const [dismissed, setDismissed] = useState(getInitialDismissed);
 
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    let raf;
-    let active = true;
-
-    const checkCookies = () => {
-      try {
-        const accepted = localStorage.getItem("cookiesAccepted");
-        if (!accepted && active) {
-          raf = requestAnimationFrame(() => setShow(true));
-        }
-      } catch {
-
-        if (active) {
-          raf = requestAnimationFrame(() => setShow(true));
-        }
-      }
-    };
-
-    checkCookies();
-
-    return () => {
-      active = false;
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, []);
-
-  const handleAccept = () => {
+  const handleDismiss = () => {
     try {
-      localStorage.setItem("cookiesAccepted", "true");
-    } catch {
-    }
-    setShow(false);
+      window.localStorage.setItem(STORAGE_KEY, "true");
+    } catch {}
+    setDismissed(true);
   };
 
   return (
 
     <AnimatePresence>
 
-      {show && (
+      {!dismissed && (
 
         <motion.aside
           role="dialog"
           aria-modal="true"
-          aria-labelledby="cookie-banner-title"
-          aria-describedby="cookie-banner-desc"
-          initial={{ opacity: 0, y: 60 }}
+          aria-label="Informativa cookie"
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 60 }}
-          transition={{ duration: 0.55, ease: [0.25, 0.1, 0.25, 1] }}
+          exit={{ opacity: 0, y: 40 }}
+          transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
           className="fixed
                      bottom-0
                      left-0
@@ -76,29 +55,19 @@ export default function CookieBanner() {
                        sm:flex-row
                        items-center
                        justify-between
-                       gap-4
-                       sm:gap-6
+                       gap-3
+                       sm:gap-5
                        rounded-t-2xl
-                       bg-white/80
+                       bg-white/85
                        backdrop-blur-md
                        border-t
-                       border-neutral-300/70
-                       shadow-[0_-8px_30px_rgba(0,0,0,0.15)]
-                       p-5
-                       sm:p-6"
+                       border-neutral-200
+                       shadow-[0_-10px_30px_rgba(0,0,0,0.15)]
+                       p-4
+                       sm:p-5"
           >
 
-            <h2
-              id="cookie-banner-title"
-              className="sr-only"
-            >
-
-              Informativa sui cookie
-
-            </h2>
-
             <p
-              id="cookie-banner-desc"
               className="text-neutral-800
                          text-sm
                          leading-relaxed
@@ -106,23 +75,19 @@ export default function CookieBanner() {
                          sm:text-left"
             >
 
-              Questo sito utilizza{" "}
-
-              <strong>solo cookie tecnici</strong> per garantire il corretto
-              funzionamento e migliorare l’esperienza di navigazione.
-              <br className="hidden sm:block" />
-              Non utilizziamo cookie di profilazione o di terze parti. Continuando accetti l’uso dei cookie.
-              Consulta la{" "}
+              Usiamo cookie tecnici e storage locale per garantire il corretto
+              funzionamento del sito (es. ricordare questa scelta). Non utilizziamo
+              cookie di profilazione. Maggiori informazioni nella{" "}
 
               <Link
                 href="/privacy-policy"
                 className="underline
                            underline-offset-2
-                           text-blue-900
-                           hover:text-blue-950
+                           text-cyan-700
+                           hover:text-cyan-900
                            focus:outline-none
                            focus-visible:ring-2
-                           focus-visible:ring-blue-900/60
+                           focus-visible:ring-cyan-900/60
                            rounded-sm"
               >
 
@@ -135,30 +100,30 @@ export default function CookieBanner() {
             </p>
 
             <motion.button
-              onClick={handleAccept}
-              whileHover={{ scale: 1.06 }}
-              whileTap={{ scale: 0.94 }}
-              transition={{ type: "spring", stiffness: 260, damping: 16 }}
-              className="mt-3
-                         sm:mt-0
-                         px-6
-                         py-2.5
-                         rounded-xl
-                         bg-sky-800
-                         text-white
-                         text-sm
+              type="button"
+              onClick={handleDismiss}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 260, damping: 18 }}
+              className="shrink-0
+                         px-3
+                         py-1.5
+                         rounded-full
+                         border
+                         border-neutral-300
+                         bg-white/70
+                         text-neutral-900
+                         text-xs
                          font-medium
-                         cursor-pointer
-                         hover:bg-sky-900
+                         hover:bg-white
+                         hover:border-neutral-400
                          transition-colors
                          focus-visible:outline-none
                          focus-visible:ring-2
-                         focus-visible:ring-blue-900
-                         focus-visible:ring-offset-2
-                         focus-visible:ring-offset-white"
+                         focus-visible:ring-black/30"
             >
 
-              OK
+              Ho capito
 
             </motion.button>
 

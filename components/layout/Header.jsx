@@ -5,6 +5,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useScroll } from "framer-motion";
 import { usePathname } from "next/navigation";
+
 import DesktopMenu from "@/components/layout/DesktopMenu";
 import MobileMenu from "@/components/layout/MobileMenu";
 import LogoAnimated from "@/components/ui/LogoAnimated";

@@ -4,11 +4,11 @@ import { motion } from "framer-motion";
 import { FaPhoneAlt, FaMobileAlt, FaEnvelope } from "react-icons/fa";
 import { FaFacebookF, FaLinkedinIn, FaInstagram } from "react-icons/fa";
 import Link from "next/link";
+
 import { fontMono, fontMonoSpecial, fontSerif, fontCursive } from "@/lib/fonts";
 
 export default function Footer() {
-
-  const year = new Date().getFullYear();
+  const year = new Date().getUTCFullYear();
 
   const revealVariants = {
     hidden: { opacity: 0, y: 60 },
@@ -56,7 +56,6 @@ export default function Footer() {
                      items-center
                      justify-center"
         >
-
           <h2
             id="footer-contacts"
             className="sr-only"
@@ -72,14 +71,20 @@ export default function Footer() {
                        gap-x-8
                        mb-6
                        text-xl
-                       text-cyan-500/90"
+                       text-cyan-600"
           >
 
-            <FaPhoneAlt aria-hidden="true" />
+            <FaPhoneAlt
+              aria-hidden="true"
+            />
 
-            <FaMobileAlt aria-hidden="true" />
+            <FaMobileAlt
+              aria-hidden="true"
+            />
 
-            <FaEnvelope aria-hidden="true" />
+            <FaEnvelope
+              aria-hidden="true"
+              />
 
           </div>
 
@@ -90,10 +95,9 @@ export default function Footer() {
                        text-sm
                        sm:text-base"
           >
-
             <p
               className={`${fontSerif.className}
-                          text-cyan-500/90`}
+                          text-cyan-600`}
             >
 
               Studio:
@@ -119,7 +123,7 @@ export default function Footer() {
 
             <p
               className={`${fontSerif.className}
-                          text-cyan-500/90`}
+                          text-cyan-600`}
             >
 
               Cellulare:
@@ -145,7 +149,7 @@ export default function Footer() {
 
             <p
               className={`${fontSerif.className}
-                          text-cyan-500/90`}
+                          text-cyan-600`}
             >
 
               E-mail:
@@ -194,19 +198,16 @@ export default function Footer() {
                        hover:shadow-lg
                        hover:shadow-white/10"
           >
-
             <div
               className={`${fontMono.className}
-                          text-2xl
                           tracking-wide
-                          text-cyan-500/95`}
+                          text-cyan-600`}
             >
 
               <span
                 className={`${fontMonoSpecial.className}
                             mr-0.5`}
               >
-
                 A
 
               </span>
@@ -246,14 +247,14 @@ export default function Footer() {
               className="border-t
                          border-neutral-200/40
                          mx-auto
-                         my-3
+                         my-2
                          w-40
                          sm:w-48"
             ></div>
 
             <div
               className={`${fontCursive.className}
-                          text-5xl
+                          text-3xl
                           font-bold
                           tracking-wider
                           text-red-400`}
@@ -275,68 +276,29 @@ export default function Footer() {
                      items-center
                      justify-center"
         >
-
-          <h2
-            id="footer-address"
-            className="sr-only"
-          >
-
+          <h2 id="footer-address" className="sr-only">
             Indirizzo e social
-
           </h2>
 
-          <p
-            className={`${fontSerif.className}
-                        text-lg
-                        mb-3
-                        text-neutral-200`}
-          >
-
+          <p className={`${fontSerif.className} text-lg mb-3 text-neutral-200`}>
             Corso Padova, 65 – 36100 Vicenza
-
           </p>
 
-          <p
-            className="mb-1"
-          >
-
+          <p className="mb-1">
             C.F.{" "}
-
-            <span
-              className={`${fontSerif.className}
-                          text-gray-200`}
-            >
-
+            <span className={`${fontSerif.className} text-gray-200`}>
               CNCMRA62L07Z103J
-
             </span>
-
           </p>
 
-          <p
-            className="mb-6"
-          >
-
+          <p className="mb-6">
             P.IVA{" "}
-
-            <span
-              className={`${fontSerif.className}
-                          text-gray-200`}
-            >
-
+            <span className={`${fontSerif.className} text-gray-200`}>
               02069980247
-
             </span>
-
           </p>
 
-          <div
-            className="flex
-                       justify-center
-                       gap-x-6
-                       text-2xl"
-          >
-
+          <div className="flex justify-center gap-x-6 text-2xl">
             <a
               href="https://facebook.com"
               aria-label="Profilo Facebook"
@@ -351,9 +313,7 @@ export default function Footer() {
                          rounded-sm
                          hover:scale-110"
             >
-
               <FaFacebookF />
-
             </a>
 
             <a
@@ -370,9 +330,7 @@ export default function Footer() {
                          rounded-sm
                          hover:scale-110"
             >
-
               <FaLinkedinIn />
-
             </a>
 
             <a
@@ -389,15 +347,10 @@ export default function Footer() {
                          rounded-sm
                          hover:scale-110"
             >
-
               <FaInstagram />
-
             </a>
-
           </div>
-
         </section>
-
       </div>
 
       <motion.div
@@ -415,9 +368,7 @@ export default function Footer() {
                    border-t
                    border-neutral-200/60"
       >
-
         © {year} Architetto Mauro Concentri &amp; Partners ·{" "}
-
         <Link
           href="/privacy-policy"
           className="underline
@@ -429,15 +380,9 @@ export default function Footer() {
                      focus-visible:ring-black/50
                      rounded-sm"
         >
-
           Privacy Policy
-
         </Link>
-
       </motion.div>
-
     </motion.footer>
-
   );
-
 }

@@ -2,8 +2,11 @@
 const nextConfig = {
   poweredByHeader: false,
 
-  // ⚠️ RIMOSSO in dev: crea problemi su mobile
-  // allowedDevOrigins: ["localhost:3000", "192.168.1.171:3000"],
+  allowedDevOrigins: [
+    "localhost",
+    "127.0.0.1",
+    "192.168.1.172",
+  ],
 
   images: {
     qualities: [75, 90],

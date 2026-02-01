@@ -1,26 +1,71 @@
-// 📄 /components/layout/DesktopMenu.jsx
+// /components/layout/DesktopMenu.jsx
 
 "use client";
 
+import React, { memo, useEffect } from "react";
 import { menuItems } from "@/data/menuItems";
-import { useEffect } from "react";
 import { motion, useAnimationControls, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { fontNav } from "@/lib/fonts";
 
-export default function DesktopMenu() {
+const letterVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: (i) => ({
+    opacity: 1,
+    y: [20, -4, 0],
+    transition: {
+      delay: i * 0.05,
+      duration: 0.5,
+      ease: [0.34, 1.56, 0.64, 1],
+    },
+  }),
+};
 
+const AnimatedLetters = memo(function AnimatedLetters({ text }) {
+  return (
+
+    <motion.span
+      initial="hidden"
+      animate="show"
+      variants={{
+        show: {
+          transition: { staggerChildren: 0.04, delayChildren: 0.15 },
+        },
+      }}
+      className="inline-block"
+    >
+
+      {text.split("").map((char, i) => (
+
+        <motion.span
+          key={`${char}-${i}`}
+          custom={i}
+          variants={letterVariants}
+          className="inline-block"
+        >
+
+          {char === " " ? "\u00A0" : char}
+
+        </motion.span>
+
+      ))}
+
+    </motion.span>
+
+  );
+
+});
+
+function DesktopMenuInner() {
   const pathname = usePathname();
   const controls = useAnimationControls();
-
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     let cancelled = false;
 
     const run = async () => {
-
       if (shouldReduceMotion) {
         controls.set("show");
         return;
@@ -30,8 +75,6 @@ export default function DesktopMenu() {
       if (cancelled) return;
 
       await controls.start("show");
-      if (cancelled) return;
-
     };
 
     run();
@@ -43,9 +86,11 @@ export default function DesktopMenu() {
 
   const linkClass = (path) =>
     `transition-colors duration-300 ease-in-out focus-visible:ring-2 focus-visible:ring-black/70 px-1 rounded-sm
-     ${pathname === path
-      ? "text-blue-900/95 font-bold cursor-default"
-      : "hover:text-blue-900/95 text-black/95"}`;
+     ${
+       pathname === path
+         ? "text-cyan-600 font-bold cursor-default"
+         : "hover:text-cyan-700 text-black/95"
+     }`;
 
   const container = {
     hidden: { opacity: 0 },
@@ -67,7 +112,6 @@ export default function DesktopMenu() {
       scale: 1,
       rotate: 0,
     }),
-
     show: {
       opacity: 1,
       y: 0,
@@ -78,11 +122,8 @@ export default function DesktopMenu() {
         opacity: { duration: 0.8, ease: [0.25, 0.8, 0.25, 1] },
         y: { duration: 0.8, ease: [0.25, 0.8, 0.25, 1] },
         x: { duration: 0.8, ease: [0.25, 0.8, 0.25, 1] },
-        scale: { duration: 0.3, ease: "easeOut" },
-        rotate: { duration: 0.3, ease: "easeOut" },
       },
     },
-
     hover: {
       scale: 1.06,
       rotate: -0.5,
@@ -90,53 +131,12 @@ export default function DesktopMenu() {
     },
   };
 
-  const letterVariants = {
-    hidden: { opacity: 0, y: 20 },
-    show: (i) => ({
-      opacity: 1,
-      y: [20, -4, 0],
-      transition: {
-        delay: i * 0.05,
-        duration: 0.5,
-        ease: [0.34, 1.56, 0.64, 1],
-      },
-    }),
-  };
-
-  const AnimatedLetters = ({ text }) => (
-    <motion.span
-      initial="hidden"
-      animate="show"
-      variants={{
-        show: {
-          transition: { staggerChildren: 0.04, delayChildren: 0.15 },
-        },
-      }}
-      className="inline-block"
-    >
-
-      {text.split("").map((char, i) => (
-
-        <motion.span
-          key={i}
-          custom={i}
-          variants={letterVariants}
-          className="inline-block"
-        >
-
-          {char === " " ? "\u00A0" : char}
-
-        </motion.span>
-
-      ))}
-
-    </motion.span>
-
-  );
-
   return (
 
-    <nav aria-label="Menu principale desktop">
+    <nav
+      aria-label="Menu principale desktop"
+    >
+
       <motion.ul
         variants={container}
         initial="hidden"
@@ -164,7 +164,9 @@ export default function DesktopMenu() {
               aria-current={pathname === item.href ? "page" : undefined}
             >
 
-              <AnimatedLetters text={item.label} />
+              <AnimatedLetters
+                text={item.label}
+              />
 
             </Link>
 
@@ -179,3 +181,5 @@ export default function DesktopMenu() {
   );
 
 }
+
+export default memo(DesktopMenuInner);

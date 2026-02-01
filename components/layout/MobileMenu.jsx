@@ -6,18 +6,17 @@ import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
+
 import { fontCursive, fontMono, fontMonoSpecial, fontNav } from "@/lib/fonts";
 
 export default function MobileMenu({ isOpen, toggleMenu, closeMenu }) {
   const pathname = usePathname();
 
-  // BLOCCA LO SCROLL QUANDO IL MENU E' APERTO
   useEffect(() => {
     document.body.classList.toggle("overflow-hidden", isOpen);
     return () => document.body.classList.remove("overflow-hidden");
   }, [isOpen]);
 
-  // CHIUDE IL MENU QUANDO CAMBIA ROUTE
   useEffect(() => {
     closeMenu();
   }, [pathname, closeMenu]);
@@ -25,8 +24,7 @@ export default function MobileMenu({ isOpen, toggleMenu, closeMenu }) {
   const links = [
     { href: "/", label: "Home" },
     { href: "/cv", label: "CV" },
-    { href: "/impianti-sportivi", label: "Impianti Sportivi" },
-    { href: "/elenco-progetti", label: "Elenco Progetti" },
+    { href: "/progetti", label: "Progetti" },
     { href: "/work-in-progress", label: "Work in Progress" },
     { href: "/contatti", label: "Contatti" },
   ];
@@ -44,25 +42,55 @@ export default function MobileMenu({ isOpen, toggleMenu, closeMenu }) {
         aria-controls="mobile-navigation"
         aria-expanded={isOpen}
         aria-haspopup="menu"
-        className={`fixed top-1 right-1 z-90 w-12 h-12
-                    flex flex-col justify-center items-center group
+        className={`fixed
+                    top-1
+                    right-1
+                    z-90
+                    w-12
+                    h-12
+                    flex
+                    flex-col
+                    justify-center
+                    items-center
+                    group
                     ${isOpen ? "text-red-400" : "text-black"}`}
       >
+
         <motion.span
-          className="block w-5 h-0.5 bg-current mb-1 rounded origin-center"
+          className="block
+                     w-5
+                     h-0.5
+                     bg-current
+                     mb-1
+                     rounded
+                     origin-center"
           animate={isOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
           transition={{ duration: 0.25, ease: "easeInOut" }}
         />
+
         <motion.span
-          className="block w-5 h-0.5 bg-current mb-1 rounded origin-center"
+          className="block
+                     w-5
+                     h-0.5
+                     bg-current
+                     mb-1
+                     rounded
+                     origin-center"
           animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
           transition={{ duration: 0.2, ease: "easeInOut" }}
         />
+
         <motion.span
-          className="block w-5 h-0.5 bg-current rounded origin-center"
+          className="block
+                     w-5
+                     h-0.5
+                     bg-current
+                     rounded
+                     origin-center"
           animate={isOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
           transition={{ duration: 0.25, ease: "easeInOut" }}
         />
+
       </button>
 
       <AnimatePresence>
@@ -77,16 +105,25 @@ export default function MobileMenu({ isOpen, toggleMenu, closeMenu }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -40 }}
             transition={{ duration: 0.6, ease: [0.25, 0.8, 0.25, 1] }}
-            className="fixed inset-0 z-70
-                       flex flex-col items-center justify-center
-                       overflow-hidden h-screen w-screen"
+            className="fixed
+                       inset-0
+                       z-70
+                       flex
+                       flex-col
+                       items-center
+                       justify-center
+                       overflow-hidden
+                       h-screen
+                       w-screen"
           >
 
-            {/* Background statico */}
             <div
-              className="absolute inset-0
+              className="absolute
+                         inset-0
                          bg-linear-to-b
-                         from-neutral-950 via-neutral-900 to-neutral-950"
+                         from-neutral-950
+                         via-neutral-900
+                         to-neutral-950"
             />
 
             <div
@@ -106,10 +143,10 @@ export default function MobileMenu({ isOpen, toggleMenu, closeMenu }) {
 
                 <div
                   className={`${fontMonoSpecial.className}
-                              text-xl
+                              text-lg
                               mb-1
                               tracking-widest
-                              text-blue-300/90`}
+                              text-cyan-600`}
                 >
 
                   A
@@ -139,7 +176,7 @@ export default function MobileMenu({ isOpen, toggleMenu, closeMenu }) {
                                 text-4xl
                                 font-extrabold
                                 tracking-widest
-                                text-red-400`}
+                                text-red-700`}
                   >
 
                     &amp; Partners
