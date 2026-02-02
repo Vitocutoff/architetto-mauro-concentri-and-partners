@@ -1,35 +1,43 @@
-// /components/home/HeroSection.jsx
-
 "use client";
 
 import { motion, useScroll, useTransform, useReducedMotion, useInView } from "framer-motion";
 import Image from "next/image";
 import { useRef } from "react";
+
 import LogoCard from "@/components/home/LogoCard";
 
 export default function HeroSection() {
   const ref = useRef(null);
   const reduceMotion = useReducedMotion();
-  const inView = useInView(ref, { once: false, amount: 0.35 });
+
+  const inView = useInView(ref, { once: true, amount: 0.35 });
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
 
-  // Animazioni Hero Section
-  const opacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.25, 0.65], [1, 0.92, 0.8]);
-  const y = useTransform(scrollYProgress, [0, 0.65], [0, -80]);
-  const x = useTransform(scrollYProgress, [0, 0.65], [0, -100]);
-  const rotate = useTransform(scrollYProgress, [0, 0.65], [0, -3]);
+  const opacityT = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
+  const scaleT = useTransform(scrollYProgress, [0, 0.25, 0.65], [1, 0.92, 0.8]);
+  const yT = useTransform(scrollYProgress, [0, 0.65], [0, -80]);
+  const xT = useTransform(scrollYProgress, [0, 0.65], [0, -100]);
+  const rotateT = useTransform(scrollYProgress, [0, 0.65], [0, -3]);
 
-  // Sfondo parallax
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
-  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  const bgYT = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+  const bgScaleT = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
 
-  // Hint scroll (fade-out con scroll)
-  const hintOpacity = useTransform(scrollYProgress, [0, 0.2, 0.4], [1, 1, 0]);
+  const hintOpacityT = useTransform(scrollYProgress, [0, 0.2, 0.4], [1, 1, 0]);
+
+  const opacity = reduceMotion ? 1 : opacityT;
+  const scale = reduceMotion ? 1 : scaleT;
+  const y = reduceMotion ? 0 : yT;
+  const x = reduceMotion ? 0 : xT;
+  const rotate = reduceMotion ? 0 : rotateT;
+
+  const bgY = reduceMotion ? "0%" : bgYT;
+  const bgScale = reduceMotion ? 1 : bgScaleT;
+
+  const hintOpacity = reduceMotion ? 1 : hintOpacityT;
 
   const sportEImpiantiUrl = "https://www.sporteimpianti.it/?aziende_mappa=mauro-concentri-edilizia-pubblica-impiantisca-sportiva";
 
@@ -54,7 +62,7 @@ export default function HeroSection() {
                  bg-white"
     >
 
-      {/* SFONDO BASE (BIANCO) */}
+      {/* SFONDO BASE */}
       <div
         className="absolute
                    inset-0
@@ -93,7 +101,6 @@ export default function HeroSection() {
                      object-center"
         />
 
-        {/* SFUMATURA PER LEGGIBILITÀ */}
         <div
           className="absolute
                      inset-0
@@ -106,17 +113,18 @@ export default function HeroSection() {
 
       </motion.div>
 
-      {/* Badge Sport&Impianti */}
       <motion.a
         href={sportEImpiantiUrl}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Apri la pubblicazione dello studio su Sport&Impianti (si apre in una nuova scheda)"
-        className="absolute z-20
+        className="absolute
+                   z-20
                    top-24
                    sm:top-28
                    lg:top-20
-                   left-1/2 -translate-x-1/2
+                   left-1/2
+                   -translate-x-1/2
                    text-center
                    select-none
                    lg:left-8
@@ -124,12 +132,13 @@ export default function HeroSection() {
                    lg:text-left"
         initial={{ opacity: 0, y: -8 }}
         animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: reduceMotion ? 0 : 1.0 }}
-        whileHover={reduceMotion ? undefined : { y: -1 }}
-        style={{
-          willChange: "transform, opacity",
-          transform: "translateZ(0)",
+        transition={{
+          duration: 0.8,
+          ease: [0.22, 1, 0.36, 1],
+          delay: reduceMotion ? 0 : 1.0,
         }}
+        whileHover={reduceMotion ? undefined : { y: -1 }}
+        style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
       >
 
         <div
@@ -142,7 +151,7 @@ export default function HeroSection() {
                      sm:text-xs
                      uppercase
                      tracking-[0.28em]
-                     text-black/65"
+                     text-black/70"
         >
 
           <span>
@@ -169,14 +178,14 @@ export default function HeroSection() {
                      justify-center
                      lg:justify-start
                      gap-2
-                     text-green-500/80"
+                     text-green-600"
         >
 
           <span
             className="font-semibold
                        tracking-[0.22em]
                        [text-decoration:overline]
-                       decoration-green-500/55
+                       decoration-green-700
                        decoration-1px"
           >
 
@@ -187,8 +196,8 @@ export default function HeroSection() {
           <span
             className="font-medium
                        tracking-[0.06em]
-                       text-lg
-                       text-green-600/80
+                       text-xl
+                       text-green-700
                        -mx-1"
             aria-label="e"
           >
@@ -201,7 +210,7 @@ export default function HeroSection() {
             className="font-semibold
                        tracking-[0.22em]
                        [text-decoration:underline]
-                       decoration-green-500/55
+                       decoration-green-700
                        decoration-1px
                        underline-offset-4"
           >
@@ -217,7 +226,7 @@ export default function HeroSection() {
                      text-[12px]
                      sm:text-[13px]
                      tracking-wide
-                     text-black/55
+                     text-black/60
                      normal-case"
         >
 
@@ -248,9 +257,9 @@ export default function HeroSection() {
 
       </motion.div>
 
-      {/* Hint scroll */}
       <motion.div
-        className="absolute z-10
+        className="absolute
+                   z-10
                    bottom-[calc(env(safe-area-inset-bottom)+9.5rem)]
                    sm:bottom-8
                    md:bottom-12
@@ -263,7 +272,11 @@ export default function HeroSection() {
         style={{ opacity: hintOpacity, willChange: "opacity" }}
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : { opacity: 0 }}
-        transition={{ delay: reduceMotion ? 0 : 0.8, duration: 1.2, ease: "easeOut" }}
+        transition={{
+          delay: reduceMotion ? 0 : 0.8,
+          duration: 1.2,
+          ease: "easeOut",
+        }}
       >
 
         <motion.span
@@ -271,8 +284,14 @@ export default function HeroSection() {
                      tracking-widest
                      font-light
                      uppercase"
-          animate={reduceMotion ? undefined : { opacity: [1, 0.6, 1], y: [0, -4, 0] }}
-          transition={reduceMotion ? undefined : { repeat: Infinity, duration: 2.8, ease: "easeInOut" }}
+          animate={
+            reduceMotion ? undefined : { opacity: [1, 0.6, 1], y: [0, -4, 0] }
+          }
+          transition={
+            reduceMotion
+              ? undefined
+              : { repeat: Infinity, duration: 2.8, ease: "easeInOut" }
+          }
         >
 
           Scroll
@@ -289,7 +308,11 @@ export default function HeroSection() {
           strokeWidth="1.4"
           className="mt-1"
           animate={reduceMotion ? undefined : { y: [0, 6, 0] }}
-          transition={reduceMotion ? undefined : { repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
+          transition={
+            reduceMotion
+              ? undefined
+              : { repeat: Infinity, duration: 2.5, ease: "easeInOut" }
+          }
           aria-hidden="true"
         >
 

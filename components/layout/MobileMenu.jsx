@@ -176,7 +176,7 @@ export default function MobileMenu({ isOpen, toggleMenu, closeMenu }) {
                                 text-4xl
                                 font-extrabold
                                 tracking-widest
-                                text-red-700`}
+                                text-red-400`}
                   >
 
                     &amp; Partners

@@ -1,9 +1,9 @@
 "use client";
 
-import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import Image from "next/image";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+
 import { fontCursive, fontSans, fontSerif } from "@/lib/fonts";
 
 function PlayIcon({ className = "" }) {
@@ -31,17 +31,22 @@ function PlayIcon({ className = "" }) {
 
 function MicroLabel({ children, align = "left" }) {
   return (
+
     <div
       className={["hidden lg:flex items-center gap-3 text-[11px] tracking-[0.22em] uppercase text-black/45 select-none",
         align === "right" ? "justify-end" : "justify-start",
       ].join(" ")}
       aria-hidden="true"
     >
+
       {align === "left" && <span className="h-px w-25 bg-black/15" />}
       <span className="leading-none">{children}</span>
       {align === "right" && <span className="h-px w-25 bg-black/15" />}
+
     </div>
+
   );
+
 }
 
 export default function IntroSection() {
@@ -78,8 +83,6 @@ export default function IntroSection() {
       transition: { duration: reduceMotion ? 0 : 0.42, ease: "easeOut" },
     },
   };
-
-  const year = new Date().getFullYear();
 
   useEffect(() => {
     if (!isVideoOpen) return;
@@ -151,7 +154,6 @@ export default function IntroSection() {
         aria-hidden="true"
       />
 
-      {/* CONTENUTO */}
       <motion.div
         initial={{ opacity: 0, scale: 0.98 }}
         animate={inView ? { opacity: 1, scale: 1 } : {}}
@@ -171,7 +173,6 @@ export default function IntroSection() {
                      max-w-300"
         >
 
-          {/* TOP */}
           <div
             className="grid
                        grid-cols-1
@@ -184,7 +185,7 @@ export default function IntroSection() {
                        lg:text-left
                        lg:justify-items-stretch"
           >
-            {/* Sinistra - Citazione */}
+
             <div
               className="lg:col-span-7
                          flex
@@ -233,7 +234,6 @@ export default function IntroSection() {
 
               </motion.blockquote>
 
-              {/* CTA */}
               <motion.button
                 type="button"
                 onClick={() => setIsVideoOpen(true)}
@@ -272,7 +272,8 @@ export default function IntroSection() {
                                w-12
                                rounded-full
                                bg-red-600
-                               text-white shadow-[0_10px_30px_rgba(0,0,0,0.18)]"
+                               text-white
+                               shadow-[0_10px_30px_rgba(0,0,0,0.18)]"
                     whileHover={reduceMotion ? undefined : { scale: 1.04 }}
                   >
 
@@ -379,7 +380,7 @@ export default function IntroSection() {
             <div
               className="lg:col-span-5
                          flex
-                         ustify-center
+                         justify-center
                          lg:justify-end"
             >
 
