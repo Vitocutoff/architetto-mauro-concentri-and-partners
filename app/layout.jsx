@@ -28,7 +28,9 @@ export default function RootLayout({ children }) {
                    selection:text-white"
       >
 
-        <ClientShell>
+        <ClientShell
+          footer={<Footer />}
+        >
 
           <Header />
 
@@ -61,8 +63,6 @@ export default function RootLayout({ children }) {
           </main>
 
           <ScrollToTop />
-
-          <Footer />
 
         </ClientShell>
 
