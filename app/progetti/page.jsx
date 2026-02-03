@@ -3,6 +3,12 @@ import { progettiCategories } from "@/data/progetti";
 import Background from "@/components/progetti/Background";
 import ProgettiPageClient from "@/components/progetti/ProgettiPageClient";
 
+export const metadata = {
+  title: "Progetti",
+  description: "Selezione di progetti: impiantistica sportiva, edilizia e interventi pubblici e privati.",
+};
+
+
 export default function ProgettiPage() {
   const categories = progettiCategories;
 

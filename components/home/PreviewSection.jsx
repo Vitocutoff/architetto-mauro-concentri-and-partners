@@ -99,7 +99,7 @@ export default function PreviewSection() {
                      linear-gradient(135deg,rgba(0,0,0,0.03)_1px,transparent_1px),
                      linear-gradient(315deg,rgba(0,0,0,0.02)_1px,transparent_1px)]
                    bg-size-[60px_60px]
-                   opacity-35"
+                   opacity-20"
         aria-hidden="true"
       />
 

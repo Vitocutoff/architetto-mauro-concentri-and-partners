@@ -7,18 +7,18 @@ export default function CvSidebarBlock({ title, children, compact = false }) {
       className="rounded-2xl
                  border
                  border-zinc-200
-                 bg-white/92
-                 shadow-[0_10px_30px_rgba(0,0,0,0.06)]"
+                 bg-white/92 shadow-[0_10px_30px_rgba(0,0,0,0.06)]"
     >
 
       <div
-        className={compact ? "p-4" : "p-5"}
+        className={compact ? "p-4 sm:p-5" : "p-5 sm:p-6"}
       >
 
         <h3
           className="text-sm
                      font-semibold
                      tracking-tight
+                     leading-tight
                      text-zinc-900"
         >
 
@@ -30,7 +30,7 @@ export default function CvSidebarBlock({ title, children, compact = false }) {
           className={compact ? "mt-3" : "mt-4"}
         >
 
-          {children}
+            {children}
 
         </div>
 

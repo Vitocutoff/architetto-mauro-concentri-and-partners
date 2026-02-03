@@ -3,7 +3,12 @@
 import CvEntry from "@/components/cv/CvEntry";
 import CvSection from "@/components/cv/CvSection";
 import CvSidebarBlock from "@/components/cv/CvSidebarBlock";
-import { fontMono, fontSans, fontSerif } from "@/lib/fonts";
+import { fontSans, fontSerif } from "@/lib/fonts";
+
+export const metadata = {
+  title: "CV",
+  description: "Curriculum professionale e incarichi principali dello studio.",
+};
 
 function Fact({ k, v }) {
   return (
@@ -12,7 +17,8 @@ function Fact({ k, v }) {
       className="rounded-xl
                  border
                  border-zinc-200
-                 bg-white/80 px-4
+                 bg-white/80
+                 px-4
                  py-3"
     >
 
@@ -49,8 +55,8 @@ export default function CVPage() {
       k: "Albo",
       v: (
         <>
-          Iscrizione all’Albo degli Architetti PPC – Provincia di Vicenza,{" "}
-          <strong>n. 689</strong> (dal <strong>1989</strong>)
+          Iscrizione all’Albo degli Architetti PPC – Provincia di Vicenza, <strong>n. 689</strong> (dal{" "}
+          <strong>1989</strong>)
         </>
       ),
     },
@@ -67,8 +73,8 @@ export default function CVPage() {
       k: "Sicurezza",
       v: (
         <>
-          Coordinatore <strong>CSP/CSE</strong> (dal <strong>2008</strong>) — aggiornamento valido
-          fino al <strong>10/05/2029</strong>
+          Coordinatore <strong>CSP/CSE</strong> (dal <strong>2008</strong>) — aggiornamento valido fino al{" "}
+          <strong>10/05/2029</strong>
         </>
       ),
     },
@@ -76,7 +82,7 @@ export default function CVPage() {
 
   const didattica = [
     {
-      period: "Dal 2006 - oggi",
+      period: "Dal 2006 — oggi",
       title: (
         <>
           Docente di <em>Tecnologia</em>
@@ -86,7 +92,7 @@ export default function CVPage() {
       note: null,
     },
     {
-      period: "1989–2006",
+      period: "1989 — 2006",
       title: (
         <>
           Docente — <em>Tecnologia</em>
@@ -94,8 +100,7 @@ export default function CVPage() {
       ),
       place: (
         <>
-          Istituto Maria Immacolata “Leone XIII” — Scuola paritaria, Montecchio
-          Maggiore (VI)
+          Istituto Maria Immacolata “Leone XIII” — Scuola paritaria, Montecchio Maggiore (VI)
         </>
       ),
       note: null,
@@ -117,13 +122,17 @@ export default function CVPage() {
 
   const pubblicaAmministrazione = [
     {
-      period: "Dal 2020 - oggi",
+      period: "Dal 2020 — oggi",
       title: <>Omologatore regionale</>,
-      place: <><strong>F.I.S.R.</strong> — Federazione Italiana Sport Rotellistici</>,
+      place: (
+        <>
+          <strong>F.I.S.R.</strong> — Federazione Italiana Sport Rotellistici
+        </>
+      ),
       note: null,
     },
     {
-      period: "2016–2017",
+      period: "2016 — 2017",
       title: <>Fondazione I.U.A.V. di Venezia</>,
       place: (
         <>
@@ -133,7 +142,7 @@ export default function CVPage() {
       note: null,
     },
     {
-      period: "Dal 2010 — Oggi",
+      period: "Dal 2010 — oggi",
       title: (
         <>
           Membro CEC esperto <strong>BB.AA.</strong>
@@ -143,13 +152,13 @@ export default function CVPage() {
       note: null,
     },
     {
-      period: "2010–2012",
+      period: "2010 — 2012",
       title: <>C.O.N.I. – Comitato Provinciale di Vicenza</>,
       place: <>Consulente per l’impiantistica sportiva</>,
       note: null,
     },
     {
-      period: "Dal 2002 — Oggi",
+      period: "Dal 2002 — oggi",
       title: (
         <>
           Commissione Vigilanza Pubblici Spettacoli (<strong>Prefettizia</strong>) — impianti sportivi
@@ -163,7 +172,7 @@ export default function CVPage() {
       note: null,
     },
     {
-      period: "2002–2015",
+      period: "2002 — 2015",
       title: <>Commissioni Vigilanza Pubblici Spettacoli Comunali — impianti sportivi</>,
       place: (
         <>
@@ -173,13 +182,13 @@ export default function CVPage() {
       note: null,
     },
     {
-      period: "2001–2009",
+      period: "2001 — 2009",
       title: <>C.O.N.I. – Comitato Provinciale di Vicenza</>,
       place: <>Vice consulente per l’impiantistica sportiva</>,
       note: null,
     },
     {
-      period: "2006–2007",
+      period: "2006 — 2007",
       title: (
         <>
           Membro CEC esperto <strong>BB.AA.</strong>
@@ -189,13 +198,13 @@ export default function CVPage() {
       note: null,
     },
     {
-      period: "2000–2005",
+      period: "2000 — 2005",
       title: <>Membro CEC</>,
       place: <>Comune di Creazzo (VI)</>,
       note: null,
     },
     {
-      period: "1996–1998",
+      period: "1996 — 1998",
       title: <>Assessore all’Urbanistica ed Edilizia Privata</>,
       place: <>Comune di Sovizzo (VI)</>,
       note: null,
@@ -204,8 +213,12 @@ export default function CVPage() {
 
   return (
 
-    <main
-      className="relative"
+    <section
+      className="relative
+                 w-screen
+                 left-1/2
+                 -translate-x-1/2
+                 overflow-hidden"
     >
 
       <div
@@ -221,6 +234,7 @@ export default function CVPage() {
       >
 
         <header>
+
           <div
             className="inline-flex
                        items-center
@@ -288,10 +302,10 @@ export default function CVPage() {
                 className="space-y-3"
               >
 
-                {abilitazioni.map((a, i) => (
+                {abilitazioni.map((a) => (
 
                   <Fact
-                    key={i}
+                    key={a.k}
                     k={a.k}
                     v={a.v}
                   />
@@ -311,10 +325,10 @@ export default function CVPage() {
                 className="space-y-4"
               >
 
-                {didattica.map((e, i) => (
+                {didattica.map((e) => (
 
                   <CvEntry
-                    key={i} {...e}
+                    key={`${e.period}-${String(e.place)}`} {...e}
                   />
 
                 ))}
@@ -332,10 +346,10 @@ export default function CVPage() {
                 className="space-y-4"
               >
 
-                {editoriale.map((e, i) => (
+                {editoriale.map((e) => (
 
                   <CvEntry
-                    key={i} {...e}
+                    key={`${e.period}-${String(e.title)}`} {...e}
                   />
 
                 ))}
@@ -359,7 +373,7 @@ export default function CVPage() {
               {pubblicaAmministrazione.map((e, i) => (
 
                 <CvEntry
-                  key={i} {...e}
+                  key={`${e.period}-${i}`} {...e}
                 />
 
               ))}
@@ -372,7 +386,7 @@ export default function CVPage() {
 
       </div>
 
-    </main>
+    </section>
 
   );
 
