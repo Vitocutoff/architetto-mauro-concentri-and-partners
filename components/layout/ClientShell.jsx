@@ -1,19 +1,29 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { MotionConfig } from "framer-motion";
+
 import CookieBanner from "@/components/layout/CookieBanner";
 
 export default function ClientShell({ children, footer = null }) {
   const pathname = usePathname();
 
-  // Solo in /contatti non vogliamo il footer
   const hideFooter = pathname === "/contatti";
 
   return (
-    <>
+
+    <MotionConfig
+      reducedMotion="never"
+    >
+
       <CookieBanner />
+
       {children}
+
       {!hideFooter ? footer : null}
-    </>
+
+    </MotionConfig>
+
   );
+
 }

@@ -276,29 +276,64 @@ export default function Footer() {
                      items-center
                      justify-center"
         >
-          <h2 id="footer-address" className="sr-only">
+
+          <h2
+            id="footer-address"
+            className="sr-only"
+          >
+
             Indirizzo e social
+
           </h2>
 
-          <p className={`${fontSerif.className} text-lg mb-3 text-neutral-200`}>
+          <p
+            className={`${fontSerif.className}
+                        text-lg
+                        mb-3
+                        text-neutral-200`}
+          >
+
             Corso Padova, 65 – 36100 Vicenza
+
           </p>
 
-          <p className="mb-1">
+          <p
+            className="mb-1"
+          >
+
             C.F.{" "}
-            <span className={`${fontSerif.className} text-gray-200`}>
+
+            <span
+              className={`${fontSerif.className}
+                          text-gray-200`}
+            >
+
               CNCMRA62L07Z103J
+
             </span>
+
           </p>
 
           <p className="mb-6">
             P.IVA{" "}
-            <span className={`${fontSerif.className} text-gray-200`}>
+            <span
+              className={`${fontSerif.className}
+                          text-gray-200`}
+            >
+
               02069980247
+
             </span>
+
           </p>
 
-          <div className="flex justify-center gap-x-6 text-2xl">
+          <div
+            className="flex
+                       justify-center
+                       gap-x-6
+                       text-2xl"
+          >
+
             <a
               href="https://facebook.com"
               aria-label="Profilo Facebook"
@@ -313,7 +348,9 @@ export default function Footer() {
                          rounded-sm
                          hover:scale-110"
             >
+
               <FaFacebookF />
+
             </a>
 
             <a
@@ -330,7 +367,9 @@ export default function Footer() {
                          rounded-sm
                          hover:scale-110"
             >
+
               <FaLinkedinIn />
+
             </a>
 
             <a
@@ -347,10 +386,15 @@ export default function Footer() {
                          rounded-sm
                          hover:scale-110"
             >
+
               <FaInstagram />
+
             </a>
+
           </div>
+
         </section>
+
       </div>
 
       <motion.div
@@ -368,7 +412,9 @@ export default function Footer() {
                    border-t
                    border-neutral-200/60"
       >
+
         © {year} Architetto Mauro Concentri &amp; Partners ·{" "}
+
         <Link
           href="/privacy-policy"
           className="underline
@@ -380,9 +426,15 @@ export default function Footer() {
                      focus-visible:ring-black/50
                      rounded-sm"
         >
+
           Privacy Policy
+
         </Link>
+
       </motion.div>
+
     </motion.footer>
+
   );
+
 }

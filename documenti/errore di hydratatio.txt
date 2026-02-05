@@ -1,0 +1,512 @@
+## Error Type
+Console Error
+
+## Error Message
+A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+      <LoadingBoundary name="/" loading={null}>
+        <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
+          <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<SegmentViewNode>} forbidden={undefined} ...>
+            <RedirectBoundary>
+              <RedirectErrorBoundary router={{...}}>
+                <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} segmentPath={[...]} ...>
+                  <SegmentViewNode type="page" pagePath="page.jsx">
+                    <SegmentTrieNode>
+                    <HomePage>
+                      <HomePage>
+                        <HeroSection>
+                          <section ref={{current:null}} role="banner" aria-label="Sezione in..." ...>
+                            <div>
+                            <motion.div>
+                            <motion.a>
+                            <motion.div initial={{opacity:0, ...}} animate={{opacity:1,scale:1,y:0}} ...>
+                              <div
+                                className="relative   z-10"
+                                style={{
++                                 opacity: 0
+-                                 opacity: "0"
++                                 willChange: "transform, opacity"
++                                 transform: "translateY(60px) scale(0.9)"
+-                                 transform: "translateY(60px) scale(0.9)"
+-                                 will-change: "transform, opacity"
+                                }}
+                                ref={function useMotionRef.useCallback}
+                              >
+                            <motion.div className="absolute  ..." style={{opacity:1, ...}} initial={{opacity:0}} ...>
+                              <div
+                                className="absolute   z-10   bottom-[calc(env(safe-area-inset-bottom)+9.5rem)]   sm:bo..."
++                               style={{opacity:0,willChange:"opacity"}}
+-                               style={{will-change:"opacity",opacity:"0"}}
+                                ref={function useMotionRef.useCallback}
+                              >
+                      ...
+                        <div className="mx-auto   ...">
+                          <div>
+                          <div className="mt-14   md...">
+                            <div>
+                            <div>
+                            <div>
+                            <div className="relative  ...">
+                              ...
+                                <p className={"plus_jak..."} style={{}} ref={function useMotionRef.useCallback}>
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     Nel
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     1989
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     ho
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     iniziato
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     la
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     mia
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     attività
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     di
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     professionista,
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     occupandomi
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     di
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     urbanistica,
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     edilizia
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     privata,
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     edilizia
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     industriale
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     e
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     lavori
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     pubblici
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     soprattutto
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     nel
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     settore
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     degli
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     impianti
+                                  <motion.span className="inline-blo..." variants={{hidden:{...}, ...}}>
+                                    <span
+                                      className="inline-block   mr-1"
+                                      style={{
++                                       opacity: 0
+-                                       opacity: "0"
++                                       transform: "none"
+-                                       transform: "translateY(14px)"
+                                      }}
+                                      ref={function useMotionRef.useCallback}
+                                    >
++                                     sportivi.
+                              <motion.div initial={{opacity:0,y:0}} animate={{opacity:0,y:0}} ...>
+                                <div
+                                  className="lg:col-span-5   lg:col-start-1   text-center   lg:text-left   lg:translat..."
+                                  style={{
++                                   opacity: 0
+-                                   opacity: "0"
++                                   transform: "none"
+-                                   transform: "translateY(14px)"
+                                  }}
+                                  ref={function useMotionRef.useCallback}
+                                >
+                              <motion.div initial={{opacity:0,y:0}} animate={{opacity:0,y:0}} ...>
+                                <div
+                                  className="lg:col-span-4   lg:col-start-8   mt-2   lg:mt-12"
+                                  style={{
++                                   opacity: 0
+-                                   opacity: "0"
++                                   transform: "none"
+-                                   transform: "translateY(14px)"
+                                  }}
+                                  ref={function useMotionRef.useCallback}
+                                >
+                      ...
+                        <div className="mx-auto   ...">
+                          <div>
+                          <div className="mt-12   gr...">
+                            <div className="lg:col-spa...">
+                              <motion.article style={{y:0, ...}} initial={{opacity:0,y:18}} whileInView={{opacity:1,y:0}} ...>
+                                <article
++                                 className={"relative rounded-2xl overflow-hidden border border-black/10 bg-white/55..."}
+-                                 className="relative rounded-2xl overflow-hidden border border-black/10 bg-white/55 s..."
+                                  style={{willChange:"transform",opacity:0,transform:"translateY..."}}
+                                  ref={function useMotionRef.useCallback}
+                                >
+                              <motion.article style={{y:0, ...}} initial={{opacity:0,y:18}} whileInView={{opacity:1,y:0}} ...>
+                                <article
++                                 className={"relative rounded-2xl overflow-hidden border border-black/10 bg-white/55..."}
+-                                 className={"relative rounded-2xl overflow-hidden border border-black/10 bg-white/55..."}
+                                  style={{willChange:"transform",opacity:0,transform:"translateY..."}}
+                                  ref={function useMotionRef.useCallback}
+                                >
+                            <div className="lg:col-spa...">
+                              <motion.article style={{y:0, ...}} initial={{opacity:0,y:18}} whileInView={{opacity:1,y:0}} ...>
+                                <article
++                                 className={"relative rounded-2xl overflow-hidden border border-black/10 bg-white/55..."}
+-                                 className="relative rounded-2xl overflow-hidden border border-black/10 bg-white/55 s..."
+                                  style={{willChange:"transform",opacity:0,transform:"translateY..."}}
+                                  ref={function useMotionRef.useCallback}
+                                >
+                                  <div>
+                                  <a href="/progetti" className="block">
+                                    <div className="relative  ...">
+                                      <img
+                                        alt={"Anteprima progetto: Palestre & Palazzetti"}
+                                        fetchPriority={undefined}
+                                        loading="lazy"
+                                        width={undefined}
+                                        height={undefined}
+                                        decoding="async"
+                                        data-nimg="fill"
++                                       className={"object-cover object-center "}
+-                                       className="object-cover object-center transition-transform duration-1400 ease-..."
+                                        style={{position:"absolute",height:"100%",width:"100%",left:0,top:0,right:0,bottom:0,objectFit:undefined, ...}}
+                                        sizes="(max-width: 1024px) 100vw, 35vw"
+                                        srcSet={"/_next/image?url=%2Fimages%2FbgCard1.jpg&w=128&q=75 128w, /_next/ima..."}
+                                        src={"/_next/image?url=%2Fimages%2FbgCard1.jpg&w=2560&q=75"}
+                                        ref={function}
+                                        onLoad={function onLoad}
+                                        onError={function onError}
+                                      >
+                                      ...
+                              <motion.article style={{y:0, ...}} initial={{opacity:0,y:18}} whileInView={{opacity:1,y:0}} ...>
+                                <article
++                                 className={"relative rounded-2xl overflow-hidden border border-black/10 bg-white/55..."}
+-                                 className="relative rounded-2xl overflow-hidden border border-black/10 bg-white/55 s..."
+                                  style={{willChange:"transform",opacity:0,transform:"translateY..."}}
+                                  ref={function useMotionRef.useCallback}
+                                >
+                                  <div>
+                                  <a href="/progetti" className="block">
+                                    <div className="relative  ...">
+                                      <img
+                                        alt="Anteprima progetto: Impianti di Atletica Leggera"
+                                        fetchPriority={undefined}
+                                        loading="lazy"
+                                        width={undefined}
+                                        height={undefined}
+                                        decoding="async"
+                                        data-nimg="fill"
++                                       className={"object-cover object-center "}
+-                                       className="object-cover object-center transition-transform duration-1400 ease-..."
+                                        style={{position:"absolute",height:"100%",width:"100%",left:0,top:0,right:0,bottom:0,objectFit:undefined, ...}}
+                                        sizes="(max-width: 1024px) 100vw, 35vw"
+                                        srcSet={"/_next/image?url=%2Fimages%2FbgCard2.jpg&w=128&q=75 128w, /_next/ima..."}
+                                        src={"/_next/image?url=%2Fimages%2FbgCard2.jpg&w=2560&q=75"}
+                                        ref={function}
+                                        onLoad={function onLoad}
+                                        onError={function onError}
+                                      >
+                                      ...
+                              <motion.article style={{y:0, ...}} initial={{opacity:0,y:18}} whileInView={{opacity:1,y:0}} ...>
+                                <article
++                                 className={"relative rounded-2xl overflow-hidden border border-black/10 bg-white/55..."}
+-                                 className="relative rounded-2xl overflow-hidden border border-black/10 bg-white/55 s..."
+                                  style={{willChange:"transform",opacity:0,transform:"translateY..."}}
+                                  ref={function useMotionRef.useCallback}
+                                >
+                                  <div>
+                                  <a href="/progetti" className="block">
+                                    <div className="relative  ...">
+                                      <img
+                                        alt={"Anteprima progetto: Acquapark & Piscine"}
+                                        fetchPriority={undefined}
+                                        loading="lazy"
+                                        width={undefined}
+                                        height={undefined}
+                                        decoding="async"
+                                        data-nimg="fill"
++                                       className={"object-cover object-center "}
+-                                       className="object-cover object-center transition-transform duration-1400 ease-..."
+                                        style={{position:"absolute",height:"100%",width:"100%",left:0,top:0,right:0,bottom:0,objectFit:undefined, ...}}
+                                        sizes="(max-width: 1024px) 100vw, 35vw"
+                                        srcSet={"/_next/image?url=%2Fimages%2FbgCard3.jpg&w=128&q=75 128w, /_next/ima..."}
+                                        src={"/_next/image?url=%2Fimages%2FbgCard3.jpg&w=2560&q=75"}
+                                        ref={function}
+                                        onLoad={function onLoad}
+                                        onError={function onError}
+                                      >
+                                      ...
+                      ...
+                  ...
+                ...
+
+
+
+    at div (<anonymous>:null:null)
+    at HeroSection (components/home/HeroSection.jsx:239:7)
+    at HomePage (app\page.jsx:15:7)
+
+## Code Frame
+  237 |       </motion.a>
+  238 |
+> 239 |       <motion.div
+      |       ^
+  240 |         initial={{ opacity: 0, scale: 0.9, y: 60 }}
+  241 |         animate={{ opacity: 1, scale: 1, y: 0 }}
+  242 |         transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+
+Next.js version: 16.1.1 (Turbopack)

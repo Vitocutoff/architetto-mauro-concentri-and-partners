@@ -1,5 +1,3 @@
-// /components/layout/DesktopMenu.jsx
-
 "use client";
 
 import React, { memo, useEffect } from "react";
@@ -7,6 +5,7 @@ import { menuItems } from "@/data/menuItems";
 import { motion, useAnimationControls, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
 import { fontNav } from "@/lib/fonts";
 
 const letterVariants = {
@@ -37,7 +36,6 @@ const AnimatedLetters = memo(function AnimatedLetters({ text }) {
     >
 
       {text.split("").map((char, i) => (
-
         <motion.span
           key={`${char}-${i}`}
           custom={i}
@@ -63,25 +61,13 @@ function DesktopMenuInner() {
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
-    let cancelled = false;
+    if (shouldReduceMotion) {
+      controls.set("show");
+      return;
+    }
 
-    const run = async () => {
-      if (shouldReduceMotion) {
-        controls.set("show");
-        return;
-      }
-
-      await controls.start("hidden");
-      if (cancelled) return;
-
-      await controls.start("show");
-    };
-
-    run();
-
-    return () => {
-      cancelled = true;
-    };
+    controls.set("hidden");
+    controls.start("show");
   }, [pathname, controls, shouldReduceMotion]);
 
   const linkClass = (path) =>
@@ -139,7 +125,7 @@ function DesktopMenuInner() {
 
       <motion.ul
         variants={container}
-        initial="hidden"
+        initial={false}
         animate={controls}
         className={`${fontNav.className}
                     flex

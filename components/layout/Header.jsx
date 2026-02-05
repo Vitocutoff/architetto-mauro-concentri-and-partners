@@ -111,9 +111,7 @@ export default function Header() {
                        min-[1280px]:block"
           >
 
-            <DesktopMenu
-              key={pathname}
-            />
+            <DesktopMenu />
 
           </div>
 

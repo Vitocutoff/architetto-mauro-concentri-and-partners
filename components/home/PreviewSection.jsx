@@ -345,6 +345,7 @@ export default function PreviewSection() {
                                   mt-1
                                   text-sm
                                   uppercase
+                                  text-right
                                   text-white/70`}
                     >
 

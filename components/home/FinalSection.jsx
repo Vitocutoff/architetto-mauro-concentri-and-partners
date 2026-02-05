@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-
 import { fontSans, fontSerif } from "@/lib/fonts";
 
 const INITIAL = {
@@ -84,23 +83,32 @@ export default function FinalSection() {
           email: form.email.trim(),
           message: form.message.trim(),
           consent: form.consent,
+          company: form.company,
         }),
       });
 
       if (res.ok) {
         setStatus({
           type: "success",
-          message: "Messaggio inviato correttamente. Ti risponderemo al più presto.",
+          message: "Messaggio inviato. Ti risponderemo al più presto.",
         });
         setForm(INITIAL);
         return;
       }
 
-      window.location.href = buildMailto();
-      setStatus({ type: "info", message: "Apertura del client di posta per completare l’invio." });
+      const text = await res.text().catch(() => "");
+      console.error("POST /api/contact failed:", res.status, text);
+      setStatus({
+        type: "error",
+        message: "Invio non riuscito. Riprova tra poco oppure usa l’email diretta.",
+      });
+      return;
     } catch {
       window.location.href = buildMailto();
-      setStatus({ type: "info", message: "Apertura del client di posta per completare l’invio." });
+      setStatus({
+        type: "info",
+        message: "Apertura del client di posta per completare l’invio.",
+      });
     } finally {
       setSubmitting(false);
     }
@@ -112,54 +120,46 @@ export default function FinalSection() {
   const fieldError = "border-amber-500/70 focus:ring-2 focus:ring-amber-500/25";
   const fieldOk = "border-white/10";
 
-  return (
+  // Status pill (elegante, senza shift layout)
+  const statusStyle =
+    status.type === "success"
+      ? "border-emerald-400/25 bg-emerald-400/10 text-emerald-100"
+      : status.type === "error"
+      ? "border-amber-300/25 bg-amber-300/10 text-amber-100"
+      : status.type === "info"
+      ? "border-white/18 bg-white/8 text-white/80"
+      : "border-transparent bg-transparent text-transparent";
 
+  const statusDot =
+    status.type === "success"
+      ? "bg-emerald-300"
+      : status.type === "error"
+      ? "bg-amber-200"
+      : status.type === "info"
+      ? "bg-white/60"
+      : "bg-transparent";
+
+  return (
     <section
       role="region"
       aria-label="Email"
-      className="relative
-                 w-screen
-                 left-1/2
-                 -translate-x-1/2
-                 overflow-hidden
-                 isolate"
+      className="relative w-screen left-1/2 -translate-x-1/2 overflow-hidden isolate"
     >
-
       {/* BACKGROUND */}
-      <div
-        className="absolute
-                   inset-0
-                   -z-10"
-      >
-
+      <div className="absolute inset-0 -z-10">
         <Image
-          src="/images/bgFinal.jpg"
+          src="/images/bgFinal.png"
           alt="Sfondo architettonico"
           fill
           loading="lazy"
           sizes="100vw"
-          className="object-cover
-                     object-center"
+          className="object-cover object-center"
         />
 
-        <div
-          className="absolute
-                     inset-0
-                     bg-linear-to-b
-                     from-white/45
-                     via-white/10
-                     to-neutral-950/90"
-        />
+        <div className="absolute inset-0 bg-linear-to-b from-white/45 via-white/10 to-neutral-950/90" />
 
         <div
-          className="absolute
-                     -top-28
-                     left-[-12%]
-                     h-152
-                     w-152
-                     rounded-full
-                     blur-2xl
-                     opacity-70"
+          className="absolute -top-28 left-[-12%] h-152 w-152 rounded-full blur-2xl opacity-70"
           style={{
             background:
               "radial-gradient(circle at 35% 35%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.12) 38%, transparent 72%)",
@@ -168,73 +168,27 @@ export default function FinalSection() {
         />
 
         <div
-          className="absolute
-                     inset-0
-                     opacity-[0.11]
-                     mix-blend-overlay
-                     pointer-events-none"
+          className="absolute inset-0 opacity-[0.11] mix-blend-overlay pointer-events-none"
           style={{
             backgroundImage:
               "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E\")",
           }}
           aria-hidden="true"
         />
-
       </div>
 
       {/* Wrapper */}
-      <div
-        className="relative
-                   z-10
-                   mx-auto
-                   w-full
-                   max-w-7xl
-                   px-4
-                   sm:px-6
-                   lg:px-12
-                   py-18
-                   sm:py-22
-                   lg:py-26"
-      >
-
-        <div
-          className="relative
-                     grid
-                     grid-cols-1
-                     lg:grid-cols-12
-                     gap-8
-                     lg:gap-10
-                     rounded-3xl
-                     overflow-hidden
-                     border
-                     border-white/18
-                     shadow-[0_20px_80px_rgba(0,0,0,0.35)]
-                     bg-white/10"
-        >
-
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-12 py-18 sm:py-22 lg:py-26">
+        <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 rounded-3xl overflow-hidden border border-white/18 shadow-[0_20px_80px_rgba(0,0,0,0.35)] bg-white/10">
           <div
-            className="pointer-events-none
-                       absolute
-                       inset-px
-                       rounded-3xl
-                       border
-                       border-black/10
-                       opacity-60"
+            className="pointer-events-none absolute inset-px rounded-3xl border border-black/10 opacity-60"
             aria-hidden="true"
           />
 
           {/* Sinistra */}
-          <div
-            className="lg:col-span-5
-                       relative
-                       p-8
-                       sm:p-10
-                       lg:p-12"
-          >
-
+          <div className="lg:col-span-5 relative p-8 sm:p-10 lg:p-12">
             <div
-              className="absolute
-                         inset-0"
+              className="absolute inset-0"
               style={{
                 background:
                   "linear-gradient(135deg, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.38) 58%, rgba(255,255,255,0.16) 100%)",
@@ -242,142 +196,45 @@ export default function FinalSection() {
               aria-hidden="true"
             />
 
-            <div
-              className="relative"
-            >
-
-              <div
-                className={`${fontSans.className}
-                            text-xs
-                            tracking-[0.26em]
-                            uppercase
-                            text-neutral-800/70`}
-              >
-
+            <div className="relative">
+              <div className={`${fontSans.className} text-xs tracking-[0.26em] uppercase text-neutral-800/70`}>
                 EMAIL
-
               </div>
 
-              <h2
-                className={`${fontSerif.className}
-                            mt-4
-                            text-4xl
-                            sm:text-5xl
-                            leading-[1.02]
-                            text-neutral-950`}
-              >
-
+              <h2 className={`${fontSerif.className} mt-4 text-4xl sm:text-5xl leading-[1.02] text-neutral-950`}>
                 Contattaci
-
-                <span
-                  className="block
-                             text-neutral-950/70"
-                >
-
-                  e raccontaci di cosa hai bisogno.
-
-                </span>
-
+                <span className="block text-neutral-950/70">e raccontaci di cosa hai bisogno.</span>
               </h2>
 
-              <p
-                className={`${fontSans.className}
-                            mt-6
-                            text-base
-                            sm:text-lg
-                            leading-relaxed
-                            text-neutral-800/85
-                            max-w-xl`}
-              >
-
+              <p className={`${fontSans.className} mt-6 text-base sm:text-lg leading-relaxed text-neutral-800/85 max-w-xl`}>
                 Per informazioni su progetti, consulenze o collaborazioni, scrivici:
-
               </p>
 
               {/* Card email */}
-              <div
-                className="mt-8"
-              >
-
-                <div
-                  className="rounded-2xl
-                             border
-                             border-black/10
-                             bg-white/55
-                             px-6
-                             py-5"
-                >
-
-                  <div
-                    className={`${fontSans.className}
-                                text-xs
-                                tracking-[0.18em]
-                                uppercase
-                                text-neutral-700/70`}
-                  >
-
+              <div className="mt-8">
+                <div className="rounded-2xl border border-black/10 bg-white/55 px-6 py-5">
+                  <div className={`${fontSans.className} text-xs tracking-[0.18em] uppercase text-neutral-700/70`}>
                     email
-
                   </div>
-
-                  <div
-                    className={`${fontSans.className}
-                                mt-2
-                                text-sm
-                                sm:text-base
-                                text-neutral-900`}
-                  >
-
+                  <div className={`${fontSans.className} mt-2 text-sm sm:text-base text-neutral-900`}>
                     info@mauroconcentri.com
-
                   </div>
-
                 </div>
-
               </div>
 
-              <div
-                className="mt-8
-                           flex
-                           items-center
-                           gap-3"
-              >
-
-                <span
-                  className="h-px
-                             w-10
-                             bg-black/20"
-                  aria-hidden="true"
-                />
-
-                <span
-                  className={`${fontSans.className}
-                              text-sm
-                              text-neutral-700/80`}
-                >
-
+              <div className="mt-8 flex items-center gap-3">
+                <span className="h-px w-10 bg-black/20" aria-hidden="true" />
+                <span className={`${fontSans.className} text-sm text-neutral-700/80`}>
                   non è possibile inviare allegati.
-
                 </span>
-
               </div>
-
             </div>
-
           </div>
 
-          {/* DESTRA */}
-          <div
-            className="lg:col-span-7
-                       relative
-                       p-8
-                       sm:p-10
-                       lg:p-12"
-          >
-
+          {/* Destra */}
+          <div className="lg:col-span-7 relative p-8 sm:p-10 lg:p-12">
             <div
-              className="absolute
-                         inset-0"
+              className="absolute inset-0"
               style={{
                 background:
                   "linear-gradient(135deg, rgba(20,20,20,0.82) 0%, rgba(0,0,0,0.90) 62%, rgba(0,0,0,0.94) 100%)",
@@ -386,12 +243,7 @@ export default function FinalSection() {
             />
 
             <div
-              className="pointer-events-none
-                         absolute
-                         inset-0
-                         rounded-3xl
-                         border
-                         border-white/10"
+              className="pointer-events-none absolute inset-0 rounded-3xl border border-white/10"
               aria-hidden="true"
             />
 
@@ -400,59 +252,22 @@ export default function FinalSection() {
               aria-hidden="true"
             />
 
-            <form
-              onSubmit={onSubmit}
-              noValidate
-              className="relative"
-            >
-
-              <div
-                className="flex
-                           items-end
-                           justify-between
-                           gap-6"
-              >
-
+            <form onSubmit={onSubmit} noValidate className="relative">
+              <div className="flex items-end justify-between gap-6">
                 <div>
-
-                  <div
-                    className={`${fontSans.className}
-                                text-xs
-                                tracking-[0.24em]
-                                uppercase
-                                text-white/60`}
-                  >
-
+                  <div className={`${fontSans.className} text-xs tracking-[0.24em] uppercase text-white/60`}>
                     richiesta
-
                   </div>
-
-                  <h3
-                    className={`${fontSerif.className}
-                                mt-3
-                                text-3xl
-                                sm:text-4xl
-                                text-white`}
-                  >
-
+                  <h3 className={`${fontSerif.className} mt-3 text-3xl sm:text-4xl text-white`}>
                     Invia un messaggio
-
                   </h3>
-
                 </div>
-
               </div>
 
               {/* Honeypot */}
-              <div
-                className="sr-only"
-                aria-hidden="true"
-              >
-
+              <div className="sr-only" aria-hidden="true">
                 <label>
-
                   Company
-
                   <input
                     type="text"
                     name="company"
@@ -461,32 +276,14 @@ export default function FinalSection() {
                     autoComplete="off"
                     tabIndex={-1}
                   />
-
                 </label>
-
               </div>
 
-              <div
-                className="mt-8
-                           grid
-                           grid-cols-1
-                           sm:grid-cols-2
-                           gap-5"
-              >
-
+              <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-
-                  <label
-                    className={`${fontSans.className}
-                                text-sm
-                                text-white/80`}
-                    htmlFor="name"
-                  >
-
+                  <label className={`${fontSans.className} text-sm text-white/80`} htmlFor="name">
                     Nome e Cognome
-
                   </label>
-
                   <input
                     id="name"
                     type="text"
@@ -495,24 +292,15 @@ export default function FinalSection() {
                     className={`${fieldBase} ${errors.name ? fieldError : fieldOk}`}
                     autoComplete="name"
                   />
-
-                  {errors.name && <div className={`${fontSans.className} mt-2 text-sm text-amber-300/90`}>{errors.name}</div>}
-
+                  {errors.name && (
+                    <div className={`${fontSans.className} mt-2 text-sm text-amber-300/90`}>{errors.name}</div>
+                  )}
                 </div>
 
                 <div>
-
-                  <label
-                    className={`${fontSans.className}
-                                text-sm
-                                text-white/80`}
-                    htmlFor="email"
-                  >
-
+                  <label className={`${fontSans.className} text-sm text-white/80`} htmlFor="email">
                     Email
-
                   </label>
-
                   <input
                     id="email"
                     type="email"
@@ -521,26 +309,15 @@ export default function FinalSection() {
                     className={`${fieldBase} ${errors.email ? fieldError : fieldOk}`}
                     autoComplete="email"
                   />
-
-                  {errors.email && <div className={`${fontSans.className} mt-2 text-sm text-amber-300/90`}>{errors.email}</div>}
-
+                  {errors.email && (
+                    <div className={`${fontSans.className} mt-2 text-sm text-amber-300/90`}>{errors.email}</div>
+                  )}
                 </div>
 
-                <div
-                  className="sm:col-span-2"
-                >
-
-                  <label
-                    className={`${fontSans.className}
-                                text-sm
-                                text-white/80`}
-                    htmlFor="message"
-                  >
-
+                <div className="sm:col-span-2">
+                  <label className={`${fontSans.className} text-sm text-white/80`} htmlFor="message">
                     Messaggio
-
                   </label>
-
                   <textarea
                     id="message"
                     value={form.message}
@@ -548,154 +325,88 @@ export default function FinalSection() {
                     rows={6}
                     className={`${fieldBase} resize-none ${errors.message ? fieldError : fieldOk}`}
                   />
-
-                  {errors.message && <div className={`${fontSans.className} mt-2 text-sm text-amber-300/90`}>{errors.message}</div>}
-
+                  {errors.message && (
+                    <div className={`${fontSans.className} mt-2 text-sm text-amber-300/90`}>{errors.message}</div>
+                  )}
                 </div>
 
-                <div
-                  className="sm:col-span-2
-                             mt-1"
-                >
-
-                  <label
-                    className="flex
-                               items-start
-                               gap-3
-                               cursor-pointer"
-                  >
-
+                <div className="sm:col-span-2 mt-1">
+                  <label className="flex items-start gap-3 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={form.consent}
                       onChange={(e) => updateField("consent", e.target.checked)}
-                      className="mt-1
-                                 h-4
-                                 w-4
-                                 rounded
-                                 border-white/30
-                                 bg-transparent"
+                      className="mt-1 h-4 w-4 rounded border-white/30 bg-transparent"
                     />
-
-                    <span
-                      className={`${fontSans.className}
-                                  text-sm
-                                  text-white/70
-                                  leading-relaxed`}
-                    >
-
+                    <span className={`${fontSans.className} text-sm text-white/70 leading-relaxed`}>
                       Ho letto l’informativa{" "}
-
                       <a
                         href="/privacy-policy"
-                        className="underline
-                                   underline-offset-4
-                                   decoration-white/40
-                                   hover:decoration-white/70"
+                        className="underline underline-offset-4 decoration-white/40 hover:decoration-white/70"
                       >
-
                         privacy
-
                       </a>{" "}
-
                       e acconsento al trattamento dei dati per essere ricontattato.
-
                     </span>
-
                   </label>
-
-                  {errors.consent && <div className={`${fontSans.className} mt-2 text-sm text-amber-300/90`}>{errors.consent}</div>}
-
+                  {errors.consent && (
+                    <div className={`${fontSans.className} mt-2 text-sm text-amber-300/90`}>{errors.consent}</div>
+                  )}
                 </div>
-
               </div>
 
-              <div
-                className="mt-8
-                           flex
-                           flex-col
-                           sm:flex-row
-                           items-start
-                           sm:items-center
-                           justify-between
-                           gap-4"
-              >
-
-                <div
-                  className={`${fontSans.className}
-                              text-sm
-                              text-white/60`}
-                  aria-live="polite"
-                >
-
-                  {status.type !== "idle" ? status.message : " "}
-
+              {/* ✅ Footer form: status pill + bottone stabile */}
+              <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                {/* status: spazio riservato per evitare jump */}
+                <div className="min-h-[44px] flex items-center">
+                  <motion.div
+                    aria-live="polite"
+                    initial={false}
+                    animate={status.type === "idle" ? { opacity: 0, y: 2 } : { opacity: 1, y: 0 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    className={`${fontSans.className} inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm ${statusStyle}`}
+                  >
+                    <span className={`h-2 w-2 rounded-full ${statusDot}`} aria-hidden="true" />
+                    <span className="leading-snug">
+                      {status.type !== "idle" ? status.message : ""}
+                    </span>
+                  </motion.div>
                 </div>
 
                 <motion.button
                   type="submit"
                   disabled={submitting}
-                  whileHover={reduceMotion || submitting ? undefined : { y: -2, transition: { duration: 0.25, ease: "easeOut" } }}
+                  whileHover={
+                    reduceMotion || submitting
+                      ? undefined
+                      : { y: -2, transition: { duration: 0.25, ease: "easeOut" } }
+                  }
                   className={`${fontSans.className}
-                              inline-flex
-                              items-center
-                              justify-center
-                              rounded-full
-                              px-7
-                              py-3
-                              text-sm
-                              sm:text-base
-                              tracking-[0.18em]
-                              uppercase
-                              transition
-                              ${submitting ? "bg-white/20 text-white/90" : "bg-white text-neutral-950 hover:bg-white/90"}
-                              shadow-[0_14px_36px_rgba(0,0,0,0.35)]
-                              focus-visible:outline-none
-                              focus-visible:ring-2
-                              focus-visible:ring-white/70`}
+                    inline-flex items-center justify-center
+                    rounded-full px-7 py-3
+                    text-sm sm:text-base tracking-[0.18em] uppercase
+                    transition shadow-[0_14px_36px_rgba(0,0,0,0.35)]
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70
+                    whitespace-nowrap shrink-0 min-w-[170px]
+                    ${submitting ? "bg-white/20 text-white/90" : "bg-white text-neutral-950 hover:bg-white/90"}
+                  `}
                 >
-
                   {submitting ? "Invio…" : "Invia →"}
-
                 </motion.button>
-
               </div>
 
-              <div
-                className={`${fontSans.className}
-                            mt-6
-                            text-xs
-                            text-white/45`}
-              >
-
+              <div className={`${fontSans.className} mt-6 text-xs text-white/45`}>
                 Se il modulo non è disponibile, si aprirà il client di posta per completare l’invio.
-
               </div>
-
             </form>
-
           </div>
-
         </div>
-
       </div>
 
       <div
-        className="absolute
-                   bottom-0
-                   left-0
-                   w-full
-                   h-[18vh]
-                   bg-linear-to-b
-                   from-transparent
-                   via-black/20
-                   to-black/10
-                   pointer-events-none"
+        className="absolute bottom-0 left-0 w-full h-[18vh] bg-linear-to-b from-transparent via-black/20 to-black/10 pointer-events-none"
         aria-hidden="true"
       />
-
     </section>
-
   );
-
 }

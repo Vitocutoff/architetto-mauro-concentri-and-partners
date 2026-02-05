@@ -230,7 +230,7 @@ export default function HeroSection() {
                      normal-case"
         >
 
-          il portale dello sport, ambiente e lifestyle
+          il portale dello sport, ambiente<br />e lifestyle.
 
         </div>
 
