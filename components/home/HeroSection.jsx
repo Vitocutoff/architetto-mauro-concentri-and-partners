@@ -91,7 +91,7 @@ export default function HeroSection() {
       >
 
         <Image
-          src="/images/bgHero.png"
+          src="/backgrounds/bgHeroSection.webp"
           alt="Sfondo architettonico"
           fill
           priority
@@ -151,7 +151,7 @@ export default function HeroSection() {
                      sm:text-xs
                      uppercase
                      tracking-[0.28em]
-                     text-black/70"
+                     text-black/60"
         >
 
           <span>
@@ -161,7 +161,7 @@ export default function HeroSection() {
           </span>
 
           <span
-            className="text-black/55"
+            className="text-black/45"
             aria-hidden="true"
           >
 
@@ -178,14 +178,14 @@ export default function HeroSection() {
                      justify-center
                      lg:justify-start
                      gap-2
-                     text-green-600"
+                     text-lime-700"
         >
 
           <span
             className="font-semibold
                        tracking-[0.22em]
                        [text-decoration:overline]
-                       decoration-green-700
+                       decoration-lime-800
                        decoration-1px"
           >
 
@@ -197,7 +197,7 @@ export default function HeroSection() {
             className="font-medium
                        tracking-[0.06em]
                        text-xl
-                       text-green-700
+                       text-lime-700
                        -mx-1"
             aria-label="e"
           >
@@ -210,7 +210,7 @@ export default function HeroSection() {
             className="font-semibold
                        tracking-[0.22em]
                        [text-decoration:underline]
-                       decoration-green-700
+                       decoration-lime-800
                        decoration-1px
                        underline-offset-4"
           >
@@ -226,7 +226,7 @@ export default function HeroSection() {
                      text-[12px]
                      sm:text-[13px]
                      tracking-wide
-                     text-black/60
+                     text-black/50
                      normal-case"
         >
 
@@ -236,24 +236,33 @@ export default function HeroSection() {
 
       </motion.a>
 
+      {/* ✅ FIX HYDRATION (UI IDENTICA)
+          - Esterno: solo animazione di ingresso
+          - Interno: solo motion values da scroll */}
       <motion.div
+        className="relative
+                   z-10"
         initial={{ opacity: 0, scale: 0.9, y: 60 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          opacity,
-          scale,
-          y,
-          x,
-          rotate,
-          willChange: "transform, opacity",
-          transform: "translateZ(0)",
-        }}
-        className="relative
-                   z-10"
       >
 
-        <LogoCard />
+        <motion.div
+          initial={false}
+          style={{
+            opacity,
+            scale,
+            y,
+            x,
+            rotate,
+            willChange: "transform, opacity",
+            transform: "translateZ(0)",
+          }}
+        >
+
+          <LogoCard />
+
+        </motion.div>
 
       </motion.div>
 
@@ -267,7 +276,7 @@ export default function HeroSection() {
                    flex
                    flex-col
                    items-center
-                   text-black/80
+                   text-neutral-50
                    pointer-events-none"
         style={{ opacity: hintOpacity, willChange: "opacity" }}
         initial={{ opacity: 0 }}

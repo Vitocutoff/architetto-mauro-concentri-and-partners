@@ -147,7 +147,7 @@ export default function WorkInProgressSection() {
             style={{ willChange: "transform, opacity" }}
           >
             <Image
-              src="/images/workImg.jpg"
+              src="/backgrounds/bgCardWork.webp"
               alt="Progetto architettonico in corso"
               fill
               sizes="(max-width: 768px) 100vw, 75vw"

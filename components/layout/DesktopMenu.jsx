@@ -1,11 +1,11 @@
 "use client";
 
 import React, { memo, useEffect } from "react";
-import { menuItems } from "@/data/menuItems";
 import { motion, useAnimationControls, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { menuItems } from "@/data/menuItems";
 import { fontNav } from "@/lib/fonts";
 
 const letterVariants = {
@@ -74,8 +74,8 @@ function DesktopMenuInner() {
     `transition-colors duration-300 ease-in-out focus-visible:ring-2 focus-visible:ring-black/70 px-1 rounded-sm
      ${
        pathname === path
-         ? "text-cyan-600 font-bold cursor-default"
-         : "hover:text-cyan-700 text-black/95"
+         ? "text-blue-900 font-bold cursor-default"
+         : "hover:text-blue-700 text-neutral-900"
      }`;
 
   const container = {

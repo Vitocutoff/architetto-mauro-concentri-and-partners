@@ -94,7 +94,7 @@ export default function LogoCard() {
                     z-10
                     text-xl
                     lg:text-xl
-                    text-cyan-600
+                    text-blue-900
                     tracking-wide`}
         initial={{ opacity: 0, y: 10, scale: 0.9 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -120,7 +120,7 @@ export default function LogoCard() {
                     mt-2
                     text-2xl
                     lg:text-3xl
-                    text-neutral-900/90`}
+                    text-neutral-950`}
         initial={{ opacity: 0, y: 20, scale: 0.9 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ delay: 0.55, duration: 1, ease: [0.25, 1, 0.5, 1] }}
@@ -136,7 +136,7 @@ export default function LogoCard() {
                     z-10
                     text-2xl
                     lg:text-3xl
-                    text-neutral-900/90`}
+                    text-neutral-950`}
         initial={{ opacity: 0, y: 20, scale: 0.9 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ delay: 0.85, duration: 1, ease: [0.25, 1, 0.5, 1] }}

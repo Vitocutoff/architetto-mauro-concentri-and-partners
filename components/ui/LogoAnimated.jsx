@@ -19,7 +19,7 @@ export default function LogoAnimated() {
 
       <motion.span
         className="shrink-0
-                   text-cyan-600
+                   text-blue-900
                    font-bold
                    tracking-widest
                    text-[11px]
@@ -50,7 +50,7 @@ export default function LogoAnimated() {
 
       <motion.span
         className={`${fontCursive.className}
-                    text-black/90
+                    text-neutral-900
                     tracking-wide
                     text-2xl
                     min-[480px]:text-xl

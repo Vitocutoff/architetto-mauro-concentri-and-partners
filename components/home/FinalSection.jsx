@@ -148,7 +148,7 @@ export default function FinalSection() {
       {/* BACKGROUND */}
       <div className="absolute inset-0 -z-10">
         <Image
-          src="/images/bgFinal.png"
+          src="/backgrounds/bgFinalSection.webp"
           alt="Sfondo architettonico"
           fill
           loading="lazy"
