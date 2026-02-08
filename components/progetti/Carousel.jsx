@@ -2,10 +2,20 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
+
 import { fontSans, fontSerif, fontMono } from "@/lib/fonts";
 
 const BLUR =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Crect width='24' height='24' fill='%23f2f2f2'/%3E%3C/svg%3E";
+
+const EMPTY = [];
+
+const BG_BY_ID = {
+  palazzetti: "/backgrounds/bgCardPalestre.webp",
+  atletica: "/backgrounds/bgCardAtletica.webp",
+  piscine: "/backgrounds/bgCardPiscine.webp",
+  campi: "/backgrounds/bgCardCampi.webp",
+};
 
 function cx(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -22,28 +32,29 @@ function clamp2LinesStyle() {
 
 function IconArrow({ dir = "right" }) {
   return (
-    <span aria-hidden className={cx("inline-block", dir === "left" ? "rotate-180" : "")}>
+    <span
+      aria-hidden
+      className={cx("inline-block", dir === "left" ? "rotate-180" : "")}
+    >
       →
     </span>
   );
 }
 
 export default function Carousel({ categories, onJumpToCategory }) {
-  const safeCategories = categories?.length ? categories : [];
+  const safeCategories = categories && categories.length ? categories : EMPTY;
 
-  const bgById = useMemo(
-    () => ({
-      palazzetti: "/backgrounds/bgCardPalestre.webp",
-      atletica: "/backgrounds/bgCardAtletica.webp",
-      piscine: "/backgrounds/bgCardPiscine.webp",
-      campi: "/backgrounds/bgCardCampi.webp",
-    }),
-    []
-  );
+  const bgById = BG_BY_ID;
 
   const initialActive =
-    safeCategories[0] || { id: "palazzetti", label: "Progetti", kicker: "", projects: [] };
-  const initialBg = bgById[initialActive.id] || "/images/bgCard1.jpg";
+    safeCategories[0] || {
+      id: "palazzetti",
+      label: "Progetti",
+      kicker: "",
+      projects: [],
+    };
+
+  const initialBg = bgById[initialActive.id] || "/backgrounds/bgCardCampi.webp";
 
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -51,23 +62,20 @@ export default function Carousel({ categories, onJumpToCategory }) {
   const active = safeCategories[index] || initialActive;
   const activeBg = bgById[active.id] || initialBg;
 
-  // preload bg
   useEffect(() => {
-    const srcs = Object.values(bgById);
+    const srcs = Object.values(BG_BY_ID);
     for (const s of srcs) {
       const im = new window.Image();
       im.src = s;
     }
-  }, [bgById]);
+  }, []);
 
-  // bg crossfade
   const [bottomSrc, setBottomSrc] = useState(initialBg);
   const [topSrc, setTopSrc] = useState(initialBg);
   const [topVisible, setTopVisible] = useState(false);
   const changeToken = useRef(0);
   const settleTimer = useRef(null);
 
-  // testo
   const [displayTitle, setDisplayTitle] = useState(initialActive.label);
   const [displayKicker, setDisplayKicker] = useState(initialActive.kicker);
   const [textPhase, setTextPhase] = useState("idle");
@@ -76,19 +84,26 @@ export default function Carousel({ categories, onJumpToCategory }) {
     const labels = safeCategories.map((c) => c.label || "");
     const kickers = safeCategories.map((c) => c.kicker || "");
     return {
-      longestLabel: labels.reduce((a, b) => (b.length > a.length ? b : a), labels[0] || ""),
-      longestKicker: kickers.reduce((a, b) => (b.length > a.length ? b : a), kickers[0] || ""),
+      longestLabel: labels.reduce(
+        (a, b) => (b.length > a.length ? b : a),
+        labels[0] || ""
+      ),
+      longestKicker: kickers.reduce(
+        (a, b) => (b.length > a.length ? b : a),
+        kickers[0] || ""
+      ),
     };
   }, [safeCategories]);
 
-  // autoplay
   useEffect(() => {
     if (!safeCategories.length || paused) return;
-    const t = setInterval(() => setIndex((i) => (i + 1) % safeCategories.length), 6500);
+    const t = setInterval(
+      () => setIndex((i) => (i + 1) % safeCategories.length),
+      6500
+    );
     return () => clearInterval(t);
   }, [paused, safeCategories.length]);
 
-  // keyboard
   useEffect(() => {
     const onKeyDown = (e) => {
       if (!safeCategories.length) return;
@@ -105,52 +120,84 @@ export default function Carousel({ categories, onJumpToCategory }) {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [safeCategories.length]);
 
-  // cambio bg
   useEffect(() => {
     if (!activeBg || activeBg === bottomSrc) return;
+
     if (settleTimer.current) clearTimeout(settleTimer.current);
     changeToken.current += 1;
-    setTopVisible(false);
-    setTopSrc(activeBg);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    let raf = 0;
+    raf = requestAnimationFrame(() => {
+      setTopVisible(false);
+      setTopSrc(activeBg);
+    });
+
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, [activeBg]);
 
-  // cambio testo
   useEffect(() => {
     if (!active?.label) return;
     if (active.label === displayTitle && active.kicker === displayKicker) return;
 
-    setTextPhase("out");
+    let raf = 0;
+
+    raf = requestAnimationFrame(() => {
+      setTextPhase("out");
+    });
+
     const t1 = setTimeout(() => {
       setDisplayTitle(active.label);
       setDisplayKicker(active.kicker);
       setTextPhase("in");
     }, 150);
+
     const t2 = setTimeout(() => setTextPhase("idle"), 420);
 
     return () => {
+      if (raf) cancelAnimationFrame(raf);
       clearTimeout(t1);
       clearTimeout(t2);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index]);
 
   const titleAnim =
-    textPhase === "out" ? "opacity-0 -translate-y-1" : "opacity-100 translate-y-0";
+    textPhase === "out"
+      ? "opacity-0 -translate-y-1"
+      : "opacity-100 translate-y-0";
   const kickerAnim =
-    textPhase === "out" ? "opacity-0 translate-y-1" : "opacity-100 translate-y-0";
+    textPhase === "out"
+      ? "opacity-0 translate-y-1"
+      : "opacity-100 translate-y-0";
 
   const total = safeCategories.length || 4;
-  const counter = `${String(index + 1).padStart(2, "0")}/${String(total).padStart(2, "0")}`;
+  const counter = `${String(index + 1).padStart(2, "0")}/${String(total).padStart(
+    2,
+    "0"
+  )}`;
 
   return (
+
     <div
-      className="relative overflow-hidden rounded-[32px] border border-neutral-200 bg-white min-h-[48vh] sm:min-h-[52vh] lg:min-h-[56vh] xl:min-h-[58vh]"
+      className="relative
+                 overflow-hidden
+                 rounded-4xl
+                 border
+                 border-blue-900/30
+                 min-h-[48vh]
+                 sm:min-h-[52vh]
+                 lg:min-h-[56vh]
+                 xl:min-h-[58vh]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {/* BG bottom */}
-      <div className="absolute inset-0">
+
+      <div
+        className="absolute
+                   inset-0"
+      >
+
         <Image
           src={bottomSrc}
           alt=""
@@ -161,15 +208,21 @@ export default function Carousel({ categories, onJumpToCategory }) {
           loading="eager"
           placeholder="blur"
           blurDataURL={BLUR}
-          className="object-cover kenburns will-change-transform"
+          className="object-cover
+                     kenburns
+                     will-change-transform"
           sizes="100vw"
         />
+
       </div>
 
       {/* BG top */}
-      <div className="absolute inset-0">
+      <div
+        className="absolute
+                   inset-0"
+      >
+
         <Image
-          key={topSrc}
           src={topSrc}
           alt=""
           fill
@@ -179,7 +232,7 @@ export default function Carousel({ categories, onJumpToCategory }) {
           placeholder="blur"
           blurDataURL={BLUR}
           className={cx(
-            "object-cover kenburns will-change-transform transition-opacity duration-[520ms]",
+            "object-cover kenburns will-change-transform transition-opacity duration-520",
             topVisible ? "opacity-100" : "opacity-0"
           )}
           sizes="100vw"
@@ -196,37 +249,35 @@ export default function Carousel({ categories, onJumpToCategory }) {
         />
       </div>
 
-      {/* Scrim hero — NO “bianco-blur”, leggibilità con scrim controllato */}
-      <div className="absolute inset-0">
-        {/* schiarita leggera globale (come prima, ma più sobria) */}
-        <div className="absolute inset-0 bg-white/10" />
-
-        {/* direzionale per area testo */}
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.46)_0%,rgba(255,255,255,0.30)_46%,rgba(255,255,255,0.16)_74%,rgba(255,255,255,0.08)_100%)]" />
-
-        {/* micro “ombra” dietro al blocco testo (WOW: leggibile senza lavare tutto) */}
-        <div className="absolute left-0 top-0 h-full w-[72%] bg-[radial-gradient(900px_600px_at_28%_26%,rgba(0,0,0,0.16),transparent_62%)]" />
-
-        <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-black/10" />
-      </div>
-
       <div className="relative flex h-full flex-col p-6 sm:p-8 lg:p-10">
         {/* Top bar */}
         <div className="flex items-center justify-between gap-4">
-          <div className={cx("text-xs tracking-[0.26em] uppercase text-neutral-900", fontSans.className)}>
+          <div
+            className={cx(
+              "text-xs tracking-[0.26em] uppercase text-white",
+              fontSans.className
+            )}
+          >
             Progetti
           </div>
 
           <div className="flex items-center gap-2">
-            <div className={cx("hidden text-xs text-neutral-900 sm:flex sm:items-center sm:gap-2", fontMono.className)}>
+            <div
+              className={cx(
+                "hidden text-xs text-white sm:flex sm:items-center sm:gap-2",
+                fontMono.className
+              )}
+            >
               <span>{counter}</span>
-              <span className="text-neutral-800">{paused ? "PAUSE" : "AUTO"}</span>
+              <span className="text-white">{paused ? "PAUSE" : "AUTO"}</span>
             </div>
 
             <button
               type="button"
-              onClick={() => setIndex((i) => (i - 1 + safeCategories.length) % safeCategories.length)}
-              className="rounded-full border border-neutral-300 bg-white/35 px-2.5 py-1.5 text-sm text-neutral-950 transition hover:border-neutral-700"
+              onClick={() =>
+                setIndex((i) => (i - 1 + safeCategories.length) % safeCategories.length)
+              }
+              className="rounded-full border border-neutral-300 bg-white/50 px-2.5 py-1.5 text-sm text-white transition hover:border-neutral-700"
               aria-label="Slide precedente"
             >
               <IconArrow dir="left" />
@@ -234,7 +285,7 @@ export default function Carousel({ categories, onJumpToCategory }) {
             <button
               type="button"
               onClick={() => setIndex((i) => (i + 1) % safeCategories.length)}
-              className="rounded-full border border-neutral-300 bg-white/35 px-2.5 py-1.5 text-sm text-neutral-950 transition hover:border-neutral-700"
+              className="rounded-full border border-neutral-300 bg-white/55 px-2.5 py-1.5 text-sm text-white transition hover:border-neutral-700"
               aria-label="Slide successiva"
             >
               <IconArrow dir="right" />
@@ -244,14 +295,12 @@ export default function Carousel({ categories, onJumpToCategory }) {
 
         {/* Title */}
         <div className="mt-6 max-w-4xl">
-          {/* ritorno a glass sottile + NO blur fastidioso */}
-          <div className="rounded-3xl border border-black/10 bg-white/26 p-6 sm:p-7 lg:p-8">
+          <div className="rounded-3xl p-6 sm:p-7 lg:p-8">
             <div className="grid">
               {/* sizer */}
               <div className="col-start-1 row-start-1 invisible">
                 <h1
                   className={cx(
-                    // ✅ leggermente più piccolo rispetto a prima
                     "text-3xl font-semibold leading-[1.10] text-neutral-950 sm:text-4xl lg:text-5xl",
                     fontSerif.className
                   )}
@@ -301,7 +350,7 @@ export default function Carousel({ categories, onJumpToCategory }) {
           </div>
         </div>
 
-        {/* Pills categorie — più piccole, SOLO titolo + count, NO blur */}
+        {/* Pills categorie */}
         <div className="mt-6">
           <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
             {safeCategories.map((c, i) => {
@@ -319,12 +368,12 @@ export default function Carousel({ categories, onJumpToCategory }) {
                   className={cx(
                     "group relative text-left transition",
                     "rounded-2xl border bg-white/28",
-                    // ✅ più piccole
                     "h-[72px] px-3.5 py-2.5 overflow-hidden",
-                    isActive ? "border-neutral-950" : "border-neutral-300 hover:border-neutral-700"
+                    isActive
+                      ? "border-neutral-950"
+                      : "border-neutral-300 hover:border-neutral-700"
                   )}
                 >
-                  {/* micro accent quando attiva */}
                   <div
                     className={cx(
                       "absolute left-0 top-0 h-full w-[3px] transition-opacity",
@@ -346,7 +395,12 @@ export default function Carousel({ categories, onJumpToCategory }) {
                       {c.label}
                     </div>
 
-                    <div className={cx("mt-auto text-[11px] text-neutral-900/80", fontSans.className)}>
+                    <div
+                      className={cx(
+                        "mt-auto text-[11px] text-neutral-900/80",
+                        fontSans.className
+                      )}
+                    >
                       {count} progetti
                     </div>
                   </div>
@@ -366,7 +420,8 @@ export default function Carousel({ categories, onJumpToCategory }) {
               fontSans.className
             )}
           >
-            Vai alla sezione <span className={cx("ml-2 text-neutral-900", fontMono.className)}>→</span>
+            Vai alla sezione{" "}
+            <span className={cx("ml-2 text-neutral-900", fontMono.className)}>→</span>
           </button>
         </div>
 
@@ -377,8 +432,12 @@ export default function Carousel({ categories, onJumpToCategory }) {
             animation: kenburns 18s ease-in-out infinite alternate;
           }
           @keyframes kenburns {
-            from { transform: scale(1) translate3d(0, 0, 0); }
-            to { transform: scale(1.04) translate3d(-1.4%, -0.8%, 0); }
+            from {
+              transform: scale(1) translate3d(0, 0, 0);
+            }
+            to {
+              transform: scale(1.04) translate3d(-1.4%, -0.8%, 0);
+            }
           }
         `}</style>
       </div>
