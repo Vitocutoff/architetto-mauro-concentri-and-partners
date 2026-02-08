@@ -1,40 +1,39 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useScroll, useTransform, useSpring, useReducedMotion, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 import { fontSans, fontSerif } from "@/lib/fonts";
 
 function PlayIcon({ className = "" }) {
   return (
-
     <svg
       className={className}
-      width="20"
-      height="20"
+      width="26"
+      height="26"
       viewBox="0 0 24 24"
       fill="none"
       aria-hidden="true"
     >
-
-      <path
-        d="M9 7.25v9.5l8.5-4.75L9 7.25Z"
-        fill="currentColor"
-      />
-
+      <path d="M9 7.25v9.5l8.5-4.75L9 7.25Z" fill="currentColor" />
     </svg>
-
   );
-
 }
 
 export default function PreviewSection() {
   const reduceMotion = useReducedMotion();
   const sectionRef = useRef(null);
-  const inView = useInView(sectionRef, { once: true, amount: 0.25 });
 
   const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  const videoSrc = "/videos/drone.mp4";
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -75,19 +74,17 @@ export default function PreviewSection() {
     { img: "/backgrounds/bgCardPiscine.webp", title: "Acquapark & Piscine", link: "/progetti", y: yC },
   ];
 
-  // ✅ Base card: niente blur sul wrapper trasformato (evita flicker)
   const cardBase =
-    "relative rounded-2xl overflow-hidden border border-white/14 bg-white/12 shadow-[0_18px_70px_rgba(0,0,0,0.28)] transform-gpu [backface-visibility:hidden] [transform-style:preserve-3d] isolate";
+    "relative rounded-2xl overflow-hidden border border-black/15 bg-white/55 shadow-[0_14px_50px_rgba(0,0,0,0.14)] transform-gpu [backface-visibility:hidden] [transform-style:preserve-3d] isolate";
 
   const cardHover = reduceMotion
-    ? {}
+    ? undefined
     : {
         y: -6,
         rotate: 0,
-        transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+        transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
       };
 
-  // ✅ Overlay video: ESC + scroll lock
   useEffect(() => {
     if (!isVideoOpen) return;
 
@@ -103,10 +100,7 @@ export default function PreviewSection() {
     };
   }, [isVideoOpen]);
 
-  const videoSrc = "/videos/drone.mp4";
-
   return (
-
     <section
       ref={sectionRef}
       role="region"
@@ -120,99 +114,42 @@ export default function PreviewSection() {
                  sm:py-20
                  lg:py-24"
     >
-
       {/* SFONDO */}
-      <div
-        className="absolute
-                   inset-0
-                   -z-10"
-        aria-hidden="true"
-      >
-
+      <div className="absolute inset-0 -z-10" aria-hidden="true">
         <Image
           src="/backgrounds/bgPreviewSection.webp"
           alt="Foto Studio"
           fill
           priority={false}
           sizes="100vw"
-          className="object-cover
-                     object-center"
+          className="object-cover object-center"
         />
 
-        <div
-          className="absolute
-                     inset-0
-                     bg-black/18
-                     sm:bg-black/22"
-        />
-
-        <div
-          className="absolute
-                     inset-0
-                     bg-radial
-                     from-white/12
-                     via-transparent
-                     to-black/45"
-        />
-
+        {/* overlay per leggibilità */}
+        <div className="absolute inset-0 bg-black/25 sm:bg-black/30" />
       </div>
 
-      <div
-        className="mx-auto
-                   w-full
-                   max-w-7xl
-                   px-4
-                   sm:px-6
-                   lg:px-12"
-      >
-
-        {/* Header */}
-        <div
-          className="flex
-                     flex-col
-                     items-start
-                     gap-5"
-        >
-
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-12">
+        <div className="flex flex-col items-start gap-5">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             viewport={{ once: true }}
-            className="inline-flex
-                       items-center
-                       gap-3
-                       rounded-full
-                       border
-                       border-white/18
-                       bg-white/10
-                       px-4
-                       py-2
-                       backdrop-blur-md"
+            className="inline-flex items-center gap-3 rounded-full border border-white/20
+                       bg-white/10 px-4 py-2 backdrop-blur-md"
           >
-
-            <span
-              className="text-white/70
-                         text-lg
-                         font-light"
-            >
-
-              &gt;
-
-            </span>
+            <span className="text-red-400 text-lg font-light">&gt;</span>
 
             <span
               className={`${fontSans.className}
                           text-sm
                           tracking-[0.18em]
                           uppercase
-                          text-white/70`}
+                          text-white/80`}
             >
-
               anteprima
-
             </span>
-
           </motion.div>
 
           <motion.h2
@@ -224,32 +161,15 @@ export default function PreviewSection() {
                         text-4xl
                         sm:text-5xl
                         lg:text-6xl
-                        text-white/92`}
+                        text-white/95`}
           >
-
             Progetti
-
           </motion.h2>
-
         </div>
 
-        <div
-          className="mt-12
-                     grid
-                     grid-cols-1
-                     lg:grid-cols-12
-                     gap-8
-                     lg:gap-10"
-        >
-
+        <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
           {/* SINISTRA */}
-          <div
-            className="lg:col-span-7
-                       flex
-                       flex-col
-                       gap-8"
-          >
-
+          <div className="lg:col-span-7 flex flex-col gap-8">
             {/* FEATURED */}
             <motion.article
               style={{ y: featured.y, willChange: "transform" }}
@@ -260,353 +180,134 @@ export default function PreviewSection() {
               className={`${cardBase} ${reduceMotion ? "" : "rotate-[-0.6deg]"}`}
               whileHover={cardHover}
             >
+              <div className="absolute inset-0 -z-10 backdrop-blur-md" aria-hidden="true" />
 
-              {/* blur layer statico (ok qui) */}
-              <div
-                className="absolute
-                           inset-0
-                           -z-10
-                           backdrop-blur-md"
-                aria-hidden="true"
-              />
-
-              <a
-                href={featured.link}
-                className="block"
-              >
-
-                <div
-                  className="relative
-                             h-72
-                             sm:h-80
-                             lg:h-112"
-                >
-
+              <a href={featured.link} className="block">
+                <div className="relative h-72 sm:h-80 lg:h-112">
                   <Image
                     src={featured.img}
                     alt={`Anteprima progetto: ${featured.title}`}
                     fill
                     priority={false}
                     sizes="(max-width: 1024px) 100vw, 60vw"
-                    className="object-cover
-                               object-center"
+                    className="object-cover object-center"
                   />
 
-                  <div
-                    className="absolute
-                               inset-0
-                               bg-linear-to-t
-                               from-black/70
-                               via-black/20
-                               to-transparent"
-                  />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/55 via-black/15 to-transparent" />
 
                   <div
-                    className="absolute
-                               left-5
-                               top-5
-                               inline-flex
-                               items-center
-                               gap-2
-                               rounded-full
-                               border
-                               border-white/18
-                               bg-black/30
-                               px-3
-                               py-1.5
-                               text-xs
-                               tracking-[0.18em]
-                               uppercase
-                               text-white/80
-                               backdrop-blur-md"
+                    className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full
+                               border border-white/20 bg-black/30 px-3 py-1.5
+                               text-xs tracking-[0.18em] uppercase text-white/80 backdrop-blur-md"
                   >
-
-                    <span
-                      className="h-1.5
-                                 w-1.5
-                                 rounded-full
-                                 bg-cyan-300/90"
-                    />
-
+                    <span className="h-1.5 w-1.5 rounded-full bg-red-400/90" />
                     {featured.tag}
-
                   </div>
 
-                  <div
-                    className="absolute
-                               bottom-5
-                               left-5
-                               right-5"
-                  >
-
-                    <div
-                      className={`${fontSerif.className}
-                                  text-2xl
-                                  sm:text-3xl
-                                  text-white/95`}
-                    >
-
+                  <div className="absolute bottom-5 left-5 right-5">
+                    <div className={`${fontSerif.className} text-2xl sm:text-3xl text-white/95`}>
                       {featured.title}
-
                     </div>
 
-                    <div
-                      className={`${fontSans.className}
-                                  mt-1
-                                  text-sm
-                                  uppercase
-                                  text-right
-                                  text-white/70`}
-                    >
-
+                    <div className={`${fontSans.className} mt-1 text-sm uppercase text-right text-white/70`}>
                       Scopri →
-
                     </div>
-
                   </div>
-
                 </div>
-
               </a>
-
             </motion.article>
 
-            {/* APPROFONDIMENTO (Brendola + video overlay) */}
+            {/* APPROFONDIMENTO (Brendola + player) */}
             <motion.article
               style={{ y: yTitle, willChange: "transform" }}
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
               viewport={{ once: true }}
-              className={`${cardBase} ${reduceMotion ? "" : "rotate-[0.35deg]"}`}
+              className={`${cardBase} ${reduceMotion ? "" : "rotate-[0.35deg]"}
+                          bg-white/55
+                          shadow-[0_14px_50px_rgba(0,0,0,0.14),inset_0_1px_0_rgba(255,255,255,0.45)]`}
               whileHover={cardHover}
             >
+              <div className="absolute inset-0 -z-10 backdrop-blur-md" aria-hidden="true" />
 
-              {/* ✅ blur layer statico */}
-              <div
-                className="absolute
-                           inset-0
-                           -z-10
-                           backdrop-blur-md"
-                aria-hidden="true"
-              />
-
-              {/* ✅ contenuto “solido” per distinguere dal player */}
-              <div
-                className="relative
-                           p-6
-                           sm:p-7"
-              >
-
-                <div
-                  className="flex
-                             items-center
-                             gap-3"
-                >
-
-                  <span
-                    className="h-1.5
-                               w-1.5
-                               rounded-full
-                               bg-cyan-300/90"
-                    aria-hidden="true"
-                  />
-
-                  <div
-                    className="h-px
-                               flex-1
-                               bg-white/14"
-                    aria-hidden="true"
-                  />
-
-                  <div
-                    className={`${fontSans.className}
-                                text-xs
-                                tracking-[0.18em]
-                                uppercase
-                                text-white/70`}
-                  >
-
-                    approfondimento
-
+              <div className="relative p-6 sm:p-7 flex flex-col gap-5">
+                <div className="flex items-center gap-3">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500/80" aria-hidden="true" />
+                  <div className="h-px flex-1 bg-black/10" aria-hidden="true" />
+                  <div className={`${fontSans.className} text-xs tracking-[0.18em] uppercase text-black/55`}>
+                    in primo piano
                   </div>
-
                 </div>
 
-                <div
-                  className={`${fontSerif.className}
-                              mt-4
-                              text-2xl
-                              text-white/92`}
-                >
+                <div>
+                  <div className={`${fontSerif.className} text-2xl text-black/85`}>Brendola</div>
 
-                  Brendola
-
+                  <div className={`${fontSans.className} mt-2 text-sm leading-relaxed text-black/60`}>
+                    Realizzazione campo da calcio in erba sintetica.
+                  </div>
                 </div>
 
-                <div
-                  className={`${fontSans.className}
-                              mt-2
-                              text-sm
-                              leading-relaxed
-                              text-white/70`}
-                >
-
-                  Realizzazione campo da calcio in erba sintetica (drone).
-
-                </div>
-
-                {/* ✅ “player tile” separato (no glass su glass) */}
+                {/* PLAYER */}
                 <button
                   type="button"
                   onClick={() => setIsVideoOpen(true)}
-                  className="group mt-5
-                             w-full
-                             rounded-2xl
-                             overflow-hidden
-                             border
-                             border-white/16
-                             bg-neutral-950/55
-                             shadow-[0_18px_60px_rgba(0,0,0,0.40)]
-                             transition
-                             hover:border-white/22
-                             focus-visible:outline-none
-                             focus-visible:ring-2
-                             focus-visible:ring-white/50"
-                  aria-label="Guarda il video (si apre in overlay)"
+                  className="group relative w-full rounded-2xl border border-black/15
+                             bg-neutral-950/85 px-5 py-4 text-left
+                             shadow-[0_14px_44px_rgba(0,0,0,0.22)]
+                             transition hover:bg-neutral-950/92"
+                  aria-label="Guarda il video"
                 >
-
-                  <div
-                    className="relative
-                               aspect-video
-                               w-full"
-                  >
-
-                    <Image
-                      src="/backgrounds/bgCardCampi.webp"
-                      alt=""
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 60vw"
-                      className="object-cover
-                                 object-center
-                                 opacity-85
-                                 transition-transform
-                                 duration-700
-                                 group-hover:scale-[1.03]"
-                      priority={false}
-                    />
-
-                    <div
-                      className="absolute
-                                 inset-0
-                                 bg-linear-to-t
-                                 from-black/75
-                                 via-black/20
-                                 to-transparent"
+                  <div className="flex items-center gap-5">
+                    <span
+                      className="relative grid place-items-center h-12 w-12 rounded-full
+                                 bg-emerald-500/90 text-white
+                                 shadow-[0_10px_26px_rgba(0,0,0,0.22)]
+                                 transition group-hover:scale-[1.03]"
                       aria-hidden="true"
-                    />
-
-                    {/* Play (no rosso, alone più contenuto) */}
-                    <div
-                      className="absolute
-                                 inset-0
-                                 grid
-                                 place-items-center"
                     >
+                      <PlayIcon className="w-7 h-7 text-white" />
+                    </span>
 
-                      <motion.span
-                        className="relative
-                                   grid
-                                   place-items-center
-                                   h-12
-                                   w-12
-                                   rounded-full
-                                   bg-cyan-500/90
-                                   text-white
-                                   shadow-[0_10px_34px_rgba(0,180,255,0.28)]"
-                        whileHover={reduceMotion ? undefined : { scale: 1.03 }}
-                        transition={{ type: "spring", stiffness: 260, damping: 18 }}
-                      >
-
-                        <span
-                          className="absolute
-                                     inset-0
-                                     rounded-full"
-                          style={{
-                            boxShadow: "0 0 0 10px rgba(0,180,255,0.10)",
-                          }}
-                          aria-hidden="true"
-                        />
-
-                        <span className="ml-0.5">
-
-                          <PlayIcon
-                            className="w-5.5
-                                       h-5.5
-                                       text-white"
-                          />
-
-                        </span>
-
-                      </motion.span>
-
-                    </div>
-
-                    <div
-                      className="absolute
-                                 bottom-3
-                                 left-4
-                                 right-4
-                                 flex
-                                 items-center
-                                 justify-between"
-                    >
-
-                      <div
-                        className={`${fontSans.className}
-                                    text-xs
-                                    tracking-[0.18em]
-                                    uppercase
-                                    text-white/80`}
-                      >
-
-                        guarda il video
-
+                    <div className="flex-1">
+                      <div className={`${fontSans.className} font-semibold tracking-wide text-white/92`}>
+                        Guarda il video
                       </div>
 
-                      <div
-                        className={`${fontSans.className}
-                                    text-xs
-                                    text-white/65`}
-                        aria-hidden="true"
-                      >
-
-                        ↗
-
+                      <div className={`${fontSans.className} mt-1 text-sm text-white/60`}>
+                        Drone cantiere (con audio)
                       </div>
-
                     </div>
-
                   </div>
 
+                  <div
+                    className="pointer-events-none absolute inset-0 rounded-2xl"
+                    style={{
+                      boxShadow: reduceMotion ? "none" : "inset 0 0 0 1px rgba(255,255,255,0.06)",
+                    }}
+                    aria-hidden="true"
+                  />
                 </button>
 
+                <div className="flex items-center justify-between">
+                  <div className="h-px flex-1 bg-black/10" />
+
+                  <a
+                    href="/progetti"
+                    className={`${fontSans.className}
+                                ml-4 text-xs tracking-[0.18em] uppercase
+                                text-black/55 hover:text-black/75 transition`}
+                  >
+                    approfondimento →
+                  </a>
+                </div>
               </div>
-
             </motion.article>
-
           </div>
 
           {/* DESTRA */}
-          <div
-            className="lg:col-span-5
-                       flex
-                       flex-col
-                       gap-8"
-          >
-
+          <div className="lg:col-span-5 flex flex-col gap-8">
             {cards.map((c, idx) => (
-
               <motion.article
                 key={c.title}
                 style={{ y: c.y, willChange: "transform" }}
@@ -615,37 +316,14 @@ export default function PreviewSection() {
                 transition={{ duration: 0.95, delay: idx * 0.06, ease: [0.22, 1, 0.36, 1] }}
                 viewport={{ once: true }}
                 className={`${cardBase} ${
-                  reduceMotion
-                    ? ""
-                    : idx === 0
-                      ? "rotate-[0.6deg]"
-                      : idx === 1
-                        ? "rotate-[-0.4deg]"
-                        : "rotate-[0.3deg]"
+                  reduceMotion ? "" : idx === 0 ? "rotate-[0.6deg]" : idx === 1 ? "rotate-[-0.4deg]" : "rotate-[0.3deg]"
                 }`}
                 whileHover={cardHover}
               >
+                <div className="absolute inset-0 -z-10 backdrop-blur-md" aria-hidden="true" />
 
-                <div
-                  className="absolute
-                             inset-0
-                             -z-10
-                             backdrop-blur-md"
-                  aria-hidden="true"
-                />
-
-                <a
-                  href={c.link}
-                  className="block"
-                >
-
-                  <div
-                    className="relative
-                               h-52
-                               sm:h-56
-                               overflow-hidden"
-                  >
-
+                <a href={c.link} className="block">
+                  <div className="relative h-52 sm:h-56 overflow-hidden">
                     <Image
                       src={c.img}
                       alt={`Anteprima progetto: ${c.title}`}
@@ -654,173 +332,81 @@ export default function PreviewSection() {
                       className={`object-cover object-center ${
                         reduceMotion
                           ? ""
-                          : "transition-transform duration-900 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
+                          : "transition-transform duration-1400 ease-[cubic-bezier(0.33,1,0.68,1)] group-hover:scale-[1.05]"
                       }`}
                       loading="lazy"
                       decoding="async"
                     />
 
-                    <div
-                      className="absolute
-                                 inset-0
-                                 bg-linear-to-t
-                                 from-black/70
-                                 via-black/18
-                                 to-transparent"
-                    />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/45 via-black/10 to-transparent" />
 
-                    <div
-                      className="absolute
-                                 bottom-4
-                                 left-4
-                                 right-4
-                                 flex
-                                 items-end
-                                 justify-between
-                                 gap-4"
-                    >
+                    <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
+                      <div className={`${fontSerif.className} text-xl text-white/95`}>{c.title}</div>
 
-                      <div
-                        className={`${fontSerif.className}
-                                    text-xl
-                                    text-white/95`}
-                      >
-
-                        {c.title}
-
-                      </div>
-
-                      <div
-                        className={`${fontSans.className}
-                                    text-xs
-                                    tracking-[0.18em]
-                                    uppercase
-                                    text-white/75`}
-                      >
-
+                      <div className={`${fontSans.className} text-xs tracking-[0.18em] uppercase text-white/75`}>
                         scopri →
-
                       </div>
-
                     </div>
-
                   </div>
-
                 </a>
-
               </motion.article>
-
             ))}
-
           </div>
-
         </div>
-
       </div>
 
-      {/* MODAL VIDEO */}
-      {isVideoOpen && (
-
-        <motion.div
-          className="fixed
-                     inset-0
-                     z-200
-                     bg-black/70
-                     px-4
-                     py-6
-                     sm:py-10"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Video"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          onMouseDown={(e) => {
-            if (e.target === e.currentTarget) setIsVideoOpen(false);
-          }}
-        >
-
-          <div
-            className="absolute
-                       inset-0
-                       pointer-events-none
-                       bg-linear-to-b
-                       from-white/10
-                       via-transparent
-                       to-transparent"
-            aria-hidden="true"
-          />
-
-          <button
-            type="button"
-            onClick={() => setIsVideoOpen(false)}
-            className="fixed
-                       z-210
-                       top-[calc(env(safe-area-inset-top)+1rem)]
-                       right-4
-                       sm:right-6
-                       rounded-full
-                       bg-white/10
-                       hover:bg-white/20
-                       border
-                       border-white/15
-                       text-white
-                       px-3
-                       py-2
-                       text-sm
-                       transition"
-            aria-label="Chiudi video"
+      {/* MODAL VIDEO (PORTAL su body: fixed = viewport reale) */}
+      {mounted && isVideoOpen &&
+        createPortal(
+          <motion.div
+            className="fixed inset-0 z-[9999] bg-black/75 px-4 sm:px-6
+                       flex items-center justify-center"
+            style={{ minHeight: "100svh" }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Video"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: reduceMotion ? 0 : 0.2, ease: "easeOut" }}
+            onMouseDown={(e) => {
+              if (e.target === e.currentTarget) setIsVideoOpen(false);
+            }}
           >
-
-            Chiudi ✕
-
-          </button>
-
-          {/* ✅ Centratissimo */}
-          <div
-            className="relative
-                       mx-auto
-                       flex
-                       min-h-[calc(100vh-6rem)]
-                       items-center
-                       justify-center"
-          >
+            <button
+              type="button"
+              onClick={() => setIsVideoOpen(false)}
+              className="fixed z-[10000]
+                         top-[calc(env(safe-area-inset-top)+1rem)]
+                         right-4 sm:right-6
+                         rounded-full bg-white/10 hover:bg-white/20
+                         border border-white/15 text-white
+                         px-3 py-2 text-sm transition"
+              aria-label="Chiudi video"
+            >
+              Chiudi ✕
+            </button>
 
             <motion.div
-              className="relative
-                         w-full
-                         max-w-5xl
-                         rounded-2xl
-                         overflow-hidden
-                         bg-black
-                         shadow-[0_20px_80px_rgba(0,0,0,0.6)]
-                         border
-                         border-white/10"
-              initial={{ scale: reduceMotion ? 1 : 0.98, y: reduceMotion ? 0 : 8 }}
+              className="relative w-full max-w-5xl rounded-2xl overflow-hidden bg-black
+                         shadow-[0_20px_80px_rgba(0,0,0,0.60)]
+                         border border-white/10"
+              initial={{ scale: reduceMotion ? 1 : 0.985, y: reduceMotion ? 0 : 8 }}
               animate={{ scale: 1, y: 0 }}
-              transition={{ duration: reduceMotion ? 0 : 0.25, ease: "easeOut" }}
+              transition={{ duration: reduceMotion ? 0 : 0.22, ease: "easeOut" }}
               onMouseDown={(e) => e.stopPropagation()}
             >
-
               <video
                 src={videoSrc}
                 controls
                 autoPlay
                 playsInline
                 preload="metadata"
-                className="w-full
-                           h-auto"
+                className="w-full h-auto max-h-[78svh]"
               />
-
             </motion.div>
-
-          </div>
-
-        </motion.div>
-
-      )}
-
+          </motion.div>,
+          document.body
+        )}
     </section>
-
   );
-
 }

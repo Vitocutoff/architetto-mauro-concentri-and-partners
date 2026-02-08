@@ -1,4 +1,3 @@
-// /components/progetti/Carousel.jsx
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -34,10 +33,10 @@ export default function Carousel({ categories, onJumpToCategory }) {
 
   const bgById = useMemo(
     () => ({
-      palazzetti: "/images/bgCard1.jpg",
-      atletica: "/images/bgCard2.jpg",
-      piscine: "/images/bgCard3.jpg",
-      campi: "/images/bgCard4.jpg",
+      palazzetti: "/backgrounds/bgCardPalestre.webp",
+      atletica: "/backgrounds/bgCardAtletica.webp",
+      piscine: "/backgrounds/bgCardPiscine.webp",
+      campi: "/backgrounds/bgCardCampi.webp",
     }),
     []
   );
@@ -197,10 +196,17 @@ export default function Carousel({ categories, onJumpToCategory }) {
         />
       </div>
 
-      {/* Scrim hero */}
+      {/* Scrim hero — NO “bianco-blur”, leggibilità con scrim controllato */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.48)_0%,rgba(255,255,255,0.30)_46%,rgba(255,255,255,0.16)_74%,rgba(255,255,255,0.08)_100%)]" />
-        <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(to_right,rgba(0,0,0,.14)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,.14)_1px,transparent_1px)] [background-size:48px_48px]" />
+        {/* schiarita leggera globale (come prima, ma più sobria) */}
+        <div className="absolute inset-0 bg-white/10" />
+
+        {/* direzionale per area testo */}
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.46)_0%,rgba(255,255,255,0.30)_46%,rgba(255,255,255,0.16)_74%,rgba(255,255,255,0.08)_100%)]" />
+
+        {/* micro “ombra” dietro al blocco testo (WOW: leggibile senza lavare tutto) */}
+        <div className="absolute left-0 top-0 h-full w-[72%] bg-[radial-gradient(900px_600px_at_28%_26%,rgba(0,0,0,0.16),transparent_62%)]" />
+
         <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-black/10" />
       </div>
 
@@ -212,17 +218,15 @@ export default function Carousel({ categories, onJumpToCategory }) {
           </div>
 
           <div className="flex items-center gap-2">
-            {/* SOLO numerazione + AUTO/PAUSE */}
             <div className={cx("hidden text-xs text-neutral-900 sm:flex sm:items-center sm:gap-2", fontMono.className)}>
               <span>{counter}</span>
               <span className="text-neutral-800">{paused ? "PAUSE" : "AUTO"}</span>
             </div>
 
-            {/* frecce più piccole */}
             <button
               type="button"
               onClick={() => setIndex((i) => (i - 1 + safeCategories.length) % safeCategories.length)}
-              className="rounded-full border border-neutral-300 bg-white/35 px-2.5 py-1.5 text-sm text-neutral-950 backdrop-blur-[1px] transition hover:border-neutral-700"
+              className="rounded-full border border-neutral-300 bg-white/35 px-2.5 py-1.5 text-sm text-neutral-950 transition hover:border-neutral-700"
               aria-label="Slide precedente"
             >
               <IconArrow dir="left" />
@@ -230,7 +234,7 @@ export default function Carousel({ categories, onJumpToCategory }) {
             <button
               type="button"
               onClick={() => setIndex((i) => (i + 1) % safeCategories.length)}
-              className="rounded-full border border-neutral-300 bg-white/35 px-2.5 py-1.5 text-sm text-neutral-950 backdrop-blur-[1px] transition hover:border-neutral-700"
+              className="rounded-full border border-neutral-300 bg-white/35 px-2.5 py-1.5 text-sm text-neutral-950 transition hover:border-neutral-700"
               aria-label="Slide successiva"
             >
               <IconArrow dir="right" />
@@ -240,13 +244,15 @@ export default function Carousel({ categories, onJumpToCategory }) {
 
         {/* Title */}
         <div className="mt-6 max-w-4xl">
-          <div className="rounded-3xl border border-black/10 bg-white/28 p-6 backdrop-blur-[1px] sm:p-7 lg:p-8">
+          {/* ritorno a glass sottile + NO blur fastidioso */}
+          <div className="rounded-3xl border border-black/10 bg-white/26 p-6 sm:p-7 lg:p-8">
             <div className="grid">
               {/* sizer */}
               <div className="col-start-1 row-start-1 invisible">
                 <h1
                   className={cx(
-                    "text-4xl font-semibold leading-[1.10] text-neutral-950 sm:text-5xl lg:text-6xl",
+                    // ✅ leggermente più piccolo rispetto a prima
+                    "text-3xl font-semibold leading-[1.10] text-neutral-950 sm:text-4xl lg:text-5xl",
                     fontSerif.className
                   )}
                   style={clamp2LinesStyle()}
@@ -269,7 +275,7 @@ export default function Carousel({ categories, onJumpToCategory }) {
               <div className="col-start-1 row-start-1">
                 <h1
                   className={cx(
-                    "text-4xl font-semibold leading-[1.10] text-neutral-950 sm:text-5xl lg:text-6xl",
+                    "text-3xl font-semibold leading-[1.10] text-neutral-950 sm:text-4xl lg:text-5xl",
                     "transition-all duration-300 will-change-transform",
                     titleAnim,
                     fontSerif.className
@@ -295,7 +301,7 @@ export default function Carousel({ categories, onJumpToCategory }) {
           </div>
         </div>
 
-        {/* Pills categorie (titoli più piccoli + no taglio discendenti) */}
+        {/* Pills categorie — più piccole, SOLO titolo + count, NO blur */}
         <div className="mt-6">
           <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
             {safeCategories.map((c, i) => {
@@ -312,21 +318,26 @@ export default function Carousel({ categories, onJumpToCategory }) {
                   }}
                   className={cx(
                     "group relative text-left transition",
-                    "rounded-2xl border bg-white/30 backdrop-blur-[1px]",
-                    "h-[92px] px-4 py-3 overflow-hidden",
+                    "rounded-2xl border bg-white/28",
+                    // ✅ più piccole
+                    "h-[72px] px-3.5 py-2.5 overflow-hidden",
                     isActive ? "border-neutral-950" : "border-neutral-300 hover:border-neutral-700"
                   )}
                 >
-                  <div className="flex h-full flex-col">
-                    <div className={cx("text-[11px] tracking-[0.22em] uppercase text-neutral-900", fontMono.className)}>
-                      {String(i + 1).padStart(2, "0")}
-                    </div>
+                  {/* micro accent quando attiva */}
+                  <div
+                    className={cx(
+                      "absolute left-0 top-0 h-full w-[3px] transition-opacity",
+                      isActive ? "opacity-100 bg-neutral-950" : "opacity-0 bg-neutral-950"
+                    )}
+                    aria-hidden="true"
+                  />
 
-                    {/* ✅ FIX definitivo: font più piccolo + leading più ampio + pb più grande */}
+                  <div className="flex h-full flex-col">
                     <div
                       className={cx(
-                        "mt-1.5 font-medium text-neutral-950 antialiased",
-                        "text-[11.5px] leading-[1.38] pb-[7px]",
+                        "font-medium text-neutral-950 antialiased",
+                        "text-[12px] leading-[1.32]",
                         "whitespace-nowrap overflow-hidden text-ellipsis",
                         fontSans.className
                       )}
@@ -335,18 +346,8 @@ export default function Carousel({ categories, onJumpToCategory }) {
                       {c.label}
                     </div>
 
-                    <div className={cx("mt-auto text-[11px] text-neutral-900 whitespace-nowrap overflow-hidden text-ellipsis", fontSans.className)}>
+                    <div className={cx("mt-auto text-[11px] text-neutral-900/80", fontSans.className)}>
                       {count} progetti
-                    </div>
-
-                    <div
-                      className={cx(
-                        "absolute bottom-2.5 right-2.5 rounded-full border bg-white/45 px-2 py-1 text-[11px] text-neutral-950 backdrop-blur-[1px] transition",
-                        isActive ? "border-neutral-950" : "border-neutral-300 group-hover:border-neutral-700",
-                        fontMono.className
-                      )}
-                    >
-                      Vai <span className="ml-1">→</span>
                     </div>
                   </div>
                 </button>
@@ -361,7 +362,7 @@ export default function Carousel({ categories, onJumpToCategory }) {
             type="button"
             onClick={() => onJumpToCategory?.(active.id)}
             className={cx(
-              "rounded-full border border-neutral-300 bg-white/35 px-5 py-2.5 text-sm text-neutral-950 backdrop-blur-[1px] transition hover:border-neutral-700",
+              "rounded-full border border-neutral-300 bg-white/35 px-5 py-2.5 text-sm text-neutral-950 transition hover:border-neutral-700",
               fontSans.className
             )}
           >
