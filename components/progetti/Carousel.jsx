@@ -43,7 +43,6 @@ function IconArrow({ dir = "right" }) {
 
 export default function Carousel({ categories, onJumpToCategory }) {
   const safeCategories = categories && categories.length ? categories : EMPTY;
-
   const bgById = BG_BY_ID;
 
   const initialActive =
@@ -62,6 +61,7 @@ export default function Carousel({ categories, onJumpToCategory }) {
   const active = safeCategories[index] || initialActive;
   const activeBg = bgById[active.id] || initialBg;
 
+  // preload bg (una volta)
   useEffect(() => {
     const srcs = Object.values(BG_BY_ID);
     for (const s of srcs) {
@@ -70,12 +70,14 @@ export default function Carousel({ categories, onJumpToCategory }) {
     }
   }, []);
 
+  // bg crossfade state
   const [bottomSrc, setBottomSrc] = useState(initialBg);
   const [topSrc, setTopSrc] = useState(initialBg);
   const [topVisible, setTopVisible] = useState(false);
   const changeToken = useRef(0);
   const settleTimer = useRef(null);
 
+  // testo
   const [displayTitle, setDisplayTitle] = useState(initialActive.label);
   const [displayKicker, setDisplayKicker] = useState(initialActive.kicker);
   const [textPhase, setTextPhase] = useState("idle");
@@ -95,6 +97,7 @@ export default function Carousel({ categories, onJumpToCategory }) {
     };
   }, [safeCategories]);
 
+  // autoplay
   useEffect(() => {
     if (!safeCategories.length || paused) return;
     const t = setInterval(
@@ -104,22 +107,27 @@ export default function Carousel({ categories, onJumpToCategory }) {
     return () => clearInterval(t);
   }, [paused, safeCategories.length]);
 
+  // keyboard
   useEffect(() => {
     const onKeyDown = (e) => {
       if (!safeCategories.length) return;
+
       if (e.key === "ArrowLeft") {
         e.preventDefault();
         setIndex((i) => (i - 1 + safeCategories.length) % safeCategories.length);
       }
+
       if (e.key === "ArrowRight") {
         e.preventDefault();
         setIndex((i) => (i + 1) % safeCategories.length);
       }
     };
+
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [safeCategories.length]);
 
+  // cambio bg (deps complete: activeBg + bottomSrc)
   useEffect(() => {
     if (!activeBg || activeBg === bottomSrc) return;
 
@@ -135,11 +143,15 @@ export default function Carousel({ categories, onJumpToCategory }) {
     return () => {
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [activeBg]);
+  }, [activeBg, bottomSrc]);
 
+  // cambio testo (deps complete: usa label/kicker e stato display)
   useEffect(() => {
-    if (!active?.label) return;
-    if (active.label === displayTitle && active.kicker === displayKicker) return;
+    const nextLabel = active?.label || "";
+    const nextKicker = active?.kicker || "";
+
+    if (!nextLabel) return;
+    if (nextLabel === displayTitle && nextKicker === displayKicker) return;
 
     let raf = 0;
 
@@ -148,8 +160,8 @@ export default function Carousel({ categories, onJumpToCategory }) {
     });
 
     const t1 = setTimeout(() => {
-      setDisplayTitle(active.label);
-      setDisplayKicker(active.kicker);
+      setDisplayTitle(nextLabel);
+      setDisplayKicker(nextKicker);
       setTextPhase("in");
     }, 150);
 
@@ -160,7 +172,7 @@ export default function Carousel({ categories, onJumpToCategory }) {
       clearTimeout(t1);
       clearTimeout(t2);
     };
-  }, [index]);
+  }, [active?.label, active?.kicker, displayTitle, displayKicker]);
 
   const titleAnim =
     textPhase === "out"
@@ -180,24 +192,12 @@ export default function Carousel({ categories, onJumpToCategory }) {
   return (
 
     <div
-      className="relative
-                 overflow-hidden
-                 rounded-4xl
-                 border
-                 border-blue-900/30
-                 min-h-[48vh]
-                 sm:min-h-[52vh]
-                 lg:min-h-[56vh]
-                 xl:min-h-[58vh]"
+      className="relative overflow-hidden rounded-4xl border border-blue-900/30 min-h-[48vh] sm:min-h-[52vh] lg:min-h-[56vh] xl:min-h-[58vh]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-
-      <div
-        className="absolute
-                   inset-0"
-      >
-
+      {/* BG bottom */}
+      <div className="absolute inset-0">
         <Image
           src={bottomSrc}
           alt=""
@@ -208,20 +208,13 @@ export default function Carousel({ categories, onJumpToCategory }) {
           loading="eager"
           placeholder="blur"
           blurDataURL={BLUR}
-          className="object-cover
-                     kenburns
-                     will-change-transform"
+          className="object-cover kenburns will-change-transform"
           sizes="100vw"
         />
-
       </div>
 
       {/* BG top */}
-      <div
-        className="absolute
-                   inset-0"
-      >
-
+      <div className="absolute inset-0">
         <Image
           src={topSrc}
           alt=""
@@ -238,8 +231,11 @@ export default function Carousel({ categories, onJumpToCategory }) {
           sizes="100vw"
           onLoadingComplete={() => {
             const tokenAtLoad = changeToken.current;
+
             requestAnimationFrame(() => setTopVisible(true));
+
             if (settleTimer.current) clearTimeout(settleTimer.current);
+
             settleTimer.current = setTimeout(() => {
               if (tokenAtLoad !== changeToken.current) return;
               setBottomSrc(topSrc);
@@ -282,10 +278,11 @@ export default function Carousel({ categories, onJumpToCategory }) {
             >
               <IconArrow dir="left" />
             </button>
+
             <button
               type="button"
               onClick={() => setIndex((i) => (i + 1) % safeCategories.length)}
-              className="rounded-full border border-neutral-300 bg-white/55 px-2.5 py-1.5 text-sm text-white transition hover:border-neutral-700"
+              className="rounded-full border border-neutral-300 bg-white/55 px-2.5 py-1.5 text-sm text-neutral-100 transition hover:border-neutral-700"
               aria-label="Slide successiva"
             >
               <IconArrow dir="right" />
@@ -301,7 +298,7 @@ export default function Carousel({ categories, onJumpToCategory }) {
               <div className="col-start-1 row-start-1 invisible">
                 <h1
                   className={cx(
-                    "text-3xl font-semibold leading-[1.10] text-neutral-950 sm:text-4xl lg:text-5xl",
+                    "text-3xl font-semibold leading-[1.10] text-neutral-100 sm:text-4xl lg:text-5xl",
                     fontSerif.className
                   )}
                   style={clamp2LinesStyle()}
@@ -311,7 +308,7 @@ export default function Carousel({ categories, onJumpToCategory }) {
 
                 <p
                   className={cx(
-                    "mt-4 max-w-2xl text-sm leading-relaxed text-neutral-950 sm:text-base",
+                    "mt-4 max-w-2xl text-sm leading-relaxed text-neutral-100 sm:text-base",
                     fontSans.className
                   )}
                   style={clamp2LinesStyle()}
@@ -324,7 +321,7 @@ export default function Carousel({ categories, onJumpToCategory }) {
               <div className="col-start-1 row-start-1">
                 <h1
                   className={cx(
-                    "text-3xl font-semibold leading-[1.10] text-neutral-950 sm:text-4xl lg:text-5xl",
+                    "text-3xl font-semibold leading-[1.10] text-neutral-100 sm:text-4xl lg:text-5xl",
                     "transition-all duration-300 will-change-transform",
                     titleAnim,
                     fontSerif.className
@@ -336,7 +333,7 @@ export default function Carousel({ categories, onJumpToCategory }) {
 
                 <p
                   className={cx(
-                    "mt-4 max-w-2xl text-sm leading-relaxed text-neutral-950 sm:text-base",
+                    "mt-4 max-w-2xl text-sm leading-relaxed text-neutral-100 sm:text-base",
                     "transition-all duration-300 will-change-transform",
                     kickerAnim,
                     fontSans.className
@@ -367,8 +364,8 @@ export default function Carousel({ categories, onJumpToCategory }) {
                   }}
                   className={cx(
                     "group relative text-left transition",
-                    "rounded-2xl border bg-white/28",
-                    "h-[72px] px-3.5 py-2.5 overflow-hidden",
+                    "rounded-2xl border bg-white/90",
+                    "h-16 px-3.5 py-2.5 overflow-hidden",
                     isActive
                       ? "border-neutral-950"
                       : "border-neutral-300 hover:border-neutral-700"
@@ -376,8 +373,10 @@ export default function Carousel({ categories, onJumpToCategory }) {
                 >
                   <div
                     className={cx(
-                      "absolute left-0 top-0 h-full w-[3px] transition-opacity",
-                      isActive ? "opacity-100 bg-neutral-950" : "opacity-0 bg-neutral-950"
+                      "absolute left-0 top-0 h-full w-0.75 transition-opacity",
+                      isActive
+                        ? "opacity-100 bg-neutral-950"
+                        : "opacity-0 bg-neutral-950"
                     )}
                     aria-hidden="true"
                   />
@@ -421,7 +420,9 @@ export default function Carousel({ categories, onJumpToCategory }) {
             )}
           >
             Vai alla sezione{" "}
-            <span className={cx("ml-2 text-neutral-900", fontMono.className)}>→</span>
+            <span className={cx("ml-2 text-neutral-900", fontMono.className)}>
+              →
+            </span>
           </button>
         </div>
 
