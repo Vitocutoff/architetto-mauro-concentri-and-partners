@@ -1,5 +1,3 @@
-// app/contatti/page.jsx
-
 import ContattiClient from "@/components/contatti/ContattiClient";
 
 export const metadata = {

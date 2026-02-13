@@ -67,7 +67,7 @@ export const progettiCategories = [
         title: "Nuovo palazzetto dello sport.",
         place: "Brendola (VI)",
         year: 2012,
-        cover: "/projects/palazzetti/cardBrendola.png",
+        cover: "/projects/palazzetti/cardBrendola.webp",
       },
       {
         slug: "progetto-palazzetti-03",

@@ -11,16 +11,43 @@ function cx(...c) {
 
 function Field({ k, v, mono = false }) {
   return (
-    <div className="rounded-2xl border border-neutral-200 bg-white/75 shadow-[0_10px_30px_rgba(0,0,0,0.06)] backdrop-blur-[1px]">
-      <div className="p-5 sm:p-6">
-        <div className={cx("text-[11px] tracking-[0.22em] uppercase text-neutral-500", fontSans.className)}>
+
+    <div
+      className="rounded-2xl
+                 border
+                 border-neutral-200
+                 bg-white/75
+                 shadow-[0_10px_30px_rgba(0,0,0,0.06)]
+                 backdrop-blur-[1px]"
+    >
+
+      <div
+        className="p-5
+                   sm:p-6"
+      >
+
+        <div
+          className={cx(
+            "text-[11px] tracking-[0.22em] uppercase text-neutral-500",
+            fontSans.className
+          )}
+        >
           {k}
         </div>
-        <div className={cx("mt-2 text-sm sm:text-base text-neutral-900", mono ? fontMono.className : fontSans.className)}>
+
+        <div
+          className={cx(
+            "mt-2 text-sm sm:text-base text-neutral-900",
+            mono ? fontMono.className : fontSans.className
+          )}
+        >
           {v}
         </div>
+
       </div>
+
     </div>
+
   );
 }
 
@@ -67,7 +94,32 @@ function Background() {
 }
 
 export default function ContattiClient() {
-  const address = "Corso Padova, 65 — 36100 Vicenza (VI), Italia";
+  const sedeLegale = "Via Gozzi, 38 — Vicenza (VI), Italia";
+  const sedeOperativa = "Corso Padova, 65 — 36100 Vicenza (VI), Italia";
+
+  const email = "archcon@goldnet.it";
+  const pec = "mauro.concentri@archiworldpec.it";
+  const phone = "+39 0444 301913";
+  const phoneHref = "+390444301913";
+  const website = "www.mauroconcentriarchitetto.com";
+
+  // Dati (da foto)
+  const piva = "02069980247";
+  const cf = "CNGMRA62L07Z103J";
+
+  const partners = [
+    { name: "arch. Mauro Concentri", role: "progettazione Generale e sicurezza — Team Manager" },
+    { name: "arch. Domenico Gabaldo", role: "progettazione Generale e rendering — Team Manager" },
+    { name: "arch. Longhin Lorenzo", role: "progettazione generale" },
+    { name: "arch. Giulliano Dal Santo", role: "rilievi e pratiche catastali" },
+    { name: "Ing. Francesco Piccoli", role: "strutture" },
+    { name: "Perito Paolo Mosele", role: "Impianti termotecnici e progettazione Antincendio" },
+    { name: "Ing. Sara Mosele", role: "Impianti termotecnici e Esperto in Gestione dell’Energia" },
+    { name: "Perito Paolo Chemello", role: "impianti elettrici" },
+    { name: "Dott. Geologo Enrico Marcato", role: "indagini geologiche, compatibilità idrauliche" },
+    { name: "Per. Ind. Antonio Sofia", role: "Acustica" },
+    { name: "Ing. Giovanni Crosara", role: "Parte idraulica e stradale" },
+  ];
 
   const { googleMapsUrl, appleMapsUrl, embedUrl } = useMemo(() => {
     const q = encodeURIComponent("Corso Padova 65, 36100 Vicenza, Italia");
@@ -80,99 +132,212 @@ export default function ContattiClient() {
 
   const [mapLoaded, setMapLoaded] = useState(false);
 
+  const pill = cx(
+    "rounded-full border px-4 py-2 text-sm transition",
+    "border-neutral-200 bg-white text-neutral-900 hover:border-neutral-400",
+    fontSans.className
+  );
+
+  const pillDark = cx(
+    "rounded-full border px-4 py-2 text-sm transition",
+    "border-neutral-900 bg-neutral-900 text-white hover:bg-neutral-800",
+    fontSans.className
+  );
+
   return (
-    <section className="relative min-h-screen bg-white overflow-hidden">
+
+    <section
+      className="relative
+                 min-h-screen
+                 bg-white
+                 overflow-hidden"
+    >
+
       <Background />
 
-      <div className="relative mx-auto w-full max-w-6xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
-        <header className="max-w-3xl">
-          <div className="inline-flex items-center gap-3">
+      <div
+        className="relative
+                   mx-auto
+                   w-full
+                   max-w-6xl
+                   px-4
+                   pb-16
+                   pt-10
+                   sm:px-6
+                   lg:px-8"
+      >
+
+        <header
+          className="max-w-3xl"
+        >
+
+          <div
+            className="inline-flex
+                       items-center
+                       gap-3"
+          >
+
             <span className="h-px w-10 bg-zinc-300" />
-            <p className={cx("text-xs tracking-[0.22em] uppercase text-zinc-600", fontSans.className)}>
+
+            <p
+              className={cx(
+                "text-xs tracking-[0.22em] uppercase text-zinc-600",
+                fontSans.className
+              )}
+            >
               studio
             </p>
+
           </div>
 
-          <h1 className={cx("mt-4 text-4xl sm:text-5xl font-semibold tracking-tight text-zinc-900", fontSerif.className)}>
+          <h1
+            className={cx(
+              "mt-4 text-4xl sm:text-5xl font-semibold tracking-tight text-zinc-900",
+              fontSerif.className
+            )}
+          >
             Contatti
           </h1>
 
-          <p className={cx("mt-5 max-w-2xl text-sm sm:text-base leading-relaxed text-zinc-700", fontSans.className)}>
-            Tutti i riferimenti dello studio, inclusi recapiti, indirizzo e indicazioni per raggiungerci.
+          <p
+            className={cx(
+              "mt-5 max-w-2xl text-sm sm:text-base leading-relaxed text-zinc-700",
+              fontSans.className
+            )}
+          >
+            Tutti i riferimenti dello studio, inclusi recapiti, sedi e indicazioni per raggiungerci.
           </p>
+
         </header>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-12">
-          {/* SX */}
-          <div className="lg:col-span-5 space-y-4">
-            <Field k="Indirizzo" v={address} />
+        <div
+          className="mt-10
+                     grid
+                     gap-6
+                     lg:grid-cols-12"
+        >
 
-            <Field
-              k="Email"
-              v={
-                <a className="underline decoration-black/15 hover:decoration-black/40" href="mailto:info@mauroconcentri.com">
-                  info@mauroconcentri.com
-                </a>
-              }
-            />
+          {/* SX */}
+          <div
+            className="lg:col-span-5
+                       space-y-4"
+          >
+
+            <Field k="Sede legale" v={sedeLegale} />
+
+            <Field k="Sede operativa" v={sedeOperativa} />
 
             <Field
               k="Telefono"
               v={
-                <>
-                  <a className="underline decoration-black/15 hover:decoration-black/40" href="tel:+390000000000">
-                    +39 000 000 0000
-                  </a>
-                  <span className="block mt-1 text-xs text-neutral-500">
-                    (sostituisci con il numero corretto)
-                  </span>
-                </>
+                <a
+                  className="underline decoration-black/15 hover:decoration-black/40"
+                  href={`tel:${phoneHref}`}
+                >
+                  {phone}
+                </a>
               }
               mono
             />
 
             <Field
-              k="PEC"
+              k="E-mail"
               v={
-                <>
-                  <a className="underline decoration-black/15 hover:decoration-black/40" href="mailto:pec@esempio.it">
-                    pec@esempio.it
-                  </a>
-                  <span className="block mt-1 text-xs text-neutral-500">
-                    (sostituisci con la PEC reale)
-                  </span>
-                </>
+                <a
+                  className="underline decoration-black/15 hover:decoration-black/40"
+                  href={`mailto:${email}`}
+                >
+                  {email}
+                </a>
               }
             />
 
             <Field
-              k="Dati societari"
+              k="PEC"
+              v={
+                <a
+                  className="underline decoration-black/15 hover:decoration-black/40"
+                  href={`mailto:${pec}`}
+                >
+                  {pec}
+                </a>
+              }
+              mono
+            />
+
+            <Field
+              k="Web"
+              v={
+                <a
+                  className="underline decoration-black/15 hover:decoration-black/40"
+                  href={`https://${website}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {website}
+                </a>
+              }
+              mono
+            />
+
+            <Field
+              k="Dati"
               v={
                 <div className="space-y-1">
                   <div>
-                    Partita IVA: <span className={fontMono.className}>—</span>
+                    Partita IVA: <span className={fontMono.className}>{piva}</span>
                   </div>
                   <div>
-                    Codice Fiscale: <span className={fontMono.className}>—</span>
+                    Codice Fiscale: <span className={fontMono.className}>{cf}</span>
                   </div>
                 </div>
               }
             />
+
           </div>
 
           {/* DX */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="rounded-2xl border border-neutral-200 bg-white/75 shadow-[0_10px_30px_rgba(0,0,0,0.06)] overflow-hidden backdrop-blur-[1px]">
+          <div
+            className="lg:col-span-7
+                       space-y-6"
+          >
+
+            {/* MAPPA */}
+            <div
+              className="rounded-2xl
+                         border
+                         border-neutral-200
+                         bg-white/75
+                         shadow-[0_10px_30px_rgba(0,0,0,0.06)]
+                         overflow-hidden
+                         backdrop-blur-[1px]"
+            >
+
               <div className="p-5 sm:p-6">
-                <div className={cx("text-[11px] tracking-[0.22em] uppercase text-neutral-500", fontSans.className)}>
+                <div
+                  className={cx(
+                    "text-[11px] tracking-[0.22em] uppercase text-neutral-500",
+                    fontSans.className
+                  )}
+                >
                   come raggiungerci
                 </div>
 
-                <h2 className={cx("mt-3 text-2xl font-semibold tracking-tight text-neutral-900", fontSerif.className)}>
+                <h2
+                  className={cx(
+                    "mt-3 text-2xl font-semibold tracking-tight text-neutral-900",
+                    fontSerif.className
+                  )}
+                >
                   Mappa
                 </h2>
 
-                <p className={cx("mt-3 text-sm leading-relaxed text-neutral-700", fontSans.className)}>
+                <p
+                  className={cx(
+                    "mt-3 text-sm leading-relaxed text-neutral-700",
+                    fontSans.className
+                  )}
+                >
                   Per tutela della privacy, la mappa interattiva viene caricata solo su richiesta.
                 </p>
 
@@ -181,10 +346,7 @@ export default function ContattiClient() {
                     href={googleMapsUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className={cx(
-                      "rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm text-neutral-900 hover:border-neutral-400 transition",
-                      fontSans.className
-                    )}
+                    className={pill}
                   >
                     Apri in Google Maps →
                   </a>
@@ -193,10 +355,7 @@ export default function ContattiClient() {
                     href={appleMapsUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className={cx(
-                      "rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm text-neutral-900 hover:border-neutral-400 transition",
-                      fontSans.className
-                    )}
+                    className={pill}
                   >
                     Apri in Apple Mappe →
                   </a>
@@ -204,10 +363,7 @@ export default function ContattiClient() {
                   <button
                     type="button"
                     onClick={() => setMapLoaded(true)}
-                    className={cx(
-                      "rounded-full border border-neutral-900 bg-neutral-900 px-4 py-2 text-sm text-white hover:bg-neutral-800 transition",
-                      fontSans.className
-                    )}
+                    className={pillDark}
                   >
                     {mapLoaded ? "Mappa caricata" : "Carica mappa"}
                   </button>
@@ -219,14 +375,26 @@ export default function ContattiClient() {
                   <>
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="text-center px-6">
-                        <div className={cx("text-xs tracking-[0.22em] uppercase text-neutral-500", fontSans.className)}>
+                        <div
+                          className={cx(
+                            "text-xs tracking-[0.22em] uppercase text-neutral-500",
+                            fontSans.className
+                          )}
+                        >
                           contenuto esterno
                         </div>
-                        <div className={cx("mt-2 text-sm text-neutral-700", fontSans.className)}>
+
+                        <div
+                          className={cx(
+                            "mt-2 text-sm text-neutral-700",
+                            fontSans.className
+                          )}
+                        >
                           Clicca “Carica mappa” per visualizzare Google Maps.
                         </div>
                       </div>
                     </div>
+
                     <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(to_right,rgba(0,0,0,.18)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,.18)_1px,transparent_1px)] [background-size:24px_24px]" />
                   </>
                 ) : (
@@ -240,51 +408,97 @@ export default function ContattiClient() {
                   />
                 )}
               </div>
+
             </div>
 
-            <div className="rounded-2xl border border-neutral-200 bg-white/75 shadow-[0_10px_30px_rgba(0,0,0,0.06)] backdrop-blur-[1px]">
+            {/* PARTNERS */}
+            <div
+              className="rounded-2xl
+                         border
+                         border-neutral-200
+                         bg-white/75
+                         shadow-[0_10px_30px_rgba(0,0,0,0.06)]
+                         backdrop-blur-[1px]"
+            >
+
               <div className="p-5 sm:p-6">
-                <div className={cx("text-[11px] tracking-[0.22em] uppercase text-neutral-500", fontSans.className)}>
+                <div
+                  className={cx(
+                    "text-[11px] tracking-[0.22em] uppercase text-neutral-500",
+                    fontSans.className
+                  )}
+                >
                   team
                 </div>
 
-                <h2 className={cx("mt-3 text-2xl font-semibold tracking-tight text-neutral-900", fontSerif.className)}>
+                <h2
+                  className={cx(
+                    "mt-3 text-2xl font-semibold tracking-tight text-neutral-900",
+                    fontSerif.className
+                  )}
+                >
                   Partners
                 </h2>
 
                 <div className="mt-5 space-y-3">
-                  {["Nome Cognome", "Nome Cognome", "Nome Cognome"].map((n) => (
-                    <div key={n} className="rounded-xl border border-neutral-200 bg-white/70 px-4 py-3">
-                      <div className={cx("text-sm text-neutral-900", fontSans.className)}>{n}</div>
-                      <div className={cx("text-xs text-neutral-600", fontSans.className)}>Ruolo / specializzazione</div>
+                  {partners.map((p, i) => (
+
+                    <div
+                      key={`${p.name}-${i}`}
+                      className="rounded-xl
+                                 border
+                                 border-neutral-200
+                                 bg-white/70
+                                 px-4
+                                 py-3"
+                    >
+
+                      <div className={cx("text-sm text-neutral-900", fontSans.className)}>
+                        {p.name}
+                      </div>
+
+                      <div className={cx("text-xs text-neutral-600", fontSans.className)}>
+                        {p.role}
+                      </div>
+
                     </div>
+
                   ))}
                 </div>
 
                 <div className="mt-6 flex items-center justify-between gap-4">
                   <Link
                     href="/privacy-policy"
-                    className={cx("text-xs tracking-[0.18em] uppercase text-neutral-700 hover:text-neutral-900 transition", fontSans.className)}
+                    className={cx(
+                      "text-xs tracking-[0.18em] uppercase text-neutral-700 hover:text-neutral-900 transition",
+                      fontSans.className
+                    )}
                   >
                     privacy policy →
                   </Link>
 
                   <Link
                     href="/"
-                    className={cx("text-xs tracking-[0.18em] uppercase text-neutral-700 hover:text-neutral-900 transition", fontSans.className)}
+                    className={cx(
+                      "text-xs tracking-[0.18em] uppercase text-neutral-700 hover:text-neutral-900 transition",
+                      fontSans.className
+                    )}
                   >
                     home →
                   </Link>
                 </div>
+
               </div>
+
             </div>
+
           </div>
+
         </div>
 
-        <p className={cx("mt-10 text-xs text-neutral-500", fontSans.className)}>
-          Nota: Telefono, PEC e dati societari sono placeholder — sostituiscili con i valori reali.
-        </p>
       </div>
+
     </section>
+
   );
 }

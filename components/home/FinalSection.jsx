@@ -217,7 +217,7 @@ export default function FinalSection() {
                     email
                   </div>
                   <div className={`${fontSans.className} mt-2 text-sm sm:text-base text-neutral-900`}>
-                    info@mauroconcentri.com
+                    m.concentri@spengineering.info
                   </div>
                 </div>
               </div>
@@ -225,7 +225,7 @@ export default function FinalSection() {
               <div className="mt-8 flex items-center gap-3">
                 <span className="h-px w-10 bg-black/20" aria-hidden="true" />
                 <span className={`${fontSans.className} text-sm text-neutral-700/80`}>
-                  non è possibile inviare allegati.
+                  da qui non è possibile inviare allegati.
                 </span>
               </div>
             </div>
