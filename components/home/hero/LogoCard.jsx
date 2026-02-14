@@ -100,6 +100,7 @@ export default function LogoCard() {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ delay: 0.25, duration: 1, ease: [0.25, 1, 0.5, 1] }}
       >
+
         <span
           className={`${fontMonoSpecial.className}
                       font-extrabold`}

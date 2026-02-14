@@ -1,8 +1,8 @@
 // /app/page.jsx
 
 import FinalSection from "@/components/home/FinalSection";
-import HeroSection from "@/components/home/HeroSection";
-import IntroSection from "@/components/home/IntroSection";
+import HeroSection from "@/components/home/hero/HeroSection";
+import IntroSection from "@/components/home/intro/IntroSection";
 import PreviewSection from "@/components/home/PreviewSection";
 import WorkInProgressSection from "@/components/home/WorkInProgressSection";
 
