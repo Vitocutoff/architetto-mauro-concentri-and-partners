@@ -141,4 +141,29 @@ export const progettiCategories = [
       },
     ],
   },
+  {
+    id: "africa",
+    label: "Progetto Africa",
+    kicker: "Impianti sportivi e villaggio turistico.",
+    projects: [
+      {
+        slug: "progetto-africa-03",
+        title: "Centro sportivo di Dakar (Africa)",
+        place: "Dakar, Senegal",
+        cover: "/projects/africa/bgCardCentro.png",
+      },
+      {
+        slug: "progetto-africa-02",
+        title: "Piscina di Dakar (Africa).",
+        place: "Dakar, Senegal",
+        cover: "/projects/africa/bgCardPiscina.png",
+      },
+      {
+        slug: "progetto-africa-01",
+        title: "Villaggio vacanze di Guéréo (Africa)",
+        place: "Guéréo, Senegal",
+        cover: "/projects/africa/bgCardVillaggio.png",
+      },
+    ],
+  },
 ];
