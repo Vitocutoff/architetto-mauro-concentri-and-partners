@@ -217,7 +217,7 @@ export default function FinalSection() {
                     email
                   </div>
                   <div className={`${fontSans.className} mt-2 text-sm sm:text-base text-neutral-900`}>
-                    m.concentri@spengineering.info
+                    archcon@goldnet.it
                   </div>
                 </div>
               </div>

@@ -60,10 +60,10 @@ export async function POST(request) {
       return json({ ok: false, error: "Configurazione email mancante (env)." }, 500);
     }
 
-    const subject = `Nuovo contatto dal sito — ${name}`;
+    const subject = "NUOVA MAIL DAL SITO";
 
     const text = [
-      "Nuovo messaggio dal form del sito",
+      "Nuovo messaggio da:",
       "",
       `Nome: ${name}`,
       `Email: ${email}`,
@@ -74,11 +74,11 @@ export async function POST(request) {
 
     const html = `
       <div style="font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; line-height:1.5">
-        <h2>Nuovo messaggio dal sito</h2>
+        <h2>Nuovo messaggio da:</h2>
         <p><strong>Nome:</strong> ${escapeHtml(name)}<br/>
            <strong>Email:</strong> ${escapeHtml(email)}</p>
         <p><strong>Messaggio:</strong></p>
-        <pre style="white-space:pre-wrap;background:#f6f7f9;padding:12px;border-radius:10px">${escapeHtml(message)}</pre>
+        <pre style="white-space:pre-wrap;padding:12px;border-radius:10px">${escapeHtml(message)}</pre>
       </div>
     `;
 

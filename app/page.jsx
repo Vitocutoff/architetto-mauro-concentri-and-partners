@@ -1,10 +1,10 @@
 // /app/page.jsx
 
-import FinalSection from "@/components/home/FinalSection";
+import FinalSection from "@/components/home/final/FinalSection";
 import HeroSection from "@/components/home/hero/HeroSection";
 import IntroSection from "@/components/home/intro/IntroSection";
-import PreviewSection from "@/components/home/PreviewSection";
-import WorkInProgressSection from "@/components/home/WorkInProgressSection";
+import PreviewSection from "@/components/home/preview/PreviewSection";
+import WorkInProgressSection from "@/components/home/work/WorkInProgressSection";
 
 export default function HomePage() {
 

@@ -401,7 +401,9 @@ export default function Footer() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 1.5, ease: "easeOut" }}
-        className="bg-linear-to-r
+        className="relative
+                   z-60
+                   bg-linear-to-r
                    from-white/90
                    via-white
                    to-white/90
@@ -413,7 +415,7 @@ export default function Footer() {
                    border-neutral-200/60"
       >
 
-        © {year} Architetto Mauro Concentri &amp; Partners ·{" "}
+        © {year} Architetto Mauro Concentri &amp; Partners -{" "}
 
         <Link
           href="/privacy-policy"

@@ -144,7 +144,7 @@ export default function PrivacyPolicyPage() {
                                hover:decoration-neutral-700"
                   >
 
-                    info@mauroconcentri.com
+                    archcon@goldnet.it
 
                   </a>
 
@@ -320,7 +320,7 @@ export default function PrivacyPolicyPage() {
                            hover:decoration-neutral-700"
               >
 
-                info@mauroconcentri.com
+                archcon@goldnet.it
 
               </a>
 
