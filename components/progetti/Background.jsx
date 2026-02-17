@@ -12,7 +12,7 @@ export default function Background() {
 
       <div
         className="absolute inset-0
-                   bg-[url('/backgrounds/bgProgetti.png')]
+                   bg-[url('/backgrounds/bgProgetti.webp')]
                    bg-top
                    bg-repeat-y
                    bg-contain"
