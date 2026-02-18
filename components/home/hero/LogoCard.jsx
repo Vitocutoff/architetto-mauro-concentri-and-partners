@@ -1,10 +1,10 @@
-// /components/home/LogoCard.jsx
+// /components/home/hero/LogoCard.jsx
 
 "use client";
 
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
-import { fontMono, fontMonoSpecial, fontSerif, fontCursive } from "@/lib/fonts";
+import { fontCursive, fontMono, fontMonoSpecial, fontSerif } from "@/lib/fonts";
 
 export default function LogoCard() {
   const rotateX = useMotionValue(0);

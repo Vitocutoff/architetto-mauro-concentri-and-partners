@@ -1,11 +1,12 @@
+// /components/layout/Footer.jsx
+
 "use client";
 
 import { motion } from "framer-motion";
-import { FaPhoneAlt, FaMobileAlt, FaEnvelope } from "react-icons/fa";
-import { FaFacebookF, FaLinkedinIn, FaInstagram } from "react-icons/fa";
 import Link from "next/link";
+import { FaEnvelope, FaFacebookF, FaInstagram, FaLinkedinIn, FaMobileAlt, FaPhoneAlt } from "react-icons/fa";
 
-import { fontMono, fontMonoSpecial, fontSerif, fontCursive } from "@/lib/fonts";
+import { fontCursive, fontMono, fontMonoSpecial, fontSerif } from "@/lib/fonts";
 
 export default function Footer() {
   const year = new Date().getUTCFullYear();

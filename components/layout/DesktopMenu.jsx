@@ -1,9 +1,11 @@
+// /components/layout/DesktopMenu.jsx
+
 "use client";
 
-import React, { memo, useEffect } from "react";
 import { motion, useAnimationControls, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { memo, useEffect } from "react";
 
 import { menuItems } from "@/data/menuItems";
 import { fontNav } from "@/lib/fonts";

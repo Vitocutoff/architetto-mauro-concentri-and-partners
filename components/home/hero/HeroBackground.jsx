@@ -1,3 +1,5 @@
+// /components/home/hero/HeroBackground.jsx
+
 "use client";
 
 import { motion } from "framer-motion";

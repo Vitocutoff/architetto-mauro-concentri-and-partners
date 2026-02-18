@@ -1,7 +1,9 @@
+// /components/layout/ClientShell.jsx
+
 "use client";
 
-import { usePathname } from "next/navigation";
 import { MotionConfig } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 import CookieBanner from "@/components/layout/CookieBanner";
 

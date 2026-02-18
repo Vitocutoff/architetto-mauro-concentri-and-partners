@@ -1,12 +1,13 @@
 // /app/layout.jsx
 
-import "./globals.css";
 import { siteMetadata, viewport } from "@/lib/metadata";
 
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import ScrollToTop from "@/components/ui/ScrollToTop";
+import "./globals.css";
+
 import ClientShell from "@/components/layout/ClientShell";
+import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
+import ScrollToTop from "@/components/ui/ScrollToTop";
 
 export const metadata = siteMetadata;
 export { viewport };

@@ -31,7 +31,7 @@ export default function MobileMenu({ isOpen, toggleMenu, closeMenu }) {
 
   const linkClass = (path) =>
     `${fontNav.className} text-xl tracking-widest transition-colors duration-200 ${
-      pathname === path ? "text-red-400 font-bold" : "hover:text-red-300 text-neutral-200"
+      pathname === path ? "text-blue-900 font-bold" : "hover:text-blue-800 text-neutral-200"
     }`;
 
   return (

@@ -1,11 +1,13 @@
+// /components/home/hero/HeroSection.jsx
+
 "use client";
 
-import { motion, useScroll, useTransform, useReducedMotion, useInView, useMotionValue } from "framer-motion";
+import { motion, useInView, useMotionValue, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
 import HeroBackground from "@/components/home/hero/HeroBackground";
-import HeroSportBadge from "@/components/home/hero/HeroSportBadge";
 import HeroScrollHint from "@/components/home/hero/HeroScrollHint";
+import HeroSportBadge from "@/components/home/hero/HeroSportBadge";
 import LogoCard from "@/components/home/hero/LogoCard";
 
 export default function HeroSection() {

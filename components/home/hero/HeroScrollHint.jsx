@@ -1,3 +1,5 @@
+// /components/home/HeroScrollHint.jsx
+
 "use client";
 
 import { motion } from "framer-motion";

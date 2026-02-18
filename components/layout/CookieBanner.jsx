@@ -1,7 +1,9 @@
+// /components/layout/CookieBanner.jsx
+
 "use client";
 
-import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
 import { useState } from "react";
 
 const STORAGE_KEY = "cookieBannerDismissed";
