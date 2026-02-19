@@ -1,4 +1,5 @@
 import Image from "next/image";
+
 import CvEntry from "@/components/cv/CvEntry";
 import CvSection from "@/components/cv/CvSection";
 import CvSidebarBlock from "@/components/cv/CvSidebarBlock";
