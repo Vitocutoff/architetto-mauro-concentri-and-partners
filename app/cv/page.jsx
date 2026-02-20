@@ -271,13 +271,13 @@ export default function CVPage() {
         </header>
 
         {/* GRIGLIA */}
-        <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-[340px_1fr]">
+        <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[350px_1fr]">
           {/* SIDEBAR */}
           <aside className="space-y-8 lg:sticky lg:top-24 lg:self-start">
             {/* FOTO PROFILO */}
             <CvSidebarBlock title="Profilo">
               <div className="flex flex-col items-center text-center">
-                <div className="relative h-40 w-40 overflow-hidden rounded-full border bg-black border-zinc-200 shadow-sm">
+                <div className="relative h-50 w-50 overflow-hidden rounded-full border bg-black border-zinc-200 shadow-sm">
                   <Image
                     src="/images/mauroConcentriCV.webp"
                     alt="Mauro Concentri"
