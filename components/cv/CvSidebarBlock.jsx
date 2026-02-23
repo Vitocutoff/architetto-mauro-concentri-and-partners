@@ -28,7 +28,7 @@ export default function CvSidebarBlock({
     >
       {/* Accent bar */}
       <div
-        className={`absolute left-0 top-0 h-full w-[3px] ${accentBg}`}
+        className={`absolute left-0 top-0 h-full w-0.75 ${accentBg}`}
         aria-hidden="true"
       />
 

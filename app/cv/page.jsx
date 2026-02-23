@@ -275,7 +275,7 @@ export default function CVPage() {
           {/* SIDEBAR */}
           <aside className="space-y-8 lg:sticky lg:top-24 lg:self-start">
             {/* FOTO PROFILO */}
-            <CvSidebarBlock title="Profilo">
+            <CvSidebarBlock title="Profilo" accent="sky">
               <div className="flex flex-col items-center text-center">
                 <div className="relative h-50 w-50 overflow-hidden rounded-full border bg-black border-zinc-200 shadow-sm">
                   <Image

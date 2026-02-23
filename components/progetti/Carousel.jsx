@@ -15,6 +15,7 @@ const BG_BY_ID = {
   atletica: "/backgrounds/bgCardAtletica.webp",
   piscine: "/backgrounds/bgCardPiscine.webp",
   campi: "/backgrounds/bgCardCampi.webp",
+  africa: "/projects/africa/bgCardVillaggio.png",
 };
 
 function cx(...classes) {
