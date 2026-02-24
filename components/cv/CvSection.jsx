@@ -11,10 +11,11 @@ export default function CvSection({
       : "text-2xl font-semibold tracking-tight leading-tight";
 
   const accentMap = {
-    zinc: "bg-zinc-900/70",
+    zinc: "bg-zinc-800/70",
     emerald: "bg-emerald-500/80",
     sky: "bg-sky-500/80",
     amber: "bg-amber-500/80",
+    red: "bg-red-400/70",
   };
 
   const accentBg = accentMap[accent] || accentMap.zinc;

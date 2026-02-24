@@ -44,7 +44,6 @@ function IconArrow({ dir = "right" }) {
 
 export default function Carousel({ categories, onJumpToCategory }) {
   const safeCategories = categories && categories.length ? categories : EMPTY;
-  const bgById = BG_BY_ID;
 
   const initialActive =
     safeCategories[0] || {
@@ -54,13 +53,14 @@ export default function Carousel({ categories, onJumpToCategory }) {
       projects: [],
     };
 
-  const initialBg = bgById[initialActive.id] || "/backgrounds/bgCardCampi.webp";
+  const initialBg =
+    BG_BY_ID[initialActive.id] || "/backgrounds/bgCardCampi.webp";
 
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
 
   const active = safeCategories[index] || initialActive;
-  const activeBg = bgById[active.id] || initialBg;
+  const activeBg = BG_BY_ID[active.id] || initialBg;
 
   // preload bg (una volta)
   useEffect(() => {
@@ -115,7 +115,9 @@ export default function Carousel({ categories, onJumpToCategory }) {
 
       if (e.key === "ArrowLeft") {
         e.preventDefault();
-        setIndex((i) => (i - 1 + safeCategories.length) % safeCategories.length);
+        setIndex(
+          (i) => (i - 1 + safeCategories.length) % safeCategories.length
+        );
       }
 
       if (e.key === "ArrowRight") {
@@ -128,7 +130,7 @@ export default function Carousel({ categories, onJumpToCategory }) {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [safeCategories.length]);
 
-  // cambio bg (deps complete: activeBg + bottomSrc)
+  // cambio bg
   useEffect(() => {
     if (!activeBg || activeBg === bottomSrc) return;
 
@@ -146,7 +148,7 @@ export default function Carousel({ categories, onJumpToCategory }) {
     };
   }, [activeBg, bottomSrc]);
 
-  // cambio testo (deps complete: usa label/kicker e stato display)
+  // cambio testo
   useEffect(() => {
     const nextLabel = active?.label || "";
     const nextKicker = active?.kicker || "";
@@ -191,7 +193,6 @@ export default function Carousel({ categories, onJumpToCategory }) {
   )}`;
 
   return (
-
     <div
       className="relative overflow-hidden rounded-4xl border border-blue-900/30 min-h-[48vh] sm:min-h-[52vh] lg:min-h-[56vh] xl:min-h-[58vh]"
       onMouseEnter={() => setPaused(true)}
@@ -246,12 +247,19 @@ export default function Carousel({ categories, onJumpToCategory }) {
         />
       </div>
 
+      {/* ✅ SCRIM ELEGANTE (leggibilità testi) */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute inset-0 bg-black/25 sm:bg-black/30" />
+        <div className="absolute inset-0 bg-[radial-gradient(900px_520px_at_18%_28%,rgba(0,0,0,0.55),transparent_62%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.55)_0%,transparent_45%)]" />
+      </div>
+
       <div className="relative flex h-full flex-col p-6 sm:p-8 lg:p-10">
         {/* Top bar */}
         <div className="flex items-center justify-between gap-4">
           <div
             className={cx(
-              "text-xs tracking-[0.26em] uppercase text-white",
+              "text-xs tracking-[0.26em] uppercase text-white/90",
               fontSans.className
             )}
           >
@@ -261,20 +269,22 @@ export default function Carousel({ categories, onJumpToCategory }) {
           <div className="flex items-center gap-2">
             <div
               className={cx(
-                "hidden text-xs text-white sm:flex sm:items-center sm:gap-2",
+                "hidden text-xs text-white/85 sm:flex sm:items-center sm:gap-2",
                 fontMono.className
               )}
             >
               <span>{counter}</span>
-              <span className="text-white">{paused ? "PAUSE" : "AUTO"}</span>
+              <span className="text-white/70">{paused ? "PAUSE" : "AUTO"}</span>
             </div>
 
             <button
               type="button"
               onClick={() =>
-                setIndex((i) => (i - 1 + safeCategories.length) % safeCategories.length)
+                setIndex(
+                  (i) => (i - 1 + safeCategories.length) % safeCategories.length
+                )
               }
-              className="rounded-full border border-neutral-300 bg-white/50 px-2.5 py-1.5 text-sm text-white transition hover:border-neutral-700"
+              className="rounded-full border border-white/25 bg-white/10 px-2.5 py-1.5 text-sm text-white/90 backdrop-blur-md transition hover:border-white/45 hover:bg-white/15"
               aria-label="Slide precedente"
             >
               <IconArrow dir="left" />
@@ -283,7 +293,7 @@ export default function Carousel({ categories, onJumpToCategory }) {
             <button
               type="button"
               onClick={() => setIndex((i) => (i + 1) % safeCategories.length)}
-              className="rounded-full border border-neutral-300 bg-white/55 px-2.5 py-1.5 text-sm text-neutral-100 transition hover:border-neutral-700"
+              className="rounded-full border border-white/25 bg-white/10 px-2.5 py-1.5 text-sm text-white/90 backdrop-blur-md transition hover:border-white/45 hover:bg-white/15"
               aria-label="Slide successiva"
             >
               <IconArrow dir="right" />
@@ -293,13 +303,13 @@ export default function Carousel({ categories, onJumpToCategory }) {
 
         {/* Title */}
         <div className="mt-6 max-w-4xl">
-          <div className="rounded-3xl p-6 sm:p-7 lg:p-8">
+          <div className="rounded-3xl border border-white/15 bg-white/8 backdrop-blur-md p-6 sm:p-7 lg:p-8">
             <div className="grid">
               {/* sizer */}
               <div className="col-start-1 row-start-1 invisible">
                 <h1
                   className={cx(
-                    "text-3xl font-semibold leading-[1.10] text-neutral-100 sm:text-4xl lg:text-5xl",
+                    "text-3xl font-semibold leading-[1.10] text-white sm:text-4xl lg:text-5xl",
                     fontSerif.className
                   )}
                   style={clamp2LinesStyle()}
@@ -309,7 +319,7 @@ export default function Carousel({ categories, onJumpToCategory }) {
 
                 <p
                   className={cx(
-                    "mt-4 max-w-2xl text-sm leading-relaxed text-neutral-100 sm:text-base",
+                    "mt-4 max-w-2xl text-sm leading-relaxed text-white/85 sm:text-base",
                     fontSans.className
                   )}
                   style={clamp2LinesStyle()}
@@ -322,7 +332,7 @@ export default function Carousel({ categories, onJumpToCategory }) {
               <div className="col-start-1 row-start-1">
                 <h1
                   className={cx(
-                    "text-3xl font-semibold leading-[1.10] text-neutral-100 sm:text-4xl lg:text-5xl",
+                    "text-3xl font-semibold leading-[1.10] text-white sm:text-4xl lg:text-5xl",
                     "transition-all duration-300 will-change-transform",
                     titleAnim,
                     fontSerif.className
@@ -334,7 +344,7 @@ export default function Carousel({ categories, onJumpToCategory }) {
 
                 <p
                   className={cx(
-                    "mt-4 max-w-2xl text-sm leading-relaxed text-neutral-100 sm:text-base",
+                    "mt-4 max-w-2xl text-sm leading-relaxed text-white/85 sm:text-base",
                     "transition-all duration-300 will-change-transform",
                     kickerAnim,
                     fontSans.className
@@ -348,12 +358,15 @@ export default function Carousel({ categories, onJumpToCategory }) {
           </div>
         </div>
 
-        {/* Pills categorie */}
+        {/* Pills categorie — ✅ layout piramide 2+3 */}
         <div className="mt-6">
-          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-3 sm:grid-cols-12">
             {safeCategories.map((c, i) => {
               const isActive = i === index;
               const count = c.projects?.length || 0;
+
+              // 2 sopra (span 6), 3 sotto (span 4)
+              const spanClass = i < 2 ? "sm:col-span-6" : "sm:col-span-4";
 
               return (
                 <button
@@ -365,66 +378,72 @@ export default function Carousel({ categories, onJumpToCategory }) {
                   }}
                   className={cx(
                     "group relative text-left transition",
-                    "rounded-2xl border bg-white/90",
-                    "h-16 px-3.5 py-2.5 overflow-hidden",
+                    "rounded-2xl border backdrop-blur-md",
+                    "h-14 px-4 py-3 overflow-hidden",
+                    spanClass,
                     isActive
-                      ? "border-neutral-950"
-                      : "border-neutral-300 hover:border-neutral-700"
+                      ? "border-white/55 bg-white/16 shadow-[0_14px_44px_rgba(0,0,0,0.28)] -translate-y-px"
+                      : "border-white/20 bg-white/10 hover:border-white/35 hover:bg-white/12 hover:-translate-y-px hover:shadow-[0_14px_44px_rgba(0,0,0,0.22)]"
                   )}
                 >
+                  {/* accent bar sottilissima solo active */}
                   <div
                     className={cx(
-                      "absolute left-0 top-0 h-full w-0.75 transition-opacity",
-                      isActive
-                        ? "opacity-100 bg-neutral-950"
-                        : "opacity-0 bg-neutral-950"
+                      "absolute left-0 top-0 h-full w-0.5 transition-opacity",
+                      isActive ? "opacity-100 bg-white/80" : "opacity-0 bg-white/80"
                     )}
                     aria-hidden="true"
                   />
 
-                  <div className="flex h-full flex-col">
-                    <div
-                      className={cx(
-                        "font-medium text-neutral-950 antialiased",
-                        "text-[12px] leading-[1.32]",
-                        "whitespace-nowrap overflow-hidden text-ellipsis",
-                        fontSans.className
-                      )}
-                      title={c.label}
-                    >
-                      {c.label}
+                  {/* micro-shine diagonale (wow sobrio) */}
+                  <div
+                    className={cx(
+                      "pointer-events-none absolute -inset-8 opacity-0 transition-opacity duration-500",
+                      "bg-[linear-gradient(115deg,transparent_0%,rgba(255,255,255,0.12)_42%,transparent_60%)]",
+                      isActive ? "opacity-100" : "group-hover:opacity-100"
+                    )}
+                    aria-hidden="true"
+                  />
+
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="min-w-0">
+                      <div
+                        className={cx(
+                          "font-medium text-white/95 antialiased",
+                          "text-[12px] leading-[1.2]",
+                          "whitespace-nowrap overflow-hidden text-ellipsis",
+                          fontSans.className
+                        )}
+                        title={c.label}
+                      >
+                        {c.label}
+                      </div>
+
+                      <div
+                        className={cx(
+                          "mt-1 text-[11px] text-white/65",
+                          fontSans.className
+                        )}
+                      >
+                        {count} progetti
+                      </div>
                     </div>
 
                     <div
                       className={cx(
-                        "mt-auto text-[11px] text-neutral-900/80",
-                        fontSans.className
+                        "shrink-0 rounded-full border px-2 py-1 text-[10px] tracking-[0.18em] uppercase",
+                        "border-white/20 text-white/70 bg-white/5",
+                        fontMono.className
                       )}
+                      aria-label={`${count} progetti`}
                     >
-                      {count} progetti
+                      {String(count).padStart(2, "0")}
                     </div>
                   </div>
                 </button>
               );
             })}
           </div>
-        </div>
-
-        {/* CTA centrata */}
-        <div className="mt-5 flex items-center justify-center">
-          <button
-            type="button"
-            onClick={() => onJumpToCategory?.(active.id)}
-            className={cx(
-              "rounded-full border border-neutral-300 bg-white/35 px-5 py-2.5 text-sm text-neutral-950 transition hover:border-neutral-700",
-              fontSans.className
-            )}
-          >
-            Vai alla sezione{" "}
-            <span className={cx("ml-2 text-neutral-900", fontMono.className)}>
-              →
-            </span>
-          </button>
         </div>
 
         {/* Ken Burns */}

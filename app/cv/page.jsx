@@ -318,7 +318,7 @@ export default function CVPage() {
             </CvSidebarBlock>
 
             {/* DIDATTICA */}
-            <CvSidebarBlock title="Didattica" accent="sky" compact>
+            <CvSidebarBlock title="Didattica" compact>
               <div className="space-y-4">
                 {didattica.map((e, i) => (
                   <CvEntry key={`did-${i}`} {...e} />
@@ -327,7 +327,7 @@ export default function CVPage() {
             </CvSidebarBlock>
 
             {/* EDITORIALE */}
-            <CvSidebarBlock title="Editoriale" accent="amber" compact>
+            <CvSidebarBlock title="Editoriale" accent="red" compact>
               <div className="space-y-4">
                 {editoriale.map((e, i) => (
                   <CvEntry key={`ed-${i}`} {...e} />
@@ -338,7 +338,7 @@ export default function CVPage() {
 
           {/* CONTENUTO PRINCIPALE */}
           <div className="space-y-12">
-            <CvSection id="pa" title="Pubblica Amministrazione" accent="red">
+            <CvSection id="pa" title="Pubblica Amministrazione" accent="amber">
               <Subheading>Incarichi sportivi</Subheading>
               {incarichiSportivi.map((e, i) => (
                 <CvEntry key={`sport-${i}`} {...e} />
