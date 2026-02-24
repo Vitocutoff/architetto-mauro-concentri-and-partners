@@ -84,7 +84,7 @@ export default function WorkInProgressCard({ p }) {
       {/* Cover */}
       <div
         className="relative
-                   aspect-[16/10]
+                   aspect-16/10
                    bg-neutral-100"
       >
 
