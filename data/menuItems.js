@@ -1,13 +1,4 @@
-// 📄 /data/menuItems.js
-
-// ===============================================================================
-// ELENCO VOCI DEL MENU DI NAVIGAZIONE
-// ===============================================================================
-// Centralizza le voci usate in DesktopMenu e MobileMenu per evitare duplicazione.
-// Ogni voce include:
-// - href → percorso della pagina
-// - label → testo visibile all’utente
-// ================================================================================
+// /data/menuItems.js
 
 export const menuItems = [
   { href: "/", label: "Home" },

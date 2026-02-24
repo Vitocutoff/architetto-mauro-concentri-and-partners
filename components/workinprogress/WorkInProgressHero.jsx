@@ -1,7 +1,7 @@
 // /components/workinprogress/WorkInProgressHero.jsx
 
-import Image from "next/image";
 import { fontSans, fontSerif } from "@/lib/fonts";
+import Image from "next/image";
 
 function cx(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -20,7 +20,6 @@ export default function WorkInProgressHero() {
                  mb-10"
     >
 
-      {/* Background image */}
       <div
         className="absolute
                    inset-0"
@@ -28,7 +27,7 @@ export default function WorkInProgressHero() {
       >
 
         <Image
-          src="/backgrounds/bgProgress.png"
+          src="/backgrounds/bgProgress.webp"
           alt=""
           fill
           priority={false}
@@ -37,7 +36,7 @@ export default function WorkInProgressHero() {
                      object-top"
         />
 
-        {/* Scrim scuro (NO nebbia bianca) */}
+        {/* Scrim scuro */}
         <div
           className="absolute
                      inset-0
@@ -68,7 +67,6 @@ export default function WorkInProgressHero() {
 
       </div>
 
-      {/* Content */}
       <div
         className="relative
                    px-6

@@ -1,8 +1,10 @@
+// /components/ui/ScrollToTop.jsx
+
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ChevronUp } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);

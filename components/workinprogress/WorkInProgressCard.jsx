@@ -1,8 +1,9 @@
 // /components/workinprogress/WorkInProgressCard.jsx
 
-import Link from "next/link";
+import { fontMono, fontSans } from "@/lib/fonts";
+
 import Image from "next/image";
-import { fontSans, fontMono } from "@/lib/fonts";
+import Link from "next/link";
 
 function clamp2LinesStyle() {
   return {
@@ -131,16 +132,16 @@ export default function WorkInProgressCard({ p }) {
               className="absolute
                          inset-0
                          opacity-[0.16]
-                         [background-image:linear-gradient(to_right,rgba(0,0,0,.22)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,.22)_1px,transparent_1px)]
-                         [background-size:72px_72px]"
+                         bg-[linear-gradient(to_right,rgba(0,0,0,.22)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,.22)_1px,transparent_1px)]
+                         bg-size-[72px_72px]"
             />
 
             <div
               className="absolute
                          inset-0
                          opacity-[0.09]
-                         [background-image:linear-gradient(to_right,rgba(0,0,0,.18)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,.18)_1px,transparent_1px)]
-                         [background-size:18px_18px]"
+                         bg-[linear-gradient(to_right,rgba(0,0,0,.18)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,.18)_1px,transparent_1px)]
+                         bg-size-[18px_18px]"
             />
 
             {/* Cross-hatch */}
@@ -151,7 +152,7 @@ export default function WorkInProgressCard({ p }) {
                          [background-image:
                            linear-gradient(135deg,transparent_49.1%,rgba(0,0,0,0.16)_49.4%,rgba(0,0,0,0.16)_50.6%,transparent_50.9%),
                            linear-gradient(45deg,transparent_49.1%,rgba(0,0,0,0.14)_49.4%,rgba(0,0,0,0.14)_50.6%,transparent_50.9%)]
-                         [background-size:340px_340px]"
+                         bg-size-[340px_340px]"
             />
 
             {/* Vignetta */}
@@ -175,7 +176,7 @@ export default function WorkInProgressCard({ p }) {
                       text-neutral-950
                       antialiased
                       leading-[1.32]
-                      pb-[3px]`}
+                      pb-0.75`}
           style={clamp2LinesStyle()}
         >
 
