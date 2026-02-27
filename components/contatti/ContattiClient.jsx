@@ -1,100 +1,20 @@
-// components/contatti/ContattiClient.jsx
 "use client";
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { fontSans, fontSerif, fontMono } from "@/lib/fonts";
 
+import ParallaxBackdrop from "@/components/contatti/ParallaxBackdrop";
+import ContactField from "@/components/contatti/ContactField";
+import MapCard from "@/components/contatti/MapCard";
+import SpecializzazioniCard from "@/components/contatti/SpecializzazioniCard";
+
 function cx(...c) {
   return c.filter(Boolean).join(" ");
 }
 
-function Field({ k, v, mono = false }) {
-  return (
-
-    <div
-      className="rounded-2xl
-                 border
-                 border-neutral-200
-                 bg-white/75
-                 shadow-[0_10px_30px_rgba(0,0,0,0.06)]
-                 backdrop-blur-[1px]"
-    >
-
-      <div
-        className="p-5
-                   sm:p-6"
-      >
-
-        <div
-          className={cx(
-            "text-[11px] tracking-[0.22em] uppercase text-neutral-500",
-            fontSans.className
-          )}
-        >
-          {k}
-        </div>
-
-        <div
-          className={cx(
-            "mt-2 text-sm sm:text-base text-neutral-900",
-            mono ? fontMono.className : fontSans.className
-          )}
-        >
-          {v}
-        </div>
-
-      </div>
-
-    </div>
-
-  );
-}
-
-function Background() {
-  return (
-    <div className="pointer-events-none absolute inset-0">
-      <div className="absolute inset-0 bg-[#fbfcfe]" />
-
-      <div className="absolute inset-0 bg-[radial-gradient(1200px_circle_at_16%_10%,rgba(170,235,255,0.50),transparent_62%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(1100px_circle_at_86%_18%,rgba(220,214,255,0.34),transparent_60%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(1200px_circle_at_52%_92%,rgba(214,255,200,0.26),transparent_62%)]" />
-
-      <div className="absolute inset-0 bg-[radial-gradient(1200px_circle_at_50%_50%,transparent_56%,rgba(0,0,0,0.040)_100%)]" />
-
-      <div
-        className="absolute inset-0 opacity-[0.16]
-        [background-image:linear-gradient(to_right,rgba(0,0,0,.22)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,.22)_1px,transparent_1px)]
-        [background-size:96px_96px]"
-      />
-
-      <div
-        className="absolute inset-0 opacity-[0.08]
-        [background-image:linear-gradient(to_right,rgba(0,0,0,.18)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,.18)_1px,transparent_1px)]
-        [background-size:18px_18px]"
-      />
-
-      <div
-        className="absolute inset-0 opacity-[0.09]
-        [background-image:
-          linear-gradient(135deg,transparent_49.1%,rgba(0,0,0,0.19)_49.4%,rgba(0,0,0,0.19)_50.6%,transparent_50.9%),
-          linear-gradient(45deg,transparent_49.1%,rgba(0,0,0,0.17)_49.4%,rgba(0,0,0,0.17)_50.6%,transparent_50.9%)]
-        [background-size:420px_420px]"
-      />
-
-      <div
-        className="absolute inset-0 opacity-[0.055] mix-blend-multiply"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.30'/%3E%3C/svg%3E\")",
-        }}
-      />
-    </div>
-  );
-}
-
 export default function ContattiClient() {
-  const sedeLegale = "Via Gozzi, 38 — Vicenza (VI), Italia";
+  // ✅ teniamo solo sede operativa
   const sedeOperativa = "Corso Padova, 65 — 36100 Vicenza (VI), Italia";
 
   const email = "archcon@goldnet.it";
@@ -103,22 +23,26 @@ export default function ContattiClient() {
   const phoneHref = "+390444301913";
   const website = "www.mauroconcentriarchitetto.com";
 
-  // Dati (da foto)
   const piva = "02069980247";
   const cf = "CNGMRA62L07Z103J";
 
-  const partners = [
-    { name: "arch. Mauro Concentri", role: "progettazione Generale e sicurezza — Team Manager" },
-    { name: "arch. Domenico Gabaldo", role: "progettazione Generale e rendering — Team Manager" },
-    { name: "arch. Longhin Lorenzo", role: "progettazione generale" },
-    { name: "arch. Giulliano Dal Santo", role: "rilievi e pratiche catastali" },
-    { name: "Ing. Francesco Piccoli", role: "strutture" },
-    { name: "Perito Paolo Mosele", role: "Impianti termotecnici e progettazione Antincendio" },
-    { name: "Ing. Sara Mosele", role: "Impianti termotecnici e Esperto in Gestione dell’Energia" },
-    { name: "Perito Paolo Chemello", role: "impianti elettrici" },
-    { name: "Dott. Geologo Enrico Marcato", role: "indagini geologiche, compatibilità idrauliche" },
-    { name: "Per. Ind. Antonio Sofia", role: "Acustica" },
-    { name: "Ing. Giovanni Crosara", role: "Parte idraulica e stradale" },
+  const specializzatoIn = [
+    "Impiantistica sportiva",
+    "Edilizia pubblica",
+    "Edilizia industriale",
+    "Edilizia privata",
+  ];
+
+  const competenze = [
+    "Progettazione generale",
+    "Indagini geologiche",
+    "Progettazione delle strutture",
+    "Progettazione impiantistica termomeccanica",
+    "Progettazione elettrica",
+    "Efficientamento energetico",
+    "Progettazione acustica",
+    "Prevenzione incendi",
+    "Coordinamento della sicurezza nei cantieri",
   ];
 
   const { googleMapsUrl, appleMapsUrl, embedUrl } = useMemo(() => {
@@ -132,373 +56,192 @@ export default function ContattiClient() {
 
   const [mapLoaded, setMapLoaded] = useState(false);
 
-  const pill = cx(
-    "rounded-full border px-4 py-2 text-sm transition",
-    "border-neutral-200 bg-white text-neutral-900 hover:border-neutral-400",
-    fontSans.className
-  );
-
-  const pillDark = cx(
-    "rounded-full border px-4 py-2 text-sm transition",
-    "border-neutral-900 bg-neutral-900 text-white hover:bg-neutral-800",
-    fontSans.className
-  );
-
   return (
+    <section className="relative min-h-screen overflow-hidden">
+      {/* ✅ FOTO FISSA DIETRO (parallax vero) */}
+      <ParallaxBackdrop />
 
-    <section
-      className="relative
-                 min-h-screen
-                 bg-white
-                 overflow-hidden"
-    >
-
-      <Background />
-
-      <div
-        className="relative
-                   mx-auto
-                   w-full
-                   max-w-6xl
-                   px-4
-                   pb-16
-                   pt-10
-                   sm:px-6
-                   lg:px-8"
-      >
-
-        <header
-          className="max-w-3xl"
-        >
-
-          <div
-            className="inline-flex
-                       items-center
-                       gap-3"
-          >
-
-            <span className="h-px w-10 bg-zinc-300" />
-
+      {/* ✅ HERO = “Specializzato in” (non una hero vuota) */}
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-4 pt-10 sm:px-6 lg:px-8">
+        <header className="max-w-3xl">
+          {/* abbassata leggermente: niente collisione con header */}
+          <div className="inline-flex items-center gap-3">
+            <span className="h-px w-10 bg-white/35" aria-hidden="true" />
             <p
               className={cx(
-                "text-xs tracking-[0.22em] uppercase text-zinc-600",
+                "text-xs tracking-[0.22em] uppercase text-white/70",
                 fontSans.className
               )}
             >
-              studio
+              aggiornamenti
             </p>
-
+            <span className="h-px w-10 bg-white/20" aria-hidden="true" />
+            <p
+              className={cx(
+                "text-xs tracking-[0.22em] uppercase text-white/70",
+                fontSans.className
+              )}
+            >
+              contatti
+            </p>
           </div>
 
           <h1
             className={cx(
-              "mt-4 text-4xl sm:text-5xl font-semibold tracking-tight text-zinc-900",
+              "mt-4 text-4xl sm:text-5xl font-semibold tracking-tight text-white",
               fontSerif.className
             )}
           >
-            Contatti
+            Architetto Mauro Concentri
           </h1>
 
           <p
             className={cx(
-              "mt-5 max-w-2xl text-sm sm:text-base leading-relaxed text-zinc-700",
+              "mt-5 max-w-2xl text-sm sm:text-base leading-relaxed text-white/85",
               fontSans.className
             )}
           >
-            Tutti i riferimenti dello studio, inclusi recapiti, sedi e indicazioni per raggiungerci.
+            Dallo studio alla direzione lavori: competenze integrate e consulenza tecnica
+            su interventi pubblici e privati.
           </p>
-
         </header>
 
-        <div
-          className="mt-10
-                     grid
-                     gap-6
-                     lg:grid-cols-12"
-        >
-
-          {/* SX */}
-          <div
-            className="lg:col-span-5
-                       space-y-4"
-          >
-
-            <Field k="Sede legale" v={sedeLegale} />
-
-            <Field k="Sede operativa" v={sedeOperativa} />
-
-            <Field
-              k="Telefono"
-              v={
-                <a
-                  className="underline decoration-black/15 hover:decoration-black/40"
-                  href={`tel:${phoneHref}`}
-                >
-                  {phone}
-                </a>
-              }
-              mono
-            />
-
-            <Field
-              k="E-mail"
-              v={
-                <a
-                  className="underline decoration-black/15 hover:decoration-black/40"
-                  href={`mailto:${email}`}
-                >
-                  {email}
-                </a>
-              }
-            />
-
-            <Field
-              k="PEC"
-              v={
-                <a
-                  className="underline decoration-black/15 hover:decoration-black/40"
-                  href={`mailto:${pec}`}
-                >
-                  {pec}
-                </a>
-              }
-              mono
-            />
-
-            <Field
-              k="Web"
-              v={
-                <a
-                  className="underline decoration-black/15 hover:decoration-black/40"
-                  href={`https://${website}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {website}
-                </a>
-              }
-              mono
-            />
-
-            <Field
-              k="Dati"
-              v={
-                <div className="space-y-1">
-                  <div>
-                    Partita IVA: <span className={fontMono.className}>{piva}</span>
-                  </div>
-                  <div>
-                    Codice Fiscale: <span className={fontMono.className}>{cf}</span>
-                  </div>
-                </div>
-              }
-            />
-
-          </div>
-
-          {/* DX */}
-          <div
-            className="lg:col-span-7
-                       space-y-6"
-          >
-
-            {/* MAPPA */}
-            <div
-              className="rounded-2xl
-                         border
-                         border-neutral-200
-                         bg-white/75
-                         shadow-[0_10px_30px_rgba(0,0,0,0.06)]
-                         overflow-hidden
-                         backdrop-blur-[1px]"
-            >
-
-              <div className="p-5 sm:p-6">
-                <div
-                  className={cx(
-                    "text-[11px] tracking-[0.22em] uppercase text-neutral-500",
-                    fontSans.className
-                  )}
-                >
-                  come raggiungerci
-                </div>
-
-                <h2
-                  className={cx(
-                    "mt-3 text-2xl font-semibold tracking-tight text-neutral-900",
-                    fontSerif.className
-                  )}
-                >
-                  Mappa
-                </h2>
-
-                <p
-                  className={cx(
-                    "mt-3 text-sm leading-relaxed text-neutral-700",
-                    fontSans.className
-                  )}
-                >
-                  Per tutela della privacy, la mappa interattiva viene caricata solo su richiesta.
-                </p>
-
-                <div className="mt-5 flex flex-wrap gap-3">
-                  <a
-                    href={googleMapsUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={pill}
-                  >
-                    Apri in Google Maps →
-                  </a>
-
-                  <a
-                    href={appleMapsUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={pill}
-                  >
-                    Apri in Apple Mappe →
-                  </a>
-
-                  <button
-                    type="button"
-                    onClick={() => setMapLoaded(true)}
-                    className={pillDark}
-                  >
-                    {mapLoaded ? "Mappa caricata" : "Carica mappa"}
-                  </button>
-                </div>
-              </div>
-
-              <div className="relative aspect-[16/9] bg-neutral-100">
-                {!mapLoaded ? (
-                  <>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-center px-6">
-                        <div
-                          className={cx(
-                            "text-xs tracking-[0.22em] uppercase text-neutral-500",
-                            fontSans.className
-                          )}
-                        >
-                          contenuto esterno
-                        </div>
-
-                        <div
-                          className={cx(
-                            "mt-2 text-sm text-neutral-700",
-                            fontSans.className
-                          )}
-                        >
-                          Clicca “Carica mappa” per visualizzare Google Maps.
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(to_right,rgba(0,0,0,.18)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,.18)_1px,transparent_1px)] [background-size:24px_24px]" />
-                  </>
-                ) : (
-                  <iframe
-                    title="Mappa - Studio Architetto Mauro Concentri & Partners"
-                    src={embedUrl}
-                    className="absolute inset-0 h-full w-full"
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    allowFullScreen
-                  />
-                )}
-              </div>
-
-            </div>
-
-            {/* PARTNERS */}
-            <div
-              className="rounded-2xl
-                         border
-                         border-neutral-200
-                         bg-white/75
-                         shadow-[0_10px_30px_rgba(0,0,0,0.06)]
-                         backdrop-blur-[1px]"
-            >
-
-              <div className="p-5 sm:p-6">
-                <div
-                  className={cx(
-                    "text-[11px] tracking-[0.22em] uppercase text-neutral-500",
-                    fontSans.className
-                  )}
-                >
-                  team
-                </div>
-
-                <h2
-                  className={cx(
-                    "mt-3 text-2xl font-semibold tracking-tight text-neutral-900",
-                    fontSerif.className
-                  )}
-                >
-                  Partners
-                </h2>
-
-                <div className="mt-5 space-y-3">
-                  {partners.map((p, i) => (
-
-                    <div
-                      key={`${p.name}-${i}`}
-                      className="rounded-xl
-                                 border
-                                 border-neutral-200
-                                 bg-white/70
-                                 px-4
-                                 py-3"
-                    >
-
-                      <div className={cx("text-sm text-neutral-900", fontSans.className)}>
-                        {p.name}
-                      </div>
-
-                      <div className={cx("text-xs text-neutral-600", fontSans.className)}>
-                        {p.role}
-                      </div>
-
-                    </div>
-
-                  ))}
-                </div>
-
-                <div className="mt-6 flex items-center justify-between gap-4">
-                  <Link
-                    href="/privacy-policy"
-                    className={cx(
-                      "text-xs tracking-[0.18em] uppercase text-neutral-700 hover:text-neutral-900 transition",
-                      fontSans.className
-                    )}
-                  >
-                    privacy policy →
-                  </Link>
-
-                  <Link
-                    href="/"
-                    className={cx(
-                      "text-xs tracking-[0.18em] uppercase text-neutral-700 hover:text-neutral-900 transition",
-                      fontSans.className
-                    )}
-                  >
-                    home →
-                  </Link>
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
+        {/* ✅ CARD “specializzato in” (leggera, NON vetro pesante) */}
+        <div className="mt-8">
+          <SpecializzazioniCard
+            fontSans={fontSans}
+            fontSerif={fontSerif}
+            specializzatoIn={specializzatoIn}
+            competenze={competenze}
+          />
         </div>
 
+        {/* ✅ spacer trasparente: qui “si vede” l’immagine mentre scorri */}
+        <div className="h-10 sm:h-14 lg:h-16" />
+
+        {/* ✅ CONTENUTO che scorre SOPRA e “copre” l’immagine */}
+        <div className="mt-6 pb-16">
+          <div className="grid gap-6 lg:grid-cols-12">
+            {/* SX: contatti */}
+            <div className="lg:col-span-5 space-y-4">
+              <ContactField k="Sede operativa" fontSans={fontSans} fontMono={fontMono} v={sedeOperativa} />
+
+              <ContactField
+                k="Telefono"
+                fontSans={fontSans}
+                fontMono={fontMono}
+                mono
+                v={
+                  <a
+                    className="underline decoration-black/15 hover:decoration-black/40"
+                    href={`tel:${phoneHref}`}
+                  >
+                    {phone}
+                  </a>
+                }
+              />
+
+              <ContactField
+                k="E-mail"
+                fontSans={fontSans}
+                fontMono={fontMono}
+                v={
+                  <a
+                    className="underline decoration-black/15 hover:decoration-black/40"
+                    href={`mailto:${email}`}
+                  >
+                    {email}
+                  </a>
+                }
+              />
+
+              <ContactField
+                k="PEC"
+                fontSans={fontSans}
+                fontMono={fontMono}
+                mono
+                v={
+                  <a
+                    className="underline decoration-black/15 hover:decoration-black/40"
+                    href={`mailto:${pec}`}
+                  >
+                    {pec}
+                  </a>
+                }
+              />
+
+              <ContactField
+                k="Web"
+                fontSans={fontSans}
+                fontMono={fontMono}
+                mono
+                v={
+                  <a
+                    className="underline decoration-black/15 hover:decoration-black/40"
+                    href={`https://${website}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {website}
+                  </a>
+                }
+              />
+
+              <ContactField
+                k="Dati"
+                fontSans={fontSans}
+                fontMono={fontMono}
+                v={
+                  <div className="space-y-1">
+                    <div>
+                      Partita IVA: <span className={fontMono.className}>{piva}</span>
+                    </div>
+                    <div>
+                      Codice Fiscale: <span className={fontMono.className}>{cf}</span>
+                    </div>
+                  </div>
+                }
+              />
+            </div>
+
+            {/* DX: mappa (non tocchiamo logica) */}
+            <div className="lg:col-span-7">
+              <MapCard
+                fontSans={fontSans}
+                fontSerif={fontSerif}
+                googleMapsUrl={googleMapsUrl}
+                appleMapsUrl={appleMapsUrl}
+                embedUrl={embedUrl}
+                mapLoaded={mapLoaded}
+                setMapLoaded={setMapLoaded}
+              />
+            </div>
+          </div>
+
+          {/* ✅ footer links: UNA SOLA VOLTA */}
+          <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
+            <Link
+              href="/privacy-policy"
+              className={cx(
+                "text-xs tracking-[0.18em] uppercase text-neutral-900 hover:text-neutral-950 transition",
+                fontSans.className
+              )}
+            >
+              privacy policy →
+            </Link>
+
+            <Link
+              href="/"
+              className={cx(
+                "text-xs tracking-[0.18em] uppercase text-neutral-900 hover:text-neutral-950 transition",
+                fontSans.className
+              )}
+            >
+              home →
+            </Link>
+          </div>
+        </div>
       </div>
-
     </section>
-
   );
 }
