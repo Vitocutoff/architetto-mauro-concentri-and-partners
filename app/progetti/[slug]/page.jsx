@@ -1,30 +1,24 @@
-// /app/progetti/[slug]/page.jsx
-
 import { notFound } from "next/navigation";
-import { progettiCategories } from "@/data/progetti";
 import ProjectPageClient from "@/components/progetti/slug/ProjectPageClient";
+import { findProjectBySlug } from "@/data/progetti";
 
-function findProjectBySlug(slug) {
-  for (const cat of progettiCategories) {
-    const p = cat.projects?.find((x) => x.slug === slug);
-    if (p) return { project: p, category: cat };
-  }
-  return null;
-}
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const found = findProjectBySlug(slug);
 
-export function generateMetadata({ params }) {
-  const found = findProjectBySlug(params.slug);
   if (!found) return { title: "Progetto" };
-  const { project, category } = found;
 
+  const { project, category } = found;
   return {
-    title: `${project.title} — ${category.label}`,
-    description: project.description || category.kicker || "Dettagli progetto",
+    title: project?.title || "Progetto",
+    description: project?.description || category?.kicker || "Scheda progetto",
   };
 }
 
-export default function ProjectSlugPage({ params }) {
-  const found = findProjectBySlug(params.slug);
+export default async function ProjectSlugPage({ params }) {
+  const { slug } = await params;
+  const found = findProjectBySlug(slug);
+
   if (!found) return notFound();
 
   return <ProjectPageClient project={found.project} category={found.category} />;

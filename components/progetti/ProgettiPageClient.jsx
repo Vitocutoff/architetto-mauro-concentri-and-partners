@@ -38,9 +38,10 @@ export default function ProgettiPageClient({ categories }) {
                 </p>
               </div>
 
+              {/* ✅ Link interno: NO <a href="/"> */}
               <a
                 href="#top"
-                className={`hidden rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm text-neutral-900 hover:border-neutral-400 lg:inline-flex ${fontSans.className}`}
+                className={`hidden rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm text-neutral-900 hover:border-neutral-400 lg:inline-flex items-center ${fontSans.className}`}
               >
                 Torna su <span className={`ml-2 text-neutral-700 ${fontMono.className}`}>→</span>
               </a>

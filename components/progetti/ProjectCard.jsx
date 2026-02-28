@@ -17,9 +17,9 @@ export default function ProjectCard({ p }) {
   const coverSrc = p?.cover || null;
 
   return (
-    
+
     <Link
-      href={`/${p.slug}`}
+      href={`/progetti/${p.slug}`}
       className="group
                  block
                  overflow-hidden
@@ -114,7 +114,7 @@ export default function ProjectCard({ p }) {
                      items-center
                      justify-between gap-4"
         >
-          
+
           <span className={`text-xs text-neutral-900 ${fontMono.className}`}>{p.year || "—"}</span>
 
           <span className={`text-xs text-neutral-800 ${fontMono.className}`}>

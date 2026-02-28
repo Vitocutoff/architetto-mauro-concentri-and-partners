@@ -8,10 +8,23 @@ export const progettiCategories = [
     projects: [
       {
         slug: "progetto-campi-07",
-        title: "Rifacimento in erba sintetica del campo di allenamento.",
+        title: "Campo da calcio di Caldogno",
         place: "Caldogno (VI)",
         year: 2012,
         cover: "/projects/campi/cardCaldogno.webp",
+        description: "Rifacimento in erba sintetica del campo di allenamento precedentemente in erba naturale.",
+        what: "Campo da calcio in erba sintetica",
+        where: "Caldogno (Vicenza)",
+        when: "2012",
+        beforeImage: "/projects/campi/caldogno/prima.avif",
+        afterImage: "/projects/campi/caldogno/dopo.avif",
+        gallery: [
+          "/projects/campi/caldogno/01.avif",
+          "/projects/campi/caldogno/02.avif",
+          "/projects/campi/caldogno/03.avif",
+          "/projects/campi/caldogno/04.avif",
+          "/projects/campi/caldogno/05.avif",
+        ],
       },
       {
         slug: "progetto-campi-06",
@@ -167,3 +180,15 @@ export const progettiCategories = [
     ],
   },
 ];
+
+// Helpers per le pagine slug
+export function findProjectBySlug(slug) {
+  if (!slug) return null;
+
+  for (const category of progettiCategories) {
+    const project = category.projects?.find((p) => p.slug === slug);
+    if (project) return { category, project };
+  }
+
+  return null;
+}
