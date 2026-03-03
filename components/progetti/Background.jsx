@@ -1,8 +1,6 @@
 // /components/progetti/Background.jsx
 
 export default function Background() {
-  // Blueprint tileable (SVG): griglia + micro-griglia + archi + diagonali + assi + cerchi + triangoli + quota
-  // Versione LIGHT + CIANO: linee sottili, opacità basse, “inchiostro” cyan tecnico.
   const blueprintSvg = encodeURIComponent(`
     <svg xmlns="http://www.w3.org/2000/svg" width="560" height="560" viewBox="0 0 560 560">
       <rect width="560" height="560" fill="rgba(0,0,0,0)"/>
@@ -101,7 +99,6 @@ export default function Background() {
     </svg>
   `);
 
-  // Noise tileable per carta (leggerissimo)
   const noiseSvg = encodeURIComponent(`
     <svg xmlns="http://www.w3.org/2000/svg" width="240" height="240">
       <filter id="n">
@@ -112,19 +109,26 @@ export default function Background() {
   `);
 
   return (
-    <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-      {/* Base carta tecnica chiara */}
+
+    <div
+      className="pointer-events-none
+                 absolute
+                 inset-0"
+      aria-hidden="true"
+    >
+
       <div
-        className="absolute inset-0"
+        className="absolute
+                   inset-0"
         style={{
           background:
             "linear-gradient(180deg, rgba(255,255,255,0.97) 0%, rgba(246,249,252,0.97) 52%, rgba(241,244,248,0.97) 100%)",
         }}
       />
 
-      {/* “Luce” morbida centrale (wow, ma chiara) */}
       <div
-        className="absolute inset-0"
+        className="absolute
+                   inset-0"
         style={{
           background:
             "radial-gradient(980px 560px at 52% 30%, rgba(255,255,255,0.95), rgba(255,255,255,0) 62%)",
@@ -132,17 +136,19 @@ export default function Background() {
         }}
       />
 
-      {/* ✅ Pieghe / ombre diagonali (tavola tecnica, ultra soft) */}
       <div
-        className="absolute inset-0"
+        className="absolute
+                   inset-0"
         style={{
           background:
             "linear-gradient(135deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.022) 26%, rgba(0,0,0,0.00) 52%)",
           opacity: 0.55,
         }}
       />
+
       <div
-        className="absolute inset-0"
+        className="absolute
+                   inset-0"
         style={{
           background:
             "linear-gradient(315deg, rgba(0,0,0,0.00) 0%, rgba(0,0,0,0.018) 44%, rgba(0,0,0,0.00) 74%)",
@@ -150,9 +156,9 @@ export default function Background() {
         }}
       />
 
-      {/* ✅ Macchie carta (molto leggere, realistiche) */}
       <div
-        className="absolute inset-0"
+        className="absolute
+                   inset-0"
         style={{
           background:
             "radial-gradient(520px 360px at 18% 22%, rgba(0,120,150,0.06), rgba(0,120,150,0) 70%)," +
@@ -163,9 +169,9 @@ export default function Background() {
         }}
       />
 
-      {/* Blueprint tileable */}
       <div
-        className="absolute inset-0"
+        className="absolute
+                   inset-0"
         style={{
           backgroundImage: `url("data:image/svg+xml,${blueprintSvg}")`,
           backgroundRepeat: "repeat",
@@ -175,9 +181,9 @@ export default function Background() {
         }}
       />
 
-      {/* Texture carta */}
       <div
-        className="absolute inset-0"
+        className="absolute
+                   inset-0"
         style={{
           backgroundImage: `url("data:image/svg+xml,${noiseSvg}")`,
           backgroundRepeat: "repeat",
@@ -187,15 +193,18 @@ export default function Background() {
         }}
       />
 
-      {/* Vignetta leggerissima (non scurisce) */}
       <div
-        className="absolute inset-0"
+        className="absolute
+                   inset-0"
         style={{
           background:
             "radial-gradient(1400px 900px at 50% 20%, rgba(0,0,0,0.00), rgba(0,0,0,0.06) 78%)",
           opacity: 0.85,
         }}
       />
+
     </div>
+
   );
+
 }

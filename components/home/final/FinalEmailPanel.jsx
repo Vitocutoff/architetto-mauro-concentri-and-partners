@@ -54,7 +54,7 @@ export default function FinalEmailPanel() {
                        text-neutral-950/70"
           >
 
-            e raccontaci di cosa hai bisogno.
+            e racconta di cosa hai bisogno.
 
           </span>
 
@@ -70,7 +70,7 @@ export default function FinalEmailPanel() {
                       max-w-xl`}
         >
 
-          Per informazioni su progetti, consulenze o collaborazioni, scrivici:
+          Per informazioni su progetti, consulenze o collaborazioni, scrivi:
 
         </p>
 

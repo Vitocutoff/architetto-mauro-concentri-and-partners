@@ -73,7 +73,7 @@ export default function ProjectPageClient({ project, category }) {
   );
 
   return (
-    <section className="relative w-screen left-1/2 -translate-x-1/2 overflow-hidden bg-white">
+    <section className="relative w-screen left-1/2 -translate-x-1/2 overflow-hidden">
       {/* HEADER */}
       <div className="relative mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 pt-28 pb-10">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
@@ -152,7 +152,7 @@ export default function ProjectPageClient({ project, category }) {
       </div>
 
       {/* BODY */}
-      <div className="relative mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 pb-16">
+      <div className="relative mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 pb-16 mt-25">
         <div className="space-y-10">
           {hasBeforeAfter ? (
             <BeforeAfter

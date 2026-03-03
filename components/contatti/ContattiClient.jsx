@@ -2,8 +2,8 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { fontSans, fontSerif, fontMono } from "@/lib/fonts";
 
+import { fontSans, fontSerif, fontMono } from "@/lib/fonts";
 import ParallaxBackdrop from "@/components/contatti/ParallaxBackdrop";
 import ContactField from "@/components/contatti/ContactField";
 import MapCard from "@/components/contatti/MapCard";
@@ -14,7 +14,6 @@ function cx(...c) {
 }
 
 export default function ContattiClient() {
-  // ✅ teniamo solo sede operativa
   const sedeOperativa = "Corso Padova, 65 — 36100 Vicenza (VI), Italia";
 
   const email = "archcon@goldnet.it";
@@ -57,74 +56,122 @@ export default function ContattiClient() {
   const [mapLoaded, setMapLoaded] = useState(false);
 
   return (
-    <section className="relative min-h-screen overflow-hidden">
-      {/* ✅ FOTO FISSA DIETRO (parallax vero) */}
+
+    <section
+      className="relative
+                 min-h-screen
+                 overflow-hidden"
+    >
+
       <ParallaxBackdrop />
 
-      {/* ✅ HERO = “Specializzato in” (non una hero vuota) */}
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-4 pt-10 sm:px-6 lg:px-8">
-        <header className="max-w-3xl">
-          {/* abbassata leggermente: niente collisione con header */}
-          <div className="inline-flex items-center gap-3">
-            <span className="h-px w-10 bg-white/35" aria-hidden="true" />
+      <div
+        className="relative
+                   z-10
+                   mx-auto
+                   w-full
+                   max-w-6xl
+                   px-4
+                   pt-10
+                   sm:px-6
+                   lg:px-8"
+      >
+
+        <header
+          className="max-w-3xl
+                     mt-5"
+        >
+
+          <div
+            className="inline-flex
+                       items-center
+                       gap-3"
+          >
+
+            <span
+              className="h-px
+                         w-10
+                         bg-white/35"
+              aria-hidden="true"
+            />
+
             <p
               className={cx(
                 "text-xs tracking-[0.22em] uppercase text-white/70",
                 fontSans.className
               )}
             >
-              aggiornamenti
+              informazioni
             </p>
-            <span className="h-px w-10 bg-white/20" aria-hidden="true" />
-            <p
-              className={cx(
-                "text-xs tracking-[0.22em] uppercase text-white/70",
-                fontSans.className
-              )}
-            >
-              contatti
-            </p>
+
           </div>
 
           <h1
             className={cx(
-              "mt-4 text-4xl sm:text-5xl font-semibold tracking-tight text-white",
+              "mt-4 text-4xl sm:text-5xl font-semibold tracking-tight text-amber-400",
               fontSerif.className
             )}
           >
-            Architetto Mauro Concentri
+
+            Contatti
+
           </h1>
 
           <p
             className={cx(
-              "mt-5 max-w-2xl text-sm sm:text-base leading-relaxed text-white/85",
+              "mt-5 max-w-2xl text-sm sm:text-base leading-relaxed text-neutral-50",
               fontSans.className
             )}
           >
+
             Dallo studio alla direzione lavori: competenze integrate e consulenza tecnica
             su interventi pubblici e privati.
+
           </p>
+
         </header>
 
-        {/* ✅ CARD “specializzato in” (leggera, NON vetro pesante) */}
-        <div className="mt-8">
+        <div
+          className="mt-8"
+        >
+
           <SpecializzazioniCard
             fontSans={fontSans}
             fontSerif={fontSerif}
             specializzatoIn={specializzatoIn}
             competenze={competenze}
           />
+
         </div>
 
-        {/* ✅ spacer trasparente: qui “si vede” l’immagine mentre scorri */}
-        <div className="h-10 sm:h-14 lg:h-16" />
+        <div
+          className="h-10
+                     sm:h-14
+                     lg:h-16"
+        />
 
-        {/* ✅ CONTENUTO che scorre SOPRA e “copre” l’immagine */}
-        <div className="mt-6 pb-16">
-          <div className="grid gap-6 lg:grid-cols-12">
-            {/* SX: contatti */}
-            <div className="lg:col-span-5 space-y-4">
-              <ContactField k="Sede operativa" fontSans={fontSans} fontMono={fontMono} v={sedeOperativa} />
+        <div
+          className="mt-6
+                     pb-16"
+        >
+
+          <div
+            className="grid
+                       gap-6
+                       lg:grid-cols-12"
+          >
+
+            <div
+              className="lg:col-span-5
+                         space-y-4"
+            >
+
+              <ContactField
+                k="Sede operativa"
+                fontSans={fontSans}
+                fontMono={fontMono}
+                v={sedeOperativa}
+              />
 
               <ContactField
                 k="Telefono"
@@ -204,8 +251,10 @@ export default function ContattiClient() {
               />
             </div>
 
-            {/* DX: mappa (non tocchiamo logica) */}
-            <div className="lg:col-span-7">
+            <div
+              className="lg:col-span-7"
+            >
+
               <MapCard
                 fontSans={fontSans}
                 fontSerif={fontSerif}
@@ -215,33 +264,52 @@ export default function ContattiClient() {
                 mapLoaded={mapLoaded}
                 setMapLoaded={setMapLoaded}
               />
+
             </div>
+
           </div>
 
-          {/* ✅ footer links: UNA SOLA VOLTA */}
-          <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
+          <div
+            className="mt-10
+                       flex
+                       flex-wrap
+                       items-center
+                       justify-between
+                       gap-4"
+          >
+
             <Link
               href="/privacy-policy"
               className={cx(
-                "text-xs tracking-[0.18em] uppercase text-neutral-900 hover:text-neutral-950 transition",
+                "text-xs tracking-[0.18em] uppercase text-neutral-400 hover:text-neutral-100 transition",
                 fontSans.className
               )}
             >
+
               privacy policy →
+
             </Link>
 
             <Link
               href="/"
               className={cx(
-                "text-xs tracking-[0.18em] uppercase text-neutral-900 hover:text-neutral-950 transition",
+                "text-xs tracking-[0.18em] uppercase text-neutral-400 hover:text-neutral-100 transition",
                 fontSans.className
               )}
             >
+
               home →
+
             </Link>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
+
   );
+
 }

@@ -76,8 +76,8 @@ function DesktopMenuInner() {
     `transition-colors duration-300 ease-in-out focus-visible:ring-2 focus-visible:ring-black/70 px-1 rounded-sm
      ${
        pathname === path
-         ? "text-blue-900 font-bold cursor-default"
-         : "hover:text-blue-700 text-neutral-900"
+         ? "text-cyan-600 font-bold cursor-default"
+         : "hover:text-cyan-500 text-neutral-900"
      }`;
 
   const container = {

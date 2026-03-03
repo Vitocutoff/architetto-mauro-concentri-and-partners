@@ -1,7 +1,6 @@
 // /app/layout.jsx
 
 import { siteMetadata, viewport } from "@/lib/metadata";
-
 import "./globals.css";
 
 import ClientShell from "@/components/layout/ClientShell";

@@ -19,7 +19,7 @@ export default function LogoAnimated() {
 
       <motion.span
         className="shrink-0
-                   text-blue-900
+                   text-cyan-600
                    font-bold
                    tracking-widest
                    text-[11px]

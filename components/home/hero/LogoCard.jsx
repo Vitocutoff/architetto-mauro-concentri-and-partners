@@ -94,7 +94,7 @@ export default function LogoCard() {
                     z-10
                     text-xl
                     lg:text-xl
-                    text-blue-900
+                    text-cyan-700
                     tracking-wide`}
         initial={{ opacity: 0, y: 10, scale: 0.9 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}

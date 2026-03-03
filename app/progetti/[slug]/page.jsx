@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+
 import ProjectPageClient from "@/components/progetti/slug/ProjectPageClient";
 import { findProjectBySlug } from "@/data/progetti";
 

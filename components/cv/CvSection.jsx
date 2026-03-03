@@ -1,10 +1,4 @@
-export default function CvSection({
-  id,
-  title,
-  children,
-  size = "lg",
-  accent = "zinc",   // zinc | emerald | sky | amber
-}) {
+export default function CvSection({ id, title, children, size = "lg", accent = "zinc" }) {
   const titleClass =
     size === "sm"
       ? "text-lg font-semibold tracking-tight leading-tight"
@@ -21,57 +15,89 @@ export default function CvSection({
   const accentBg = accentMap[accent] || accentMap.zinc;
 
   return (
+
     <section
       id={id}
       className="scroll-mt-28"
     >
+
       <div
-        className="
-          relative
-          rounded-2xl
-          border
-          border-zinc-200
-          bg-white/92
-          shadow-[0_10px_30px_rgba(0,0,0,0.06)]
-          overflow-hidden
-        "
+        className="relative
+                   rounded-2xl
+                   border
+                   border-zinc-200
+                   bg-white/92
+                   shadow-[0_10px_30px_rgba(0,0,0,0.06)]
+                   overflow-hidden"
       >
-        {/* Accent bar */}
+
         <div
-          className={`absolute left-0 top-0 h-full w-0.75 ${accentBg}`}
+          className={`absolute
+                      left-0
+                      top-0
+                      h-full
+                      w-0.75
+                      ${accentBg}`}
           aria-hidden="true"
         />
 
-        <div className="p-6 sm:p-8">
-          {/* HEADER */}
-          <div className="flex items-end justify-between gap-6">
+        <div
+          className="p-6
+                     sm:p-8"
+        >
+
+          <div
+            className="flex
+                       items-end
+                       justify-between
+                       gap-6"
+          >
+
             <h2
               className={[
                 titleClass,
                 "text-zinc-900",
               ].join(" ")}
             >
+
               {title}
+
             </h2>
 
             <span
-              className="hidden sm:block h-px w-20 bg-zinc-200/80"
+              className="hidden
+                         sm:block
+                         h-px
+                         w-20
+                         bg-amber-400/95"
               aria-hidden="true"
             />
+
           </div>
 
-          {/* Divider */}
           <div
-            className="mt-4 h-px w-full bg-zinc-200/80"
+            className="mt-4
+                       h-px
+                       w-full
+                       bg-zinc-200/80"
             aria-hidden="true"
           />
 
-          {/* CONTENT */}
-          <div className="mt-6 space-y-6">
+          <div
+            className="mt-6
+                       space-y-6"
+          >
+
             {children}
+
           </div>
+
         </div>
+
       </div>
+
     </section>
+
   );
+
 }

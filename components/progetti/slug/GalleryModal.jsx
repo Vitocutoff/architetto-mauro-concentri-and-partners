@@ -166,8 +166,9 @@ export default function GalleryModal({ images }) {
       : null;
 
   return (
+
     <section className="space-y-4">
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 mt-25 mb-10">
         <span className="h-px w-10 bg-neutral-300" aria-hidden="true" />
         <h2 className={cx("text-sm tracking-[0.22em] uppercase text-neutral-600", fontSerif.className)}>
           Gallery

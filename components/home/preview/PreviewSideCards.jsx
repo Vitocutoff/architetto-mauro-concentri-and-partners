@@ -14,13 +14,7 @@ function useHydrated() {
   );
 }
 
-export default function PreviewSideCards({
-  cards,
-  fontSans,
-  fontSerif,
-  reduceMotion: reduceMotionProp,
-  hoverAnim,
-}) {
+export default function PreviewSideCards({ cards, fontSans, fontSerif, reduceMotion: reduceMotionProp, hoverAnim }) {
   const hydrated = useHydrated();
 
   const reduceMotionHook = useReducedMotion();
@@ -41,7 +35,14 @@ export default function PreviewSideCards({
     : "";
 
   return (
-    <div className="lg:col-span-5 flex flex-col gap-8">
+
+    <div
+      className="lg:col-span-5
+                 flex
+                 flex-col
+                 gap-8"
+    >
+
       {cards.map((c, idx) => {
         const motionStyle = canMotion
           ? { y: c.y, willChange: "transform" }
@@ -56,6 +57,7 @@ export default function PreviewSideCards({
         const safeHover = canMotion ? hoverAnim : undefined;
 
         return (
+
           <motion.article
             key={c.title}
             style={motionStyle}
@@ -67,34 +69,95 @@ export default function PreviewSideCards({
             className={`group ${cardBase} ${rotateForIdx(idx)}`}
             whileHover={safeHover}
           >
-            <div className="absolute inset-0 -z-10 backdrop-blur-md" aria-hidden="true" />
 
-            <a href={c.link} className="block">
-              <div className="relative h-52 sm:h-56 overflow-hidden">
+            <div
+              className="absolute
+                         inset-0
+                         -z-10
+                         backdrop-blur-md"
+              aria-hidden="true"
+            />
+
+            <a
+              href={c.link}
+              className="block"
+            >
+
+              <div
+                className="relative
+                           h-52
+                           sm:h-56
+                           overflow-hidden"
+              >
+
                 <Image
                   src={c.img}
                   alt={`Anteprima progetto: ${c.title}`}
                   fill
                   sizes="(max-width: 1024px) 100vw, 35vw"
-                  className={`object-cover object-center ${imgHoverClass}`}
+                  className={`object-cover
+                              object-center
+                              ${imgHoverClass}`}
                   loading="lazy"
                   decoding="async"
                 />
 
-                <div className="absolute inset-0 bg-linear-to-t from-black/45 via-black/10 to-transparent" />
+                <div
+                  className="absolute
+                             inset-0
+                             bg-linear-to-t
+                             from-black/45
+                             via-black/10
+                             to-transparent"
+                />
 
-                <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
-                  <div className={`${fontSerif} text-xl text-white/95`}>{c.title}</div>
+                <div
+                  className="absolute
+                             bottom-4
+                             left-4
+                             right-4
+                             flex
+                             items-end
+                             justify-between
+                             gap-4"
+                >
 
-                  <div className={`${fontSans} text-xs tracking-[0.18em] uppercase text-white/75`}>
-                    scopri →
+                  <div
+                    className={`${fontSerif}
+                                text-xl
+                                text-white/95`}
+                  >
+
+                    {c.title}
+
                   </div>
+
+                  <div
+                    className={`${fontSans}
+                                text-xs
+                                tracking-[0.18em]
+                                uppercase
+                                text-white/75`}
+                  >
+
+                    scopri →
+
+                  </div>
+
                 </div>
+
               </div>
+
             </a>
+
           </motion.article>
+
         );
+
       })}
+
     </div>
+
   );
+
 }

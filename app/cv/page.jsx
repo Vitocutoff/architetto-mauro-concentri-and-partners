@@ -12,6 +12,7 @@ export const metadata = {
 
 function Fact({ k, v }) {
   return (
+
     <div
       className="rounded-xl
                  border
@@ -20,13 +21,16 @@ function Fact({ k, v }) {
                  px-4
                  py-3"
     >
+
       <div
         className="text-[11px]
                    tracking-[0.22em]
                    uppercase
                    text-zinc-500"
       >
+
         {k}
+
       </div>
 
       <div
@@ -34,17 +38,37 @@ function Fact({ k, v }) {
                    text-sm
                    text-zinc-900"
       >
+
         {v}
+
       </div>
+
     </div>
+
   );
+
 }
 
 function Subheading({ children }) {
   return (
-    <div className="pt-6">
-      <div className="flex items-center gap-3">
-        <span className="h-px w-8 bg-zinc-300" aria-hidden="true" />
+
+    <div
+      className="pt-6"
+    >
+
+      <div
+        className="flex
+                   items-center
+                   gap-3"
+      >
+
+        <span
+          className="h-px
+                     w-8
+                     bg-zinc-300"
+          aria-hidden="true"
+        />
+
         <h3
           className={`${fontSans.className}
                       text-xs
@@ -52,15 +76,20 @@ function Subheading({ children }) {
                       uppercase
                       text-zinc-600`}
         >
+
           {children}
+
         </h3>
+
       </div>
+
     </div>
+
   );
+
 }
 
 export default function CVPage() {
-  /* ================= DATI ================= */
 
   const abilitazioni = [
     {
@@ -221,9 +250,8 @@ export default function CVPage() {
     },
   ];
 
-  /* ================= RENDER ================= */
-
   return (
+
     <section
       className="relative
                  w-screen
@@ -231,6 +259,7 @@ export default function CVPage() {
                  -translate-x-1/2
                  overflow-hidden"
     >
+
       <div
         className="relative
                    mx-auto
@@ -242,19 +271,33 @@ export default function CVPage() {
                    py-10
                    sm:py-14"
       >
-        {/* HEADER */}
+
         <header>
-          <div className="inline-flex items-center gap-3">
-            <span className="h-px w-10 bg-zinc-300" />
+          <div
+            className="inline-flex
+                       items-center
+                       gap-4"
+          >
+
+            <span
+              className="h-px
+                         w-10
+                         mt-5
+                         bg-zinc-300"
+            />
             <p
               className={`${fontSans.className}
                           text-xs
                           tracking-[0.22em]
                           uppercase
+                          mt-5
                           text-zinc-600`}
             >
+
               informazioni
+
             </p>
+
           </div>
 
           <h1
@@ -266,18 +309,53 @@ export default function CVPage() {
                         tracking-tight
                         text-zinc-900`}
           >
+
             Curriculum Vitae
+
           </h1>
+
         </header>
 
         {/* GRIGLIA */}
-        <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[350px_1fr]">
-          {/* SIDEBAR */}
-          <aside className="space-y-8 lg:sticky lg:top-24 lg:self-start">
-            {/* FOTO PROFILO */}
-            <CvSidebarBlock title="Profilo" accent="sky">
-              <div className="flex flex-col items-center text-center">
-                <div className="relative h-50 w-50 overflow-hidden rounded-full border bg-black border-zinc-200 shadow-sm">
+        <div
+          className="mt-12
+                     grid
+                     grid-cols-1
+                     gap-10
+                     lg:grid-cols-[350px_1fr]"
+        >
+
+          <aside
+            className="space-y-8
+                       lg:sticky
+                       lg:top-24
+                       lg:self-start"
+          >
+
+            <CvSidebarBlock
+              title="Profilo"
+              accent="sky"
+            >
+
+              <div
+                className="flex
+                           flex-col
+                           items-center
+                           text-center"
+              >
+
+                <div
+                  className="relative
+                             h-50
+                             w-50
+                             overflow-hidden
+                             rounded-full
+                             border
+                             bg-black
+                             border-zinc-200
+                             shadow-sm"
+                >
+
                   <Image
                     src="/images/mauroConcentriCV.webp"
                     alt="Mauro Concentri"
@@ -285,6 +363,7 @@ export default function CVPage() {
                     className="object-contain"
                     priority
                   />
+
                 </div>
 
                 <div
@@ -294,7 +373,9 @@ export default function CVPage() {
                               font-semibold
                               text-zinc-900`}
                 >
+
                   Mauro Concentri
+
                 </div>
 
                 <div
@@ -303,65 +384,159 @@ export default function CVPage() {
                               text-sm
                               text-zinc-600`}
                 >
+
                   Architetto
+
                 </div>
+
               </div>
+
             </CvSidebarBlock>
 
-            {/* ABILITAZIONI */}
-            <CvSidebarBlock title="Abilitazioni principali" accent="emerald">
-              <div className="space-y-3">
+            <CvSidebarBlock
+              title="Abilitazioni principali"
+              accent="emerald"
+            >
+
+              <div
+                className="space-y-3"
+              >
+
                 {abilitazioni.map((a) => (
-                  <Fact key={a.k} k={a.k} v={a.v} />
+
+                  <Fact
+                    key={a.k}
+                    k={a.k}
+                    v={a.v}
+                  />
+
                 ))}
+
               </div>
+
             </CvSidebarBlock>
 
-            {/* DIDATTICA */}
-            <CvSidebarBlock title="Didattica" compact>
-              <div className="space-y-4">
+            <CvSidebarBlock
+              title="Didattica"
+              compact
+            >
+
+              <div
+                className="space-y-4"
+              >
+
                 {didattica.map((e, i) => (
-                  <CvEntry key={`did-${i}`} {...e} />
+
+                  <CvEntry
+                    key={`did-${i}`} {...e}
+                  />
+
                 ))}
+
               </div>
+
             </CvSidebarBlock>
 
-            {/* EDITORIALE */}
-            <CvSidebarBlock title="Editoriale" accent="red" compact>
-              <div className="space-y-4">
+            <CvSidebarBlock
+              title="Editoriale"
+              accent="red"
+              compact
+            >
+
+              <div
+                className="space-y-4"
+              >
+
                 {editoriale.map((e, i) => (
-                  <CvEntry key={`ed-${i}`} {...e} />
+
+                  <CvEntry
+                    key={`ed-${i}`} {...e}
+                  />
+
                 ))}
+
               </div>
+
             </CvSidebarBlock>
+
           </aside>
 
-          {/* CONTENUTO PRINCIPALE */}
-          <div className="space-y-12">
-            <CvSection id="pa" title="Pubblica Amministrazione" accent="amber">
-              <Subheading>Incarichi sportivi</Subheading>
+          <div
+            className="space-y-12"
+          >
+
+            <CvSection
+              id="pa"
+              title="Pubblica Amministrazione"
+              accent="amber"
+            >
+
+              <Subheading>
+
+                Incarichi sportivi
+
+              </Subheading>
+
               {incarichiSportivi.map((e, i) => (
-                <CvEntry key={`sport-${i}`} {...e} />
+
+                <CvEntry
+                  key={`sport-${i}`} {...e}
+                />
+
               ))}
 
-              <Subheading>Commissioni di vigilanza</Subheading>
+              <Subheading>
+
+                Commissioni di vigilanza
+
+              </Subheading>
+
               {commissioniVigilanza.map((e, i) => (
-                <CvEntry key={`vig-${i}`} {...e} />
+
+                <CvEntry
+                  key={`vig-${i}`} {...e}
+                />
+
               ))}
 
-              <Subheading>Incarichi tecnici</Subheading>
+              <Subheading>
+
+                Incarichi tecnici
+
+              </Subheading>
+
               {incarichiTecnici.map((e, i) => (
-                <CvEntry key={`tec-${i}`} {...e} />
+
+                <CvEntry
+                  key={`tec-${i}`} {...e}
+                />
+
               ))}
 
-              <Subheading>Ruoli istituzionali</Subheading>
+              <Subheading>
+
+                Ruoli istituzionali
+
+              </Subheading>
+
               {ruoliIstituzionali.map((e, i) => (
-                <CvEntry key={`ist-${i}`} {...e} />
+
+                <CvEntry
+                  key={`ist-${i}`} {...e}
+                />
+
               ))}
+
             </CvSection>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
+
   );
+
 }
