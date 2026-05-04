@@ -16,14 +16,14 @@ export default function IntroSection() {
   const inView = useInView(ref, { once: true, amount: 0.35 });
 
   const fullText =
-    "Dopo la laurea allo IUAV di Venezia nel 1989 ho iniziato la mia attività di professionista, occupandomi di urbanistica, edilizia privata, edilizia industriale e lavori pubblici soprattutto nel settore degli impianti sportivi.";
+    "Dopo la laurea allo IUAV di Venezia, nel 1989 ho iniziato la mia attività di professionista, occupandomi di urbanistica, edilizia privata, edilizia industriale e lavori pubblici.";
   const words = fullText.split(" ");
 
   const extraText1 =
-    "Dal 2000 lavoro come Architetto Mauro Concentri & Partners, un gruppo di professionisti formato da me, dall’arch. Domenico Gabaldo e da SP Engineering Srl, direttore tecnico Ing. Francesco Piccioli. Ci occupiamo soprattutto di edilizia pubblica, con una specializzazione nell’impiantistica sportiva.";
+    "Dal 2000 lavoro come Architetto Mauro Concentri & Partners, un gruppo di professionisti formato da me, dall’arch. Domenico Gabaldo e da SP Engineering srl oltre ad altri professionisti specialisti. Lavoriamo con un'organizzazione flessibile, che ci permette di seguire progetti anche molto diversi tra loro, garantendo competenza e professionalità continua in tutte le fasi di progettazione e realizzazione dell'opera.";
 
   const extraText2 =
-    "Dal 2000 al 2015 sono stato consulente provinciale CONI: quell’esperienza ha rafforzato competenze e visione dello studio e ha reso l’impiantistica sportiva uno dei nostri ambiti principali. Lavoriamo con un’organizzazione flessibile e una progettazione integrata tra specialisti che collaborano stabilmente da oltre 25 anni. Questo ci permette di seguire progetti anche molto diversi tra loro, garantendo una direzione lavori presente e continua in tutte le fasi di realizzazione.";
+    "Dal 2000 al 2015 sono stato consulente provinciale CONI per l'impiantistica sportiva, quell'esperienza ha raffarzato conoscenze e competenze, facendo diventare l'impiantistica sportiva l'ambito di intervento principale del gruppo di lavoro.";
 
   return (
 
