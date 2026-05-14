@@ -64,7 +64,7 @@ export default function IntroPortrait({ inView, reduceMotion }) {
         >
 
           <Image
-            src="/images/mauroConcentri.webp"
+            src="/images/mauroConcentriCV.webp"
             alt="Ritratto dell'architetto Mauro Concentri"
             fill
             className="object-cover

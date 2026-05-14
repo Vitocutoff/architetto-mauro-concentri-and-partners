@@ -23,7 +23,7 @@ export default function IntroSection() {
     "Dal 2000 lavoro come Architetto Mauro Concentri & Partners, un gruppo di professionisti formato da me, dall’arch. Domenico Gabaldo e da SP Engineering srl oltre ad altri professionisti specialisti. Lavoriamo con un'organizzazione flessibile, che ci permette di seguire progetti anche molto diversi tra loro, garantendo competenza e professionalità continua in tutte le fasi di progettazione e realizzazione dell'opera.";
 
   const extraText2 =
-    "Dal 2000 al 2015 sono stato consulente provinciale CONI per l'impiantistica sportiva, quell'esperienza ha raffarzato conoscenze e competenze, facendo diventare l'impiantistica sportiva l'ambito di intervento principale del gruppo di lavoro.";
+    "Dal 2000 al 2015 sono stato consulente provinciale CONI per l'impiantistica sportiva, quell'esperienza ha rafforzato conoscenze e competenze, facendo diventare l'impiantistica sportiva l'ambito di intervento principale del gruppo di lavoro.";
 
   return (
 
