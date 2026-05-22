@@ -57,14 +57,12 @@ export default function IntroPortrait({ inView, reduceMotion }) {
                      lg:h-105
                      rounded-full
                      overflow-hidden
-                     border-2
-                     border-black/35
                      shadow-[0_14px_70px_rgba(0,0,0,0.28)]
                      lg:-translate-y-10"
         >
 
           <Image
-            src="/images/mauroConcentriCV.webp"
+            src="/images/mauroConcentriCV.png"
             alt="Ritratto dell'architetto Mauro Concentri"
             fill
             className="object-cover
