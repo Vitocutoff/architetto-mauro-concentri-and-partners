@@ -357,7 +357,7 @@ export default function CVPage() {
                 >
 
                   <Image
-                    src="/images/mauroConcentriCV.webp"
+                    src="/images/mauroConcentriCV.png"
                     alt="Mauro Concentri"
                     fill
                     className="object-contain"
