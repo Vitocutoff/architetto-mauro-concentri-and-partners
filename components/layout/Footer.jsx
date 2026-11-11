@@ -294,7 +294,7 @@ export default function Footer() {
                         text-neutral-200`}
           >
 
-            Corso Padova, 65 – 36100 Vicenza
+            Via G. Ferrari, 14 – 36100 Vicenza
 
           </p>
 

@@ -14,7 +14,7 @@ function cx(...c) {
 }
 
 export default function ContattiClient() {
-  const sedeOperativa = "Corso Padova, 65 — 36100 Vicenza (VI), Italia";
+  const sedeOperativa = "Via G. Ferrari, 14 — 36100 Vicenza (VI), Italia";
 
   const email = "archcon@goldnet.it";
   const pec = "mauro.concentri@archiworldpec.it";
